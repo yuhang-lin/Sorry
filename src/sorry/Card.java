@@ -16,4 +16,12 @@ public class Card {
 		this.name = name;
 		this.info = info;
 	}
+	
+	/**
+	 * Return the information of the card as String.
+	 */
+	@Override
+	public String toString() {
+		return name + "\n" + info + "\n";
+	}
 }
