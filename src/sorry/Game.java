@@ -4,7 +4,7 @@
 package sorry;
 
 /**
- * @author User
+ * @author Yuhang Lin
  *
  */
 public class Game {
