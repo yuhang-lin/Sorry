@@ -9,9 +9,11 @@ package sorry;
  */
 public class Card {
 
-	public String info;
+	public String name; // Card name
+	public String info; // Description of the card
 	
-	public Card(String info) {
+	public Card(String name, String info) {
+		this.name = name;
 		this.info = info;
 	}
 }
