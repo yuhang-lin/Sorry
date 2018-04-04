@@ -1,5 +1,5 @@
 /**
- * Implement game logic and create cards of the game.
+ * Deck of cards in the game.
  */
 package sorry;
 
@@ -7,11 +7,11 @@ package sorry;
  * @author Yuhang Lin
  *
  */
-public class Game {
+public class Deck {
 
 	public Card[] cards = new Card[45];
 
-	public Game() {
+	public Deck() {
 		// Create cards
 		// Five 1 cards; four each of 2, 3, 4, 5, 7, 8, 10, 11, 12 and four Sorry cards.
 		for (int i = 0; i < cards.length; i++) {
@@ -42,6 +42,13 @@ public class Game {
 				cards[i] = new Card("Sorry",
 						"Take one pawn from your START, place it on any space that is occupied by any opponent, and BUMP that opponent¡¯s pawn back to its START. If there is no pawn on your START or no opponent¡¯s pawn on any space you can move to, you forfeit your move.");
 			}
+		}
+		
+		/**
+		 * Shuffle the cards of the deck.
+		 */
+		public void shuffle() {
+			
 		}
 	}
 
