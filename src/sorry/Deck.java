@@ -3,13 +3,17 @@
  */
 package sorry;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * @author Yuhang Lin
  *
  */
 public class Deck {
 
-	public Card[] cards = new Card[45];
+	public final int NUM_CARDS = 45;
+	public int numUsed = 0;
+	public Card[] cards = new Card[NUM_CARDS];
 
 	public Deck() {
 		// Create cards
@@ -40,16 +44,38 @@ public class Deck {
 				cards[i] = new Card("12", "Move one pawn forward 12 spaces.");
 			} else if (i < 45) {
 				cards[i] = new Card("Sorry",
-						"Take one pawn from your START, place it on any space that is occupied by any opponent, and BUMP that opponent¡¯s pawn back to its START. If there is no pawn on your START or no opponent¡¯s pawn on any space you can move to, you forfeit your move.");
+						"Take one pawn from your START, place it on any space that is occupied by any opponent, and BUMP that opponent's pawn back to its START. If there is no pawn on your START or no opponent's pawn on any space you can move to, you forfeit your move.");
 			}
 		}
-		
-		/**
-		 * Shuffle the cards of the deck.
-		 */
-		public void shuffle() {
-			
+		shuffle();
+	}
+	
+	/**
+	 * Shuffle the cards of the deck.
+	 */
+	public void shuffle() {
+		int randomNum = 0;
+		for (int i = 0; i < cards.length; i++) {
+			while (true) {
+				randomNum = ThreadLocalRandom.current().nextInt(0, NUM_CARDS);
+				if (randomNum != i) { // make sure that we swap the card with another card
+					break;
+				}
+			}
+			Card temp = cards[i];
+			cards[i] = cards[randomNum];
+			cards[randomNum] = temp;
 		}
 	}
-
+	
+	/**
+	 * Return next card from the deck.
+	 */
+	public Card nextCard() {
+		if (numUsed > NUM_CARDS) {
+			shuffle();
+			numUsed = 0;
+		}
+		return cards[numUsed++];
+	}
 }
