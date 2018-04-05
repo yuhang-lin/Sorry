@@ -71,7 +71,7 @@ public class Deck {
 	/**
 	 * Return next card from the deck.
 	 */
-	public Card nextCard() {
+	public Card draw() {
 		if (numUsed > NUM_CARDS) {
 			shuffle();
 			numUsed = 0;
