@@ -3,7 +3,7 @@ package sorry;
 public class Piece {
 
 	private String color;
-	private Square location;
+	private BoardSquare location;
 	private int movement;
 	private boolean occupied;
 	
@@ -15,11 +15,11 @@ public class Piece {
 		occupied = isOccupied;
 	}
 	
-	public void setLocation(Square sq){
+	public void setLocation(BoardSquare sq){
 		location = sq;
 	}
 	
-	public Square getLocation(){
+	public BoardSquare getLocation(){
 		return location;
 	}
 	
