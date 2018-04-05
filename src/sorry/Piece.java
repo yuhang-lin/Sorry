@@ -2,10 +2,17 @@ package sorry;
 
 public class Piece {
 
-	private String color;
-	private BoardSquare location;
+	private PieceColor color;
+	private int[][] location;
+	private int[][] possibleMoves;
 	private int movement;
 	private boolean occupied;
+	private Player player;
+        
+        public Piece(PieceColor c, Player p){
+            this.color = c;
+            this.player = p;
+        }
 	
 	public void Move(int squareNum){
 		movement = squareNum;
@@ -15,17 +22,35 @@ public class Piece {
 		occupied = isOccupied;
 	}
 	
-	public void setLocation(BoardSquare sq){
+	public void setLocation(int[][] sq){
 		location = sq;
 	}
 	
-	public BoardSquare getLocation(){
+	public int[][] getLocation(){
 		return location;
 	}
 	
-	public String getColor(){
+	public PieceColor getColor(){
 		return color;
 	}
+
+	public Player getPlayer(){
+		return player;
+	}
+
+	/**
+    	 * @return the possibleMoves
+    	 */
+    	public int[][] getPossibleMoves() {
+        	return possibleMoves;
+   	 }
+
+   	 /**	
+    	  * @param possibleMoves the possibleMoves to set
+     	  */
+    	public void setPossibleMoves(int[][] possibleMoves) {
+        	this.possibleMoves = possibleMoves;
+    	}	
 	
 	
 }
