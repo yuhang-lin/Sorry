@@ -106,10 +106,10 @@ public class Main extends Application{
                 
                 Card currCard = deck.draw();
                 int card = 0;
-                if (!currCard.name.equals("Sorry")) {
-                	card = Integer.parseInt(currCard.name);
+                if (!currCard.getName().equals("Sorry")) {
+                	card = Integer.parseInt(currCard.getName());
                 }
-                t1.setText("The card is: " + currCard.name);
+                t1.setText("The card is: " + currCard.getName());
                 
                 switch (card){
                     case 1: 
