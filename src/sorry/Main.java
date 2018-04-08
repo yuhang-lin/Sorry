@@ -104,13 +104,12 @@ public class Main extends Application{
         bttn.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent event) {
                 
-                
-                Random r = new Random();
-                int card = r.nextInt(12) + 1;
-                while(card == 6 || card == 9){
-                    card = r.nextInt(12) + 1;
+                Card currCard = deck.draw();
+                int card = 0;
+                if (!currCard.name.equals("Sorry")) {
+                	card = Integer.parseInt(currCard.name);
                 }
-                t1.setText("The card is: " + card);
+                t1.setText("The card is: " + currCard.name);
                 
                 switch (card){
                     case 1: 
@@ -118,14 +117,14 @@ public class Main extends Application{
                         option2.setText("You can move a pawn forward 1 space.");
                         for(Piece p : blue.getPieces()){
                             int[][] oneMoves = new int[2][2];
-                            p.canStart = true;
+                            /*p.canStart = true;
                             if(!p.isInPlay()){
                                 int[][] firstSpot = p.getColor().getFirstSpot();
                                 int[] firstSpot1 = new int[2];                           
                                 firstSpot1[0] = firstSpot[0][0];
                                 firstSpot1[1] = firstSpot[0][1];                         
                                 oneMoves[0] = firstSpot1;                          
-                            }
+                            }*/
                         
                             oneMoves[1] = getMoveFromInt(board, p, 1);
                             p.setPossibleMoves(oneMoves);
@@ -139,14 +138,14 @@ public class Main extends Application{
                         
                         for(Piece p : blue.getPieces()){
                             int[][] twoMoves = new int[2][2];
-                            p.canStart = true;
+                            /*p.canStart = true;
                             if(!p.isInPlay()){
                                 int[][] firstSpot = p.getColor().getFirstSpot();
                                 int[] firstSpot1 = new int[2];                           
                                 firstSpot1[0] = firstSpot[0][0];
                                 firstSpot1[1] = firstSpot[0][1];                         
                                 twoMoves[0] = firstSpot1;                          
-                            }
+                            }*/
                         
                             twoMoves[1] = getMoveFromInt(board, p, 2);
                             p.setPossibleMoves(twoMoves);
@@ -189,9 +188,6 @@ public class Main extends Application{
                         }
                         
                         break;
-                        
-                    case 6:
-                        break;
                      
                     case 7: 
                         option1.setText("You must move a pawn forward 7 spaces.");
@@ -214,9 +210,6 @@ public class Main extends Application{
                             eightMoves[0] = getMoveFromInt(board, p, 8);
                             p.setPossibleMoves(eightMoves);
                         }
-                        break;
-                        
-                    case 9:
                         break;
                         
                     case 10: 
