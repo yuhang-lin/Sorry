@@ -101,160 +101,160 @@ public class Main extends Application{
 //        blue.getPieces()[0].setPossibleMoves(moveOptions);
 //        yellow.getPieces()[0].setPossibleMoves(moveOptions1);
         
-//        bttn.setOnMousePressed(new EventHandler<MouseEvent>() {
-//            @Override public void handle(MouseEvent event) {
-//                
-//                
-//                Random r = new Random();
-//                int card = r.nextInt(12) + 1;
-//                while(card == 6 || card == 9){
-//                    card = r.nextInt(12) + 1;
-//                }
-//                t1.setText("The card is: " + card);
-//                
-//                switch (card){
-//                    case 1: 
-//                        option1.setText("You can move a pawn to the start square.");
-//                        option2.setText("You can move a pawn forward 1 space.");
-//                        for(Piece p : blue.getPieces()){
-//                            int[][] oneMoves = new int[2][2];
-//                            p.canStart = true;
-//                            if(!p.isInPlay()){
-//                                int[][] firstSpot = p.getColor().getFirstSpot();
-//                                int[] firstSpot1 = new int[2];                           
-//                                firstSpot1[0] = firstSpot[0][0];
-//                                firstSpot1[1] = firstSpot[0][1];                         
-//                                oneMoves[0] = firstSpot1;                          
-//                            }
-//                        
-//                            oneMoves[1] = getMoveFromInt(board, p, 1);
-//                            p.setPossibleMoves(oneMoves);
-//                        }
-//                        
-//                        break;
-//                        
-//                    case 2:
-//                        option1.setText("You can move a pawn to the start square.");
-//                        option2.setText("You can move a pawn forward 2 spaces.");
-//                        
-//                        for(Piece p : blue.getPieces()){
-//                            int[][] twoMoves = new int[2][2];
-//                            p.canStart = true;
-//                            if(!p.isInPlay()){
-//                                int[][] firstSpot = p.getColor().getFirstSpot();
-//                                int[] firstSpot1 = new int[2];                           
-//                                firstSpot1[0] = firstSpot[0][0];
-//                                firstSpot1[1] = firstSpot[0][1];                         
-//                                twoMoves[0] = firstSpot1;                          
-//                            }
-//                        
-//                            twoMoves[1] = getMoveFromInt(board, p, 2);
-//                            p.setPossibleMoves(twoMoves);
-//                        }
-//                        break;
-//                        
-//                    case 3:
-//                        option1.setText("You must move a pawn forward 3 spaces.");
-//                        option2.setText("");
-//                        for(Piece p : blue.getPieces()){
-//                            int[][] threeMoves = new int[2][2];
-//
-//                            threeMoves[0] = getMoveFromInt(board, p, 3);
-//                            p.setPossibleMoves(threeMoves);
-//                        }
-//                        
-//                        break;
-//                        
-//                    case 4:
-//                        option1.setText("You must move a pawn backwards 4 spaces.");
-//                        option2.setText("");
-//                        for(Piece p : blue.getPieces()){
-//                            int[][] fourMoves = new int[2][2];
-//                            
-//                        
-//                            fourMoves[0] = getMoveFromInt(board, p, -4);
-//                            p.setPossibleMoves(fourMoves);
-//                        }
-//                        break;
-//                    
-//                    case 5: 
-//                        option1.setText("You must move a pawn forward 5 spaces.");
-//                        option2.setText("");
-//                        for(Piece p : blue.getPieces()){
-//                            int[][] fiveMoves = new int[2][2];
-//                            
-//                        
-//                            fiveMoves[0] = getMoveFromInt(board, p, 5);
-//                            p.setPossibleMoves(fiveMoves);
-//                        }
-//                        
-//                        break;
-//                        
-//                    case 6:
-//                        break;
-//                     
-//                    case 7: 
-//                        option1.setText("You must move a pawn forward 7 spaces.");
-//                        option2.setText("");
-//                        for(Piece p : blue.getPieces()){
-//                            int[][] sevenMoves = new int[2][2];
-//          
-//                            sevenMoves[0] = getMoveFromInt(board, p, 7);
-//                            p.setPossibleMoves(sevenMoves);
-//                        }
-//                        break;
-//                        
-//                    case 8: 
-//                        option1.setText("You must move a pawn forward 8 spaces.");
-//                        option2.setText("");
-//                        for(Piece p : blue.getPieces()){
-//                            int[][] eightMoves = new int[2][2];
-//                            
-//                        
-//                            eightMoves[0] = getMoveFromInt(board, p, 8);
-//                            p.setPossibleMoves(eightMoves);
-//                        }
-//                        break;
-//                        
-//                    case 9:
-//                        break;
-//                        
-//                    case 10: 
-//                        option1.setText("You must move a pawn forward 10 spaces.");
-//                        option2.setText("");
-//                        for(Piece p : blue.getPieces()){
-//                            int[][] tenMoves = new int[2][2];
-//                            
-//                            tenMoves[0] = getMoveFromInt(board, p, 10);
-//                            p.setPossibleMoves(tenMoves);
-//                        }
-//                        break;
-//                        
-//                    case 11:
-//                        option1.setText("You must move a pawn forward 11 spaces.");
-//                        option2.setText("");
-//                        for(Piece p : blue.getPieces()){
-//                            int[][] elevenMoves = new int[2][2];
-//                            
-//                            elevenMoves[0] = getMoveFromInt(board, p, 11);
-//                            p.setPossibleMoves(elevenMoves);
-//                        }
-//                        break;
-//                        
-//                    case 12:
-//                        option1.setText("You must move a pawn forward 12 spaces.");
-//                        option2.setText("");
-//                        for(Piece p : blue.getPieces()){
-//                            int[][] twelveMoves = new int[2][2];
-//                            
-//                            twelveMoves[0] = getMoveFromInt(board, p, 12);
-//                            p.setPossibleMoves(twelveMoves);
-//                        }
-//                        break;
-//                }
-//                        
-//            }
-//        });
+        bttn.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent event) {
+                
+                
+                Random r = new Random();
+                int card = r.nextInt(12) + 1;
+                while(card == 6 || card == 9){
+                    card = r.nextInt(12) + 1;
+                }
+                t1.setText("The card is: " + card);
+                
+                switch (card){
+                    case 1: 
+                        option1.setText("You can move a pawn to the start square.");
+                        option2.setText("You can move a pawn forward 1 space.");
+                        for(Piece p : blue.getPieces()){
+                            int[][] oneMoves = new int[2][2];
+                            p.canStart = true;
+                            if(!p.isInPlay()){
+                                int[][] firstSpot = p.getColor().getFirstSpot();
+                                int[] firstSpot1 = new int[2];                           
+                                firstSpot1[0] = firstSpot[0][0];
+                                firstSpot1[1] = firstSpot[0][1];                         
+                                oneMoves[0] = firstSpot1;                          
+                            }
+                        
+                            oneMoves[1] = getMoveFromInt(board, p, 1);
+                            p.setPossibleMoves(oneMoves);
+                        }
+                        
+                        break;
+                        
+                    case 2:
+                        option1.setText("You can move a pawn to the start square.");
+                        option2.setText("You can move a pawn forward 2 spaces.");
+                        
+                        for(Piece p : blue.getPieces()){
+                            int[][] twoMoves = new int[2][2];
+                            p.canStart = true;
+                            if(!p.isInPlay()){
+                                int[][] firstSpot = p.getColor().getFirstSpot();
+                                int[] firstSpot1 = new int[2];                           
+                                firstSpot1[0] = firstSpot[0][0];
+                                firstSpot1[1] = firstSpot[0][1];                         
+                                twoMoves[0] = firstSpot1;                          
+                            }
+                        
+                            twoMoves[1] = getMoveFromInt(board, p, 2);
+                            p.setPossibleMoves(twoMoves);
+                        }
+                        break;
+                        
+                    case 3:
+                        option1.setText("You must move a pawn forward 3 spaces.");
+                        option2.setText("");
+                        for(Piece p : blue.getPieces()){
+                            int[][] threeMoves = new int[2][2];
+
+                            threeMoves[0] = getMoveFromInt(board, p, 3);
+                            p.setPossibleMoves(threeMoves);
+                        }
+                        
+                        break;
+                        
+                    case 4:
+                        option1.setText("You must move a pawn backwards 4 spaces.");
+                        option2.setText("");
+                        for(Piece p : blue.getPieces()){
+                            int[][] fourMoves = new int[2][2];
+                            
+                        
+                            fourMoves[0] = getMoveFromInt(board, p, -4);
+                            p.setPossibleMoves(fourMoves);
+                        }
+                        break;
+                    
+                    case 5: 
+                        option1.setText("You must move a pawn forward 5 spaces.");
+                        option2.setText("");
+                        for(Piece p : blue.getPieces()){
+                            int[][] fiveMoves = new int[2][2];
+                            
+                        
+                            fiveMoves[0] = getMoveFromInt(board, p, 5);
+                            p.setPossibleMoves(fiveMoves);
+                        }
+                        
+                        break;
+                        
+                    case 6:
+                        break;
+                     
+                    case 7: 
+                        option1.setText("You must move a pawn forward 7 spaces.");
+                        option2.setText("");
+                        for(Piece p : blue.getPieces()){
+                            int[][] sevenMoves = new int[2][2];
+          
+                            sevenMoves[0] = getMoveFromInt(board, p, 7);
+                            p.setPossibleMoves(sevenMoves);
+                        }
+                        break;
+                        
+                    case 8: 
+                        option1.setText("You must move a pawn forward 8 spaces.");
+                        option2.setText("");
+                        for(Piece p : blue.getPieces()){
+                            int[][] eightMoves = new int[2][2];
+                            
+                        
+                            eightMoves[0] = getMoveFromInt(board, p, 8);
+                            p.setPossibleMoves(eightMoves);
+                        }
+                        break;
+                        
+                    case 9:
+                        break;
+                        
+                    case 10: 
+                        option1.setText("You must move a pawn forward 10 spaces.");
+                        option2.setText("");
+                        for(Piece p : blue.getPieces()){
+                            int[][] tenMoves = new int[2][2];
+                            
+                            tenMoves[0] = getMoveFromInt(board, p, 10);
+                            p.setPossibleMoves(tenMoves);
+                        }
+                        break;
+                        
+                    case 11:
+                        option1.setText("You must move a pawn forward 11 spaces.");
+                        option2.setText("");
+                        for(Piece p : blue.getPieces()){
+                            int[][] elevenMoves = new int[2][2];
+                            
+                            elevenMoves[0] = getMoveFromInt(board, p, 11);
+                            p.setPossibleMoves(elevenMoves);
+                        }
+                        break;
+                        
+                    case 12:
+                        option1.setText("You must move a pawn forward 12 spaces.");
+                        option2.setText("");
+                        for(Piece p : blue.getPieces()){
+                            int[][] twelveMoves = new int[2][2];
+                            
+                            twelveMoves[0] = getMoveFromInt(board, p, 12);
+                            p.setPossibleMoves(twelveMoves);
+                        }
+                        break;
+                }
+                        
+            }
+        });
     }
     
     public int[] getMoveFromInt(Board board, Piece piece, int increment){
