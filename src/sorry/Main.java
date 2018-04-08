@@ -36,13 +36,13 @@ public class Main extends Application{
      * @param args
      */
     public static void main(String[] args) {
-        Game game = new Game();
         launch(args);
     }
     Piece selected;
     Piece prevPiece;
     Circle prevCircle;
     int[][] moves;
+    Deck deck = new Deck();
     @Override
     public void start(Stage primaryStage){
         GridPane pane = new GridPane();
