@@ -9,8 +9,8 @@ package sorry;
  */
 public class Card {
 
-	public String name; // Card name
-	public String info; // Description of the card
+	private String name; // Card name
+	private String info; // Description of the card
 	
 	public Card(String name, String info) {
 		this.name = name;
@@ -23,5 +23,13 @@ public class Card {
 	@Override
 	public String toString() {
 		return name + "\n" + info + "\n";
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String getInfo() {
+		return info;
 	}
 }
