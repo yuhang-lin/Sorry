@@ -58,7 +58,7 @@ public class Deck {
 		for (int i = 0; i < cards.length; i++) {
 			while (true) {
 				randomNum = ThreadLocalRandom.current().nextInt(0, NUM_CARDS);
-				if (randomNum != i) { // make sure that we swap the card with another card
+				if (Math.abs(randomNum -i) > 5) { // make sure that we swap the card with another card
 					break;
 				}
 			}
@@ -72,7 +72,7 @@ public class Deck {
 	 * Return next card from the deck.
 	 */
 	public Card draw() {
-		if (numUsed > NUM_CARDS) {
+		if (numUsed >= NUM_CARDS) {
 			shuffle();
 			numUsed = 0;
 		}
