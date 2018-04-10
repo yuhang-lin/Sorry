@@ -8,49 +8,49 @@ public class Piece {
 	private int movement;
 	private boolean occupied;
 	private Player player;
-        
-        public Piece(PieceColor c, Player p){
-            this.color = c;
-            this.player = p;
-        }
-	
-	public void Move(int squareNum){
+
+	public Piece(PieceColor c, Player p) {
+		this.color = c;
+		this.player = p;
+	}
+
+	public void Move(int squareNum) {
 		movement = squareNum;
 	}
-	
-	public void canMove(boolean isOccupied){
+
+	public void canMove(boolean isOccupied) {
 		occupied = isOccupied;
 	}
-	
-	public void setLocation(int[][] sq){
+
+	public void setLocation(int[][] sq) {
 		location = sq;
 	}
-	
-	public int[][] getLocation(){
+
+	public int[][] getLocation() {
 		return location;
 	}
-	
-	public PieceColor getColor(){
+
+	public PieceColor getColor() {
 		return color;
 	}
 
-	public Player getPlayer(){
+	public Player getPlayer() {
 		return player;
 	}
 
 	/**
-    	 * @return the possibleMoves
-    	 */
-    	public int[][] getPossibleMoves() {
-        	return possibleMoves;
-   	 }
+	 * @return the possibleMoves
+	 */
+	public int[][] getPossibleMoves() {
+		return possibleMoves;
+	}
 
-   	 /**	
-    	  * @param possibleMoves the possibleMoves to set
-     	  */
-    	public void setPossibleMoves(int[][] possibleMoves) {
-        	this.possibleMoves = possibleMoves;
-    	}	
-	
-	
+	/**
+	 * @param possibleMoves
+	 *            the possibleMoves to set
+	 */
+	public void setPossibleMoves(int[][] possibleMoves) {
+		this.possibleMoves = possibleMoves;
+	}
+
 }

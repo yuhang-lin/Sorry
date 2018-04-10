@@ -49,7 +49,7 @@ public class Deck {
 		}
 		shuffle();
 	}
-	
+
 	/**
 	 * Shuffle the cards of the deck.
 	 */
@@ -67,7 +67,7 @@ public class Deck {
 			cards[randomNum] = temp;
 		}
 	}
-	
+
 	/**
 	 * Return next card from the deck.
 	 */
