@@ -58,7 +58,7 @@ public class Deck {
 		for (int i = 0; i < cards.length; i++) {
 			while (true) {
 				randomNum = ThreadLocalRandom.current().nextInt(0, NUM_CARDS);
-				if (Math.abs(randomNum -i) > 5) { // make sure that we swap the card with another card
+				if (!cards[i].getName().equals(cards[randomNum].getName())) { // make sure that we swap the card with a different card
 					break;
 				}
 			}
