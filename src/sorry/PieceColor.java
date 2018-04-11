@@ -12,12 +12,13 @@ import javafx.scene.paint.Color;
  * @author austinbatistoni
  */
 public class PieceColor {
-	private Color color;
-	private int[][] homeCoords;
-	private int[][] safeCoords;
-	private int[][] startCoords;
-	private int[][] firstSpot;
-	private int[][] lastSpot;
+	protected Color color;
+	protected int[][] homeCoords;
+	protected int[][] safeCoords;
+	protected int[][] startCoords;
+	protected int[][] firstSpot;
+	protected int[][] lastSpot;
+	
 
 	public Color getColor() {
 		return color;
