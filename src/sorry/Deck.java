@@ -55,16 +55,20 @@ public class Deck {
 	 */
 	public void shuffle() {
 		int randomNum = 0;
-		for (int i = 0; i < cards.length; i++) {
-			while (true) {
-				randomNum = ThreadLocalRandom.current().nextInt(0, NUM_CARDS);
-				if (!cards[i].getName().equals(cards[randomNum].getName())) { // make sure that we swap the card with a different card
-					break;
+		int numShuffle = 2;
+		for (int j = 0; j < numShuffle; j++) {
+			for (int i = 0; i < cards.length; i++) {
+				while (true) {
+					randomNum = ThreadLocalRandom.current().nextInt(0, NUM_CARDS);
+					if (!cards[i].getName().equals(cards[randomNum].getName())) { // make sure that we swap the card
+																					// with a different card
+						break;
+					}
 				}
+				Card temp = cards[i];
+				cards[i] = cards[randomNum];
+				cards[randomNum] = temp;
 			}
-			Card temp = cards[i];
-			cards[i] = cards[randomNum];
-			cards[randomNum] = temp;
 		}
 	}
 
