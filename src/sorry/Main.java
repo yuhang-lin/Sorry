@@ -43,6 +43,22 @@ public class Main extends Application {
 	Circle prevCircle;
 	int[][] moves;
 	Deck deck = new Deck();
+	
+	/**
+	 * Save the current game status.
+	 * @return
+	 */
+	public boolean save() {
+		return false;
+	}
+	
+	/**
+	 * Restore the game status from a text file.
+	 * @return
+	 */
+	public boolean restore() {
+		return false;
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
