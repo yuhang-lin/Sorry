@@ -72,8 +72,12 @@ public class Main extends Application {
 		drawBoard(pane, board);
 		// t.setRotate(45);
 
-		Button bttn = new Button("Draw");
-		pane.add(bttn, 20, 2);
+		Button btnDraw = new Button("Draw");
+		pane.add(btnDraw, 20, 2);
+		Button btnSave = new Button("Save game");
+		pane.add(btnSave, 30, 2);
+		Button btnRestore = new Button("Restore game");
+		pane.add(btnRestore, 50, 2);
 
 		Text t1 = new Text("Please draw a card");
 		pane.add(t1, 20, 5);
@@ -120,7 +124,7 @@ public class Main extends Application {
 		// blue.getPieces()[0].setPossibleMoves(moveOptions);
 		// yellow.getPieces()[0].setPossibleMoves(moveOptions1);
 
-		bttn.setOnMousePressed(new EventHandler<MouseEvent>() {
+		btnDraw.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 
@@ -257,6 +261,18 @@ public class Main extends Application {
 					break;
 				}
 
+			}
+		});
+		
+		btnSave.setOnMousePressed(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				save();
+			}
+		});
+		
+		btnRestore.setOnMousePressed(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				restore();
 			}
 		});
 	}
