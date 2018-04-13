@@ -22,7 +22,7 @@ public class MysqlConnect {
 		String password = properties.getString("password");
 
 		try {
-			Class.forName(driver).newInstance();
+			Class.forName(driver).getDeclaredConstructor().newInstance();
 			conn = DriverManager.getConnection(url + dbName, userName, password);
 		} catch (Exception e) {
 			System.err.println("Error MysqlConnect.myConnect: " + e.getMessage());
