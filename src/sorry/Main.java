@@ -3,6 +3,11 @@
  */
 package sorry;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -43,21 +48,50 @@ public class Main extends Application {
 	Circle prevCircle;
 	int[][] moves;
 	Deck deck = new Deck();
-	
+	String logFile = "game_status.txt";
+
 	/**
 	 * Save the current game status.
+	 * 
 	 * @return
 	 */
 	public boolean save() {
-		return false;
+		try {
+			PrintWriter printWriter = new PrintWriter(logFile);
+			for (Card card : deck.getCards()) {
+				printWriter.print(card.getName() + ",");
+			}
+			printWriter.println("\n" + deck.getNumUsed());
+			printWriter.close();
+		} catch (IOException ioe) {
+			System.err.println("IOException: " + ioe.getMessage());
+			return false;
+		}
+		return true;
 	}
-	
+
 	/**
 	 * Restore the game status from a text file.
+	 * 
 	 * @return
 	 */
 	public boolean restore() {
-		return false;
+		try (BufferedReader br = new BufferedReader(new FileReader(logFile))) {
+			String cardList = br.readLine();
+			Card[] newCards = new Card[deck.NUM_CARDS];
+			int index = 0;
+			for (String cardName : cardList.split(",")) {
+				if (cardName.length() > 0) {
+				newCards[index++] = new Card(cardName);
+				}
+			}
+			deck.setCards(newCards);
+			deck.setNumUsed(Integer.parseInt(br.readLine()));
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -263,13 +297,13 @@ public class Main extends Application {
 
 			}
 		});
-		
+
 		btnSave.setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
 				save();
 			}
 		});
-		
+
 		btnRestore.setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
 				restore();
