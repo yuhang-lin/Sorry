@@ -12,8 +12,24 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Deck {
 
 	public final int NUM_CARDS = 45;
-	public int numUsed = 0;
-	public Card[] cards = new Card[NUM_CARDS];
+	private int numUsed = 0;
+	private Card[] cards = new Card[NUM_CARDS];
+
+	public Card[] getCards() {
+		return cards;
+	}
+
+	public void setCards(Card[] cards) {
+		this.cards = cards;
+	}
+
+	public int getNumUsed() {
+		return numUsed;
+	}
+
+	public void setNumUsed(int numUsed) {
+		this.numUsed = numUsed;
+	}
 
 	public Deck() {
 		// Create cards
