@@ -3,3 +3,6 @@ language: java
 notifications:
   slack:
     on_failure: change
+
+before_install:
+ - chmod +x gradlew
