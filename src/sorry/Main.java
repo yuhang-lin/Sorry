@@ -59,7 +59,7 @@ public class Main extends Application {
 		try {
 			PrintWriter printWriter = new PrintWriter(logFile);
 			for (Card card : deck.getCards()) {
-				printWriter.print(card.getName() + ",");
+				printWriter.print(card.getName() + ","); // Save all the cards
 			}
 			printWriter.println("\n" + deck.getNumUsed());
 			printWriter.close();
@@ -82,7 +82,7 @@ public class Main extends Application {
 			int index = 0;
 			for (String cardName : cardList.split(",")) {
 				if (cardName.length() > 0) {
-				newCards[index++] = new Card(cardName);
+					newCards[index++] = new Card(cardName); // Restore all the cards
 				}
 			}
 			deck.setCards(newCards);
