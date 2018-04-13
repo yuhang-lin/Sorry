@@ -41,3 +41,4 @@ local.properties
 */.DS_Store
 
 src/MysqlConnect.properties
+game_status.txt
