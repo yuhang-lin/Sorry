@@ -42,3 +42,4 @@ local.properties
 
 src/MysqlConnect.properties
 game_status.txt
+.gradle/*
