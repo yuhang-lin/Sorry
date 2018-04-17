@@ -4,11 +4,15 @@
 package sorry;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -73,9 +77,9 @@ public class Main extends Application {
 	/**
 	 * Restore the game status from a text file.
 	 * 
-	 * @return
+	 * @return 0 if there is no error, 1 if file is not found, 2 otherwise.
 	 */
-	public boolean restore() {
+	public int restore() {
 		try (BufferedReader br = new BufferedReader(new FileReader(logFile))) {
 			String cardList = br.readLine();
 			Card[] newCards = new Card[deck.NUM_CARDS];
@@ -87,11 +91,13 @@ public class Main extends Application {
 			}
 			deck.setCards(newCards);
 			deck.setNumUsed(Integer.parseInt(br.readLine()));
+		} catch (FileNotFoundException e) {
+			return 1;
 		} catch (IOException e) {
 			e.printStackTrace();
-			return false;
+			return 2;
 		}
-		return true;
+		return 0;
 	}
 
 	@Override
@@ -300,13 +306,27 @@ public class Main extends Application {
 
 		btnSave.setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				save();
+				boolean isSuccess = save();
+				if (isSuccess) {
+					String timeStamp = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy").format(Calendar.getInstance().getTime());
+					t1.setText("Succesfully saved the game at " + timeStamp);
+				} else {
+					t1.setText("Failed to save the game.");
+				}
 			}
 		});
 
 		btnRestore.setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				restore();
+				int result = restore();
+				if (result == 0) {
+					String timeStamp = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy").format(Calendar.getInstance().getTime());
+					t1.setText("Succesfully restore the game at " + timeStamp);
+				} else if (result == 1) {
+					t1.setText("It seem that you didn't save the game before.");
+				} else {
+					t1.setText("Failed to restore the game.");
+				}
 			}
 		});
 	}
