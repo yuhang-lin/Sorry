@@ -1,10 +1,10 @@
 package sorry;
-
+import java.util.ArrayList;
 public class Piece {
 
 	private PieceColor color;
-	private int[][] location;
-	private int[][] possibleMoves;
+	private ArrayList<ArrayList<Integer>> location;
+	private ArrayList<ArrayList<Integer>> possibleMoves;
 	private int movement;
 	private boolean occupied;
 	private Player player;
@@ -22,11 +22,11 @@ public class Piece {
 		occupied = isOccupied;
 	}
 
-	public void setLocation(int[][] sq) {
+	public void setLocation(ArrayList<ArrayList<Integer>> sq) {
 		location = sq;
 	}
 
-	public int[][] getLocation() {
+	public ArrayList<ArrayList<Integer>> getLocation() {
 		return location;
 	}
 
@@ -41,7 +41,7 @@ public class Piece {
 	/**
 	 * @return the possibleMoves
 	 */
-	public int[][] getPossibleMoves() {
+	public ArrayList<ArrayList<Integer>> getPossibleMoves() {
 		return possibleMoves;
 	}
 
@@ -49,7 +49,7 @@ public class Piece {
 	 * @param possibleMoves
 	 *            the possibleMoves to set
 	 */
-	public void setPossibleMoves(int[][] possibleMoves) {
+	public void setPossibleMoves(ArrayList<ArrayList<Integer>> possibleMoves) {
 		this.possibleMoves = possibleMoves;
 	}
 

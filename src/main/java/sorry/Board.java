@@ -5,6 +5,9 @@
  */
 package sorry;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  *
  * @author austinbatistoni
@@ -13,20 +16,82 @@ public class Board {
 
 	private final int PATH_LENGTH = 61;
 	private final int SLIDE_LENGTH = 4;
-	private final BoardSquare[] path = new BoardSquare[PATH_LENGTH];
+	private final ArrayList<BoardSquare >path = new ArrayList<BoardSquare>();
 
-	private int[][] pathCoords = { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 7, 0 },
+	private int[][] pathCoord = { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 7, 0 },
 			{ 8, 0 }, { 9, 0 }, { 10, 0 }, { 11, 0 }, { 12, 0 }, { 13, 0 }, { 14, 0 }, { 15, 0 }, { 15, 1 }, { 15, 2 },
 			{ 15, 3 }, { 15, 4 }, { 15, 5 }, { 15, 6 }, { 15, 7 }, { 15, 8 }, { 15, 9 }, { 15, 10 }, { 15, 11 },
 			{ 15, 12 }, { 15, 13 }, { 15, 14 }, { 15, 15 }, { 14, 15 }, { 13, 15 }, { 12, 15 }, { 11, 15 }, { 10, 15 },
 			{ 9, 15 }, { 8, 15 }, { 7, 15 }, { 6, 15 }, { 5, 15 }, { 4, 15 }, { 3, 15 }, { 2, 15 }, { 1, 15 },
 			{ 0, 15 }, { 0, 14 }, { 0, 13 }, { 0, 12 }, { 0, 11 }, { 0, 10 }, { 0, 9 }, { 0, 8 }, { 0, 7 }, { 0, 6 },
 			{ 0, 5 }, { 0, 4 }, { 0, 3 }, { 0, 2 }, { 0, 1 } };
+	
+	private ArrayList<ArrayList<Integer>> pathCoords = new ArrayList<ArrayList<Integer>>();
 
 	private Piece[][] pieces;
 
 	public Board() {
-
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(0,0)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(1,0)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(2,0)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(3,0)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(4,0)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(5,0)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(6,0)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(7,0)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(8,0)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(9,0)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(10,0)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(11,0)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(12,0)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(13,0)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(14,0)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(15,0)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(15,1)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(15,2)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(15,3)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(15,4)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(15,5)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(15,6)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(15,7)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(15,8)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(15,9)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(15,10)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(15,11)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(15,12)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(15,13)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(15,14)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(15,15)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(14,15)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(13,15)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(12,15)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(11,15)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(10,15)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(9,15)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(8,15)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(7,15)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(6,15)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(5,15)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(4,15)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(3,15)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(2,15)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(1,15)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(0,15)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(0,14)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(0,13)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(0,12)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(0,11)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(0,10)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(0,9)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(0,8)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(0,7)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(0,6)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(0,5)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(0,4)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(0,3)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(0,2)));
+		pathCoords.add(new ArrayList<Integer>(Arrays.asList(0,1)));
+		
 	}
 
 	/**
@@ -187,7 +252,7 @@ public class Board {
 	/**
 	 * @return the pathCoords
 	 */
-	public int[][] getPathCoords() {
+	public ArrayList<ArrayList<Integer>> getPathCoords() {
 		return pathCoords;
 	}
 }
