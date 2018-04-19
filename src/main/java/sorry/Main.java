@@ -53,6 +53,7 @@ public class Main extends Application {
 	ArrayList<ArrayList<Integer>> moves;
 	Deck deck = new Deck();
 	String logFile = "game_status.txt";
+	int currentTerm = 0; // current term for the player
 
 	/**
 	 * Save the current game status.
@@ -125,8 +126,7 @@ public class Main extends Application {
 		Text option2 = new Text("");
 		pane.add(option1, 20, 6);
 		pane.add(option2, 20, 7);
-
-		Player blue = new Player(new Blue());
+		Player blue = new Computer(new Blue(), Computer.NiceLevel.MEAN, Computer.SmartLevel.SMART); // for testing only
 		Player green = new Player(new Green());
 		Player red = new Player(new Red());
 		Player yellow = new Player(new Yellow());
@@ -136,7 +136,6 @@ public class Main extends Application {
 		for (int i = 0; i < players.length; i++) {
 			Piece[] pieces = players[i].getPieces();
 			for (int j = 0; j < pieces.length; j++) {
-				System.out.println(pieces[j].getColor().getColor().toString());
 				drawPiece(pieces[j], primaryStage, pane, board, j);
 				ArrayList<ArrayList<Integer>> location = new ArrayList<ArrayList<Integer>>();
 				location.add(pieces[j].getColor().getStartCoords().get(i));
@@ -164,17 +163,17 @@ public class Main extends Application {
 			public void handle(MouseEvent event) {
 				
 				Card currCard = deck.draw();
-				int card = 0;
-				if (!currCard.getName().equals("Sorry")) {
-					card = Integer.parseInt(currCard.getName());
-				}
+				String card = currCard.getName();
 				t1.setText("The card is: " + currCard.getName());
+				
+				Player currentPlayer = players[currentTerm];
 
 				switch (card) {
-				case 1:
+				case "1":
 					option1.setText("You can move a pawn to the start square.");
 					option2.setText("You can move a pawn forward 1 space.");
-					//for (Piece p : blue.getPieces()) {
+
+					for (Piece p : currentPlayer.getPieces()) {
 						ArrayList<ArrayList<Integer>> oneMoves = new ArrayList<ArrayList<Integer>>();
 						if(selected.getIsInPlay()) {
 							oneMoves.add(getMoveFromInt(board, selected, 1));
@@ -190,11 +189,12 @@ public class Main extends Application {
 
 					break;
 
-				case 2:
+				case "2":
 					option1.setText("You can move a pawn to the start square.");
 					option2.setText("You can move a pawn forward 2 spaces.");
 
-					//for (Piece p : blue.getPieces()) {
+
+					for (Piece p : currentPlayer.getPieces()) {
 						ArrayList<ArrayList<Integer>> twoMoves = new ArrayList<ArrayList<Integer>>();
 						if(selected.getIsInPlay()) {
 							twoMoves.add(getMoveFromInt(board, selected, 2));
@@ -209,10 +209,11 @@ public class Main extends Application {
 					//}
 					break;
 
-				case 3:
+				case "3":
 					option1.setText("You must move a pawn forward 3 spaces.");
 					option2.setText("");
-					//for (Piece p : blue.getPieces()) {
+
+					for (Piece p : currentPlayer.getPieces()) {
 						ArrayList<ArrayList<Integer>> threeMoves = new ArrayList<ArrayList<Integer>>();
 
 						threeMoves.add(getMoveFromInt(board, selected, 3));
@@ -221,10 +222,11 @@ public class Main extends Application {
 
 					break;
 
-				case 4:
+				case "4":
 					option1.setText("You must move a pawn backwards 4 spaces.");
 					option2.setText("");
-					//for (Piece p : blue.getPieces()) {
+
+					for (Piece p : currentPlayer.getPieces()) {
 						ArrayList<ArrayList<Integer>> fourMoves = new ArrayList<ArrayList<Integer>>();
 
 						fourMoves.add(getMoveFromInt(board, selected, -4));
@@ -232,10 +234,11 @@ public class Main extends Application {
 					//}
 					break;
 
-				case 5:
+				case "5":
 					option1.setText("You must move a pawn forward 5 spaces.");
 					option2.setText("");
-					//for (Piece p : blue.getPieces()) {
+
+					for (Piece p : currentPlayer.getPieces()) {
 						ArrayList<ArrayList<Integer>> fiveMoves = new ArrayList<ArrayList<Integer>>();
 
 						fiveMoves.add(getMoveFromInt(board, selected, 5));
@@ -244,10 +247,11 @@ public class Main extends Application {
 
 					break;
 
-				case 7:
+				case "7":
 					option1.setText("You must move a pawn forward 7 spaces.");
 					option2.setText("");
-					//for (Piece p : blue.getPieces()) {
+
+					for (Piece p : currentPlayer.getPieces()) {
 						ArrayList<ArrayList<Integer>> sevenMoves = new ArrayList<ArrayList<Integer>>();
 
 						sevenMoves.add(getMoveFromInt(board, selected, 7));
@@ -255,7 +259,7 @@ public class Main extends Application {
 					//}
 					break;
 
-				case 8:
+				case "8":
 					option1.setText("You must move a pawn forward 8 spaces.");
 					option2.setText("");
 					//for (Piece p : blue.getPieces()) {
@@ -264,9 +268,10 @@ public class Main extends Application {
 						eightMoves.add(getMoveFromInt(board, selected, 8));
 						selected.setPossibleMoves(eightMoves);
 					//}
+
 					break;
 
-				case 10:
+				case "10":
 					option1.setText("You must move a pawn forward 10 spaces.");
 					option2.setText("");
 					//for (Piece p : blue.getPieces()) {
@@ -275,9 +280,10 @@ public class Main extends Application {
 						tenMoves.add(getMoveFromInt(board, selected, 10));
 						selected.setPossibleMoves(tenMoves);
 					//}
+
 					break;
 
-				case 11:
+				case "11":
 					option1.setText("You must move a pawn forward 11 spaces.");
 					option2.setText("");
 					//for (Piece p : blue.getPieces()) {
@@ -286,9 +292,10 @@ public class Main extends Application {
 						elevenMoves.add(getMoveFromInt(board, selected, 11));
 						selected.setPossibleMoves(elevenMoves);
 					//}
+
 					break;
 
-				case 12:
+				case "12":
 					option1.setText("You must move a pawn forward 12 spaces.");
 					option2.setText("");
 					//for (Piece p : blue.getPieces()) {
@@ -297,11 +304,17 @@ public class Main extends Application {
 						twelveMoves.add(getMoveFromInt(board, selected, 12));
 						selected.setPossibleMoves(twelveMoves);
 					//}
+
+					break;
+				case "Sorry":
+					option1.setText(currCard.getInfo());
+					option2.setText("");
 					break;
 				}
 				System.out.println(selected.getIsInPlay());
 				System.out.println(prevPiece.getPossibleMoves());
 				System.out.println(selected.getPossibleMoves());
+
 
 			}
 		});
@@ -340,14 +353,11 @@ public class Main extends Application {
 			for (int j = 0; j < 2; j++) {
 				if (piece.getLocation().get(0).get(0) == board.getPathCoords().get(i).get(0)
 						&& piece.getLocation().get(0).get(1) == board.getPathCoords().get(i).get(1)) {
-          int boardIndex = (i + increment) % board.getPathLength();
+					int boardIndex = (i + increment) % board.getPathLength();
 					int newX = board.getPathCoords().get(boardIndex).get(0);
 					int newY = board.getPathCoords().get(boardIndex).get(1);
-
-
 					move.set(0, newX);
 					move.set(1, newY);
-
 				}
 			}
 		}
