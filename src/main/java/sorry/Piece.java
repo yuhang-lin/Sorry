@@ -6,7 +6,6 @@ public class Piece {
 	private ArrayList<ArrayList<Integer>> location;
 	private ArrayList<ArrayList<Integer>> possibleMoves;
 	private int movement;
-	private boolean occupied;
 	private Player player;
 
 	public Piece(PieceColor c, Player p) {
@@ -18,11 +17,9 @@ public class Piece {
 		movement = squareNum;
 	}
 
-	public void canMove(boolean isOccupied) {
-		occupied = isOccupied;
-	}
-
 	public void setLocation(ArrayList<ArrayList<Integer>> sq) {
+
+
 		location = sq;
 	}
 

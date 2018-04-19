@@ -331,14 +331,17 @@ public class Main extends Application {
 		});
 	}
 
+
 	public ArrayList<Integer> getMoveFromInt(Board board, Piece piece, int increment) {
 		ArrayList<Integer> move = new ArrayList<Integer>();
 		for (int i = 0; i < board.getPathCoords().size(); i++) {
 			for (int j = 0; j < 2; j++) {
 				if (piece.getLocation().get(0).get(0) == board.getPathCoords().get(i).get(0)
 						&& piece.getLocation().get(0).get(1) == board.getPathCoords().get(i).get(1)) {
-					int newX = board.getPathCoords().get(i + increment).get(0);
-					int newY = board.getPathCoords().get(i + increment).get(1);
+          int boardIndex = (i + increment) % board.getPathLength();
+					int newX = board.getPathCoords().get(boardIndex).get(0);
+					int newY = board.getPathCoords().get(boardIndex).get(1);
+
 
 					move.set(0, newX);
 					move.set(1, newY);

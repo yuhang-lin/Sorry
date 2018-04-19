@@ -255,4 +255,12 @@ public class Board {
 	public ArrayList<ArrayList<Integer>> getPathCoords() {
 		return pathCoords;
 	}
+	
+	/**
+	 * Get the length of the path.
+	 * @return an integer repesenting the length of the path
+	 */
+	public int getPathLength() {
+		return PATH_LENGTH;
+	}
 }
