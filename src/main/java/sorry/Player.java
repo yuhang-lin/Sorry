@@ -50,4 +50,12 @@ public class Player {
 	public Piece[] getPieces() {
 		return pieceArray;
 	}
+	
+	public int getPiecesHome() {
+		return piecesHome;
+	}
+
+	public int getStartPieces() {
+		return startPieces;
+	}
 }

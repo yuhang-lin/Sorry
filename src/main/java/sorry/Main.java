@@ -332,13 +332,14 @@ public class Main extends Application {
 	}
 
 	public int[] getMoveFromInt(Board board, Piece piece, int increment) {
-		int[] move = null;
+		int[] move = new int[2];
 		for (int i = 0; i < board.getPathCoords().length; i++) {
 			for (int j = 0; j < 2; j++) {
 				if (piece.getLocation()[0][0] == board.getPathCoords()[i][0]
 						&& piece.getLocation()[0][1] == board.getPathCoords()[i][1]) {
-					int newX = board.getPathCoords()[i + increment][0];
-					int newY = board.getPathCoords()[i + increment][1];
+					int boardIndex = (i + increment) % board.getPathLength();
+					int newX = board.getPathCoords()[boardIndex][0];
+					int newY = board.getPathCoords()[boardIndex][1];
 
 					move[0] = newX;
 					move[1] = newY;
