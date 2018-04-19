@@ -1,5 +1,7 @@
 package sorry;
 
+import java.util.ArrayList;
+
 public class Computer extends Player {
 
 	private PieceColor color;
@@ -27,10 +29,21 @@ public class Computer extends Player {
 	}
 
 	public void Move(int squareNum) {
+		
 		movement = squareNum;
 	}
 
-	public void canMove(boolean isOccupied) {
-		occupied = isOccupied;
+	public boolean canMove(ArrayList<ArrayList<Integer>> targetLocation) {
+		return true;
+	}
+	
+	
+
+	public NiceLevel getNiceLevel() {
+		return niceLevel;
+	}
+
+	public SmartLevel getSmartLevel() {
+		return smartLevel;
 	}
 }
