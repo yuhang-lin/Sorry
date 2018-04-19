@@ -173,7 +173,7 @@ public class Main extends Application {
 					option1.setText("You can move a pawn to the start square.");
 					option2.setText("You can move a pawn forward 1 space.");
 
-					for (Piece p : currentPlayer.getPieces()) {
+					//for (Piece p : currentPlayer.getPieces()) {
 						ArrayList<ArrayList<Integer>> oneMoves = new ArrayList<ArrayList<Integer>>();
 						if(selected.getIsInPlay()) {
 							oneMoves.add(getMoveFromInt(board, selected, 1));
@@ -194,7 +194,7 @@ public class Main extends Application {
 					option2.setText("You can move a pawn forward 2 spaces.");
 
 
-					for (Piece p : currentPlayer.getPieces()) {
+					//for (Piece p : currentPlayer.getPieces()) {
 						ArrayList<ArrayList<Integer>> twoMoves = new ArrayList<ArrayList<Integer>>();
 						if(selected.getIsInPlay()) {
 							twoMoves.add(getMoveFromInt(board, selected, 2));
@@ -203,17 +203,17 @@ public class Main extends Application {
 							temp.add(selected.getColor().getFirstSpot().get(0).get(0));
 							temp.add(selected.getColor().getFirstSpot().get(0).get(1));
 							twoMoves.add(temp);
-						}
+						//}
 
 						selected.setPossibleMoves(twoMoves);
-					//}
+					}
 					break;
 
 				case "3":
 					option1.setText("You must move a pawn forward 3 spaces.");
 					option2.setText("");
 
-					for (Piece p : currentPlayer.getPieces()) {
+					//for (Piece p : currentPlayer.getPieces()) {
 						ArrayList<ArrayList<Integer>> threeMoves = new ArrayList<ArrayList<Integer>>();
 
 						threeMoves.add(getMoveFromInt(board, selected, 3));
@@ -226,7 +226,7 @@ public class Main extends Application {
 					option1.setText("You must move a pawn backwards 4 spaces.");
 					option2.setText("");
 
-					for (Piece p : currentPlayer.getPieces()) {
+					//for (Piece p : currentPlayer.getPieces()) {
 						ArrayList<ArrayList<Integer>> fourMoves = new ArrayList<ArrayList<Integer>>();
 
 						fourMoves.add(getMoveFromInt(board, selected, -4));
@@ -238,7 +238,7 @@ public class Main extends Application {
 					option1.setText("You must move a pawn forward 5 spaces.");
 					option2.setText("");
 
-					for (Piece p : currentPlayer.getPieces()) {
+					//for (Piece p : currentPlayer.getPieces()) {
 						ArrayList<ArrayList<Integer>> fiveMoves = new ArrayList<ArrayList<Integer>>();
 
 						fiveMoves.add(getMoveFromInt(board, selected, 5));
@@ -251,7 +251,7 @@ public class Main extends Application {
 					option1.setText("You must move a pawn forward 7 spaces.");
 					option2.setText("");
 
-					for (Piece p : currentPlayer.getPieces()) {
+					//for (Piece p : currentPlayer.getPieces()) {
 						ArrayList<ArrayList<Integer>> sevenMoves = new ArrayList<ArrayList<Integer>>();
 
 						sevenMoves.add(getMoveFromInt(board, selected, 7));
