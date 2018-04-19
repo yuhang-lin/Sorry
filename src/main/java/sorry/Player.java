@@ -5,7 +5,9 @@
  */
 package sorry;
 
+
 import javafx.scene.layout.GridPane;
+import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -27,7 +29,9 @@ public class Player {
 		this.piecesHome = 4;
 		this.startPieces = 0;
 		for (int i = 0; i < 4; i++) {
-			pieceArray[i] = new Piece(c, this);
+			ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
+			temp.add(c.getHomeCoords().get(i));
+			pieceArray[i] = new Piece(c, this, temp);
 		}
 	}
 

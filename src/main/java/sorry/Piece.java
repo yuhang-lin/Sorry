@@ -10,7 +10,7 @@ public class Piece {
 	private boolean isInPlay;
 	private boolean isSelected;
 
-	public Piece(PieceColor c, Player p) {
+	public Piece(PieceColor c, Player p, ArrayList<ArrayList<Integer>> location) {
 		this.color = c;
 		this.player = p;
 		this.isInPlay = false;
