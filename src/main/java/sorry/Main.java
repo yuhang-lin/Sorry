@@ -126,7 +126,7 @@ public class Main extends Application {
 		Text option2 = new Text("");
 		pane.add(option1, 20, 6);
 		pane.add(option2, 20, 7);
-		Player blue = new Computer(new Blue()); // for testing only
+		Player blue = new Computer(new Blue(), Computer.NiceLevel.MEAN, Computer.SmartLevel.SMART); // for testing only
 		Player green = new Player(new Green());
 		Player red = new Player(new Red());
 		Player yellow = new Player(new Yellow());
@@ -259,7 +259,6 @@ public class Main extends Application {
 					option2.setText("");
 					for (Piece p : currentPlayer.getPieces()) {
 						ArrayList<ArrayList<Integer>> eightMoves = new ArrayList<ArrayList<Integer>>();
-
 						eightMoves.add(getMoveFromInt(board, p, 8));
 						p.setPossibleMoves(eightMoves);
 					}
@@ -270,7 +269,6 @@ public class Main extends Application {
 					option2.setText("");
 					for (Piece p : currentPlayer.getPieces()) {
 						ArrayList<ArrayList<Integer>>tenMoves = new ArrayList<ArrayList<Integer>>();
-
 						tenMoves.add(getMoveFromInt(board, p, 10));
 						p.setPossibleMoves(tenMoves);
 					}
