@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
-
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -50,7 +50,7 @@ public class Main extends Application {
 	Piece selected;
 	Piece prevPiece;
 	Circle prevCircle;
-	int[][] moves;
+	ArrayList<ArrayList<Integer>> moves;
 	Deck deck = new Deck();
 	String logFile = "game_status.txt";
 
@@ -136,10 +136,10 @@ public class Main extends Application {
 		for (int i = 0; i < players.length; i++) {
 			Piece[] pieces = players[i].getPieces();
 			for (int j = 0; j < pieces.length; j++) {
+				System.out.println(pieces[j].getColor().getColor().toString());
 				drawPiece(pieces[j], primaryStage, pane, board, j);
-				int[][] location = new int[1][2];
-				location[0][0] = pieces[j].getColor().getStartCoords()[i][0];
-				location[0][1] = pieces[j].getColor().getStartCoords()[i][1];
+				ArrayList<ArrayList<Integer>> location = new ArrayList<ArrayList<Integer>>();
+				location.add(pieces[j].getColor().getStartCoords().get(i));
 				pieces[j].setLocation(location);
 			}
 			fillInSquares(players[i].getPlayerColor().getStartCoords(), players[i].getPlayerColor().getColor(),
@@ -180,14 +180,14 @@ public class Main extends Application {
 					option1.setText("You can move a pawn to the start square.");
 					option2.setText("You can move a pawn forward 1 space.");
 					for (Piece p : blue.getPieces()) {
-						int[][] oneMoves = new int[2][2];
+						ArrayList<ArrayList<Integer>> oneMoves = new ArrayList<ArrayList<Integer>>();
 						/*
 						 * p.canStart = true; if(!p.isInPlay()){ int[][] firstSpot =
 						 * p.getColor().getFirstSpot(); int[] firstSpot1 = new int[2]; firstSpot1[0] =
 						 * firstSpot[0][0]; firstSpot1[1] = firstSpot[0][1]; oneMoves[0] = firstSpot1; }
 						 */
 
-						oneMoves[1] = getMoveFromInt(board, p, 1);
+						oneMoves.add(getMoveFromInt(board, p, 1));
 						p.setPossibleMoves(oneMoves);
 					}
 
@@ -198,14 +198,14 @@ public class Main extends Application {
 					option2.setText("You can move a pawn forward 2 spaces.");
 
 					for (Piece p : blue.getPieces()) {
-						int[][] twoMoves = new int[2][2];
+						ArrayList<ArrayList<Integer>> twoMoves = new ArrayList<ArrayList<Integer>>();
 						/*
 						 * p.canStart = true; if(!p.isInPlay()){ int[][] firstSpot =
 						 * p.getColor().getFirstSpot(); int[] firstSpot1 = new int[2]; firstSpot1[0] =
 						 * firstSpot[0][0]; firstSpot1[1] = firstSpot[0][1]; twoMoves[0] = firstSpot1; }
 						 */
 
-						twoMoves[1] = getMoveFromInt(board, p, 2);
+						twoMoves.add(getMoveFromInt(board, p, 2));
 						p.setPossibleMoves(twoMoves);
 					}
 					break;
@@ -214,9 +214,9 @@ public class Main extends Application {
 					option1.setText("You must move a pawn forward 3 spaces.");
 					option2.setText("");
 					for (Piece p : blue.getPieces()) {
-						int[][] threeMoves = new int[2][2];
+						ArrayList<ArrayList<Integer>> threeMoves = new ArrayList<ArrayList<Integer>>();
 
-						threeMoves[0] = getMoveFromInt(board, p, 3);
+						threeMoves.add(getMoveFromInt(board, p, 3));
 						p.setPossibleMoves(threeMoves);
 					}
 
@@ -226,9 +226,9 @@ public class Main extends Application {
 					option1.setText("You must move a pawn backwards 4 spaces.");
 					option2.setText("");
 					for (Piece p : blue.getPieces()) {
-						int[][] fourMoves = new int[2][2];
+						ArrayList<ArrayList<Integer>> fourMoves = new ArrayList<ArrayList<Integer>>();
 
-						fourMoves[0] = getMoveFromInt(board, p, -4);
+						fourMoves.add(getMoveFromInt(board, p, -4));
 						p.setPossibleMoves(fourMoves);
 					}
 					break;
@@ -237,9 +237,9 @@ public class Main extends Application {
 					option1.setText("You must move a pawn forward 5 spaces.");
 					option2.setText("");
 					for (Piece p : blue.getPieces()) {
-						int[][] fiveMoves = new int[2][2];
+						ArrayList<ArrayList<Integer>> fiveMoves = new ArrayList<ArrayList<Integer>>();
 
-						fiveMoves[0] = getMoveFromInt(board, p, 5);
+						fiveMoves.add(getMoveFromInt(board, p, 5));
 						p.setPossibleMoves(fiveMoves);
 					}
 
@@ -249,9 +249,9 @@ public class Main extends Application {
 					option1.setText("You must move a pawn forward 7 spaces.");
 					option2.setText("");
 					for (Piece p : blue.getPieces()) {
-						int[][] sevenMoves = new int[2][2];
+						ArrayList<ArrayList<Integer>> sevenMoves = new ArrayList<ArrayList<Integer>>();
 
-						sevenMoves[0] = getMoveFromInt(board, p, 7);
+						sevenMoves.add(getMoveFromInt(board, p, 7));
 						p.setPossibleMoves(sevenMoves);
 					}
 					break;
@@ -260,9 +260,9 @@ public class Main extends Application {
 					option1.setText("You must move a pawn forward 8 spaces.");
 					option2.setText("");
 					for (Piece p : blue.getPieces()) {
-						int[][] eightMoves = new int[2][2];
+						ArrayList<ArrayList<Integer>> eightMoves = new ArrayList<ArrayList<Integer>>();
 
-						eightMoves[0] = getMoveFromInt(board, p, 8);
+						eightMoves.add(getMoveFromInt(board, p, 8));
 						p.setPossibleMoves(eightMoves);
 					}
 					break;
@@ -271,9 +271,9 @@ public class Main extends Application {
 					option1.setText("You must move a pawn forward 10 spaces.");
 					option2.setText("");
 					for (Piece p : blue.getPieces()) {
-						int[][] tenMoves = new int[2][2];
+						ArrayList<ArrayList<Integer>>tenMoves = new ArrayList<ArrayList<Integer>>();
 
-						tenMoves[0] = getMoveFromInt(board, p, 10);
+						tenMoves.add(getMoveFromInt(board, p, 10));
 						p.setPossibleMoves(tenMoves);
 					}
 					break;
@@ -282,9 +282,9 @@ public class Main extends Application {
 					option1.setText("You must move a pawn forward 11 spaces.");
 					option2.setText("");
 					for (Piece p : blue.getPieces()) {
-						int[][] elevenMoves = new int[2][2];
+						ArrayList<ArrayList<Integer>> elevenMoves = new ArrayList<ArrayList<Integer>>();
 
-						elevenMoves[0] = getMoveFromInt(board, p, 11);
+						elevenMoves.add(getMoveFromInt(board, p, 11));
 						p.setPossibleMoves(elevenMoves);
 					}
 					break;
@@ -293,9 +293,9 @@ public class Main extends Application {
 					option1.setText("You must move a pawn forward 12 spaces.");
 					option2.setText("");
 					for (Piece p : blue.getPieces()) {
-						int[][] twelveMoves = new int[2][2];
+						ArrayList<ArrayList<Integer>> twelveMoves = new ArrayList<ArrayList<Integer>>();
 
-						twelveMoves[0] = getMoveFromInt(board, p, 12);
+						twelveMoves.add(getMoveFromInt(board, p, 12));
 						p.setPossibleMoves(twelveMoves);
 					}
 					break;
@@ -331,18 +331,20 @@ public class Main extends Application {
 		});
 	}
 
-	public int[] getMoveFromInt(Board board, Piece piece, int increment) {
-		int[] move = new int[2];
-		for (int i = 0; i < board.getPathCoords().length; i++) {
-			for (int j = 0; j < 2; j++) {
-				if (piece.getLocation()[0][0] == board.getPathCoords()[i][0]
-						&& piece.getLocation()[0][1] == board.getPathCoords()[i][1]) {
-					int boardIndex = (i + increment) % board.getPathLength();
-					int newX = board.getPathCoords()[boardIndex][0];
-					int newY = board.getPathCoords()[boardIndex][1];
 
-					move[0] = newX;
-					move[1] = newY;
+	public ArrayList<Integer> getMoveFromInt(Board board, Piece piece, int increment) {
+		ArrayList<Integer> move = new ArrayList<Integer>();
+		for (int i = 0; i < board.getPathCoords().size(); i++) {
+			for (int j = 0; j < 2; j++) {
+				if (piece.getLocation().get(0).get(0) == board.getPathCoords().get(i).get(0)
+						&& piece.getLocation().get(0).get(1) == board.getPathCoords().get(i).get(1)) {
+          int boardIndex = (i + increment) % board.getPathLength();
+					int newX = board.getPathCoords().get(boardIndex).get(0);
+					int newY = board.getPathCoords().get(boardIndex).get(1);
+
+
+					move.set(0, newX);
+					move.set(1, newY);
 
 				}
 			}
@@ -350,12 +352,12 @@ public class Main extends Application {
 		return move;
 	}
 
-	public void fillInSquares(int[][] grid, Color inside, Color outside, double radius, GridPane pane) {
+	public void fillInSquares(ArrayList<ArrayList<Integer>> grid, Color inside, Color outside, double radius, GridPane pane) {
 		Stop[] stops1 = new Stop[] { new Stop(0.5, inside), new Stop(0.99, outside) };
 		RadialGradient lg1 = new RadialGradient(0, 0, 0.5, 0.5, radius, true, CycleMethod.NO_CYCLE, stops1);
-		for (int i = 0; i < grid.length; i++) {
-			if (grid[i] != null) {
-				Rectangle r = (Rectangle) getNodeFromGridPane(pane, grid[i][0], grid[i][1]);
+		for (int i = 0; i < grid.size(); i++) {
+			if (!grid.get(i).isEmpty()) {
+				Rectangle r = (Rectangle) getNodeFromGridPane(pane, grid.get(i).get(0), grid.get(i).get(1));
 				r.setFill(lg1);
 				r.setStroke(Color.BLACK);
 			}
@@ -372,7 +374,7 @@ public class Main extends Application {
 	}
 
 	public void drawPiece(Piece p, Stage primaryStage, GridPane pane, Board board, int i) {
-		p.setLocation(moves);
+		//p.setLocation(moves);
 		Circle circle = new Circle();
 		// c.setFill(p.getPlayerColor().getColor());
 		circle.setStroke(Color.BLACK);
@@ -380,7 +382,7 @@ public class Main extends Application {
 		circle.setFill(p.getColor().getColor().deriveColor(0, 1, 10, 1));
 		GridPane.setHalignment(circle, HPos.CENTER);
 		GridPane.setValignment(circle, VPos.CENTER);
-		pane.add(circle, p.getColor().getStartCoords()[i][0], p.getColor().getStartCoords()[i][1]);
+		pane.add(circle, p.getColor().getStartCoords().get(i).get(0), p.getColor().getStartCoords().get(i).get(1));
 
 		// circle.setOnMousePressed(new EventHandler<MouseEvent>() {
 		// @Override public void handle(MouseEvent event) {
@@ -467,12 +469,11 @@ public class Main extends Application {
 	}
 
 	public void moveFromStart(Piece p, GridPane pane, Circle circle) {
-		int[][] firstSpot = p.getColor().getFirstSpot();
+		ArrayList<ArrayList<Integer>> firstSpot = p.getColor().getFirstSpot();
 		pane.getChildren().remove(circle);
-		pane.add(circle, firstSpot[0][0], firstSpot[0][1]);
+		pane.add(circle, firstSpot.get(0).get(0), firstSpot.get(0).get(1));
 		p.setLocation(firstSpot);
 		// p.setInPlay(true);
-		System.out.println(Arrays.deepToString(firstSpot));
 		circle.setStroke(Color.BLACK);
 	}
 
