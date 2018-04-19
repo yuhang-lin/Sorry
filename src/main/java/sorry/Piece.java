@@ -7,10 +7,13 @@ public class Piece {
 	private ArrayList<ArrayList<Integer>> possibleMoves;
 	private int movement;
 	private Player player;
+	private boolean isInPlay;
+	private boolean isSelected;
 
 	public Piece(PieceColor c, Player p) {
 		this.color = c;
 		this.player = p;
+		this.isInPlay = false;
 	}
 
 	public void Move(int squareNum) {
@@ -48,6 +51,30 @@ public class Piece {
 	 */
 	public void setPossibleMoves(ArrayList<ArrayList<Integer>> possibleMoves) {
 		this.possibleMoves = possibleMoves;
+	}
+	
+	public boolean getIsInPlay() {
+		return isInPlay;
+	}
+	
+	public void setInPlay() {
+		this.isInPlay = true;
+	}
+	
+	public void setOutOfPlay() {
+		this.isInPlay = false;
+	}
+	
+	public boolean getIsSelected() {
+		return isSelected;
+	}
+	
+	public void select() {
+		this.isSelected = true;
+	}
+	
+	public void unSelect() {
+		this.isSelected = false;
 	}
 
 }

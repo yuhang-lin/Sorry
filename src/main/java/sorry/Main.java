@@ -159,15 +159,10 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
-		// int[][] moveOptions = {{0,0}, {5,0}};
-		// int[][] moveOptions1 = {{15,7}};
-		// blue.getPieces()[0].setPossibleMoves(moveOptions);
-		// yellow.getPieces()[0].setPossibleMoves(moveOptions1);
-
 		btnDraw.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-
+				
 				Card currCard = deck.draw();
 				int card = 0;
 				if (!currCard.getName().equals("Sorry")) {
@@ -179,17 +174,19 @@ public class Main extends Application {
 				case 1:
 					option1.setText("You can move a pawn to the start square.");
 					option2.setText("You can move a pawn forward 1 space.");
-					for (Piece p : blue.getPieces()) {
+					//for (Piece p : blue.getPieces()) {
 						ArrayList<ArrayList<Integer>> oneMoves = new ArrayList<ArrayList<Integer>>();
-						/*
-						 * p.canStart = true; if(!p.isInPlay()){ int[][] firstSpot =
-						 * p.getColor().getFirstSpot(); int[] firstSpot1 = new int[2]; firstSpot1[0] =
-						 * firstSpot[0][0]; firstSpot1[1] = firstSpot[0][1]; oneMoves[0] = firstSpot1; }
-						 */
+						if(selected.getIsInPlay()) {
+							oneMoves.add(getMoveFromInt(board, selected, 1));
+						}else {
+							ArrayList<Integer> temp = new ArrayList<Integer>();
+							temp.add(selected.getColor().getFirstSpot().get(0).get(0));
+							temp.add(selected.getColor().getFirstSpot().get(0).get(1));
+							oneMoves.add(temp);
+						}
 
-						oneMoves.add(getMoveFromInt(board, p, 1));
-						p.setPossibleMoves(oneMoves);
-					}
+						selected.setPossibleMoves(oneMoves);
+					//}
 
 					break;
 
@@ -197,109 +194,114 @@ public class Main extends Application {
 					option1.setText("You can move a pawn to the start square.");
 					option2.setText("You can move a pawn forward 2 spaces.");
 
-					for (Piece p : blue.getPieces()) {
+					//for (Piece p : blue.getPieces()) {
 						ArrayList<ArrayList<Integer>> twoMoves = new ArrayList<ArrayList<Integer>>();
-						/*
-						 * p.canStart = true; if(!p.isInPlay()){ int[][] firstSpot =
-						 * p.getColor().getFirstSpot(); int[] firstSpot1 = new int[2]; firstSpot1[0] =
-						 * firstSpot[0][0]; firstSpot1[1] = firstSpot[0][1]; twoMoves[0] = firstSpot1; }
-						 */
+						if(selected.getIsInPlay()) {
+							twoMoves.add(getMoveFromInt(board, selected, 2));
+						}else {
+							ArrayList<Integer> temp = new ArrayList<Integer>();
+							temp.add(selected.getColor().getFirstSpot().get(0).get(0));
+							temp.add(selected.getColor().getFirstSpot().get(0).get(1));
+							twoMoves.add(temp);
+						}
 
-						twoMoves.add(getMoveFromInt(board, p, 2));
-						p.setPossibleMoves(twoMoves);
-					}
+						selected.setPossibleMoves(twoMoves);
+					//}
 					break;
 
 				case 3:
 					option1.setText("You must move a pawn forward 3 spaces.");
 					option2.setText("");
-					for (Piece p : blue.getPieces()) {
+					//for (Piece p : blue.getPieces()) {
 						ArrayList<ArrayList<Integer>> threeMoves = new ArrayList<ArrayList<Integer>>();
 
-						threeMoves.add(getMoveFromInt(board, p, 3));
-						p.setPossibleMoves(threeMoves);
-					}
+						threeMoves.add(getMoveFromInt(board, selected, 3));
+						selected.setPossibleMoves(threeMoves);
+					//}
 
 					break;
 
 				case 4:
 					option1.setText("You must move a pawn backwards 4 spaces.");
 					option2.setText("");
-					for (Piece p : blue.getPieces()) {
+					//for (Piece p : blue.getPieces()) {
 						ArrayList<ArrayList<Integer>> fourMoves = new ArrayList<ArrayList<Integer>>();
 
-						fourMoves.add(getMoveFromInt(board, p, -4));
-						p.setPossibleMoves(fourMoves);
-					}
+						fourMoves.add(getMoveFromInt(board, selected, -4));
+						selected.setPossibleMoves(fourMoves);
+					//}
 					break;
 
 				case 5:
 					option1.setText("You must move a pawn forward 5 spaces.");
 					option2.setText("");
-					for (Piece p : blue.getPieces()) {
+					//for (Piece p : blue.getPieces()) {
 						ArrayList<ArrayList<Integer>> fiveMoves = new ArrayList<ArrayList<Integer>>();
 
-						fiveMoves.add(getMoveFromInt(board, p, 5));
-						p.setPossibleMoves(fiveMoves);
-					}
+						fiveMoves.add(getMoveFromInt(board, selected, 5));
+						selected.setPossibleMoves(fiveMoves);
+					//}
 
 					break;
 
 				case 7:
 					option1.setText("You must move a pawn forward 7 spaces.");
 					option2.setText("");
-					for (Piece p : blue.getPieces()) {
+					//for (Piece p : blue.getPieces()) {
 						ArrayList<ArrayList<Integer>> sevenMoves = new ArrayList<ArrayList<Integer>>();
 
-						sevenMoves.add(getMoveFromInt(board, p, 7));
-						p.setPossibleMoves(sevenMoves);
-					}
+						sevenMoves.add(getMoveFromInt(board, selected, 7));
+						selected.setPossibleMoves(sevenMoves);
+					//}
 					break;
 
 				case 8:
 					option1.setText("You must move a pawn forward 8 spaces.");
 					option2.setText("");
-					for (Piece p : blue.getPieces()) {
+					//for (Piece p : blue.getPieces()) {
 						ArrayList<ArrayList<Integer>> eightMoves = new ArrayList<ArrayList<Integer>>();
 
-						eightMoves.add(getMoveFromInt(board, p, 8));
-						p.setPossibleMoves(eightMoves);
-					}
+						eightMoves.add(getMoveFromInt(board, selected, 8));
+						selected.setPossibleMoves(eightMoves);
+					//}
 					break;
 
 				case 10:
 					option1.setText("You must move a pawn forward 10 spaces.");
 					option2.setText("");
-					for (Piece p : blue.getPieces()) {
+					//for (Piece p : blue.getPieces()) {
 						ArrayList<ArrayList<Integer>>tenMoves = new ArrayList<ArrayList<Integer>>();
 
-						tenMoves.add(getMoveFromInt(board, p, 10));
-						p.setPossibleMoves(tenMoves);
-					}
+						tenMoves.add(getMoveFromInt(board, selected, 10));
+						selected.setPossibleMoves(tenMoves);
+					//}
 					break;
 
 				case 11:
 					option1.setText("You must move a pawn forward 11 spaces.");
 					option2.setText("");
-					for (Piece p : blue.getPieces()) {
+					//for (Piece p : blue.getPieces()) {
 						ArrayList<ArrayList<Integer>> elevenMoves = new ArrayList<ArrayList<Integer>>();
 
-						elevenMoves.add(getMoveFromInt(board, p, 11));
-						p.setPossibleMoves(elevenMoves);
-					}
+						elevenMoves.add(getMoveFromInt(board, selected, 11));
+						selected.setPossibleMoves(elevenMoves);
+					//}
 					break;
 
 				case 12:
 					option1.setText("You must move a pawn forward 12 spaces.");
 					option2.setText("");
-					for (Piece p : blue.getPieces()) {
+					//for (Piece p : blue.getPieces()) {
 						ArrayList<ArrayList<Integer>> twelveMoves = new ArrayList<ArrayList<Integer>>();
 
-						twelveMoves.add(getMoveFromInt(board, p, 12));
-						p.setPossibleMoves(twelveMoves);
-					}
+						twelveMoves.add(getMoveFromInt(board, selected, 12));
+						selected.setPossibleMoves(twelveMoves);
+					//}
 					break;
 				}
+				System.out.println(selected.getIsInPlay());
+				System.out.println(prevPiece.getPossibleMoves());
+				System.out.println(selected.getPossibleMoves());
 
 			}
 		});
@@ -384,49 +386,47 @@ public class Main extends Application {
 		GridPane.setValignment(circle, VPos.CENTER);
 		pane.add(circle, p.getColor().getStartCoords().get(i).get(0), p.getColor().getStartCoords().get(i).get(1));
 
-		// circle.setOnMousePressed(new EventHandler<MouseEvent>() {
-		// @Override public void handle(MouseEvent event) {
-		// circle.setStroke(Color.WHITE);
-		// }
-		// });
-		//
-		// circle.setOnMouseReleased(new EventHandler<MouseEvent>() {
-		// @Override public void handle(MouseEvent event) {
-		//
-		// selected = p;
-		// if(prevPiece != null && prevPiece.getPossibleMoves() != null){
-		// fillInSquares(prevPiece.getPossibleMoves(), Color.LIGHTGRAY, Color.BLACK, 1,
-		// pane);
-		// }
-		// if(prevCircle != null){
-		// prevCircle.setStroke(Color.BLACK);
-		// }
-		// circle.setStroke(Color.WHITE);
-		//
-		// if(selected.isInPlay()){
-		// if(selected.getPossibleMoves() != null){
-		// moves = p.getPossibleMoves();
-		// System.out.println(Arrays.deepToString(moves));
-		// fillInSquares(moves, Color.LIGHTGRAY, selected.getPlayerColor().getColor(),
-		// .7, pane);
-		// }
-		// }else{
-		// if(selected.getPossibleMoves() != null){
-		// moves = p.getPossibleMoves();
-		// System.out.println("MOVES: " + Arrays.deepToString(moves));
-		// fillInSquares(moves, selected.getPlayerColor().getColor(), Color.WHITE, .7,
-		// pane);
-		// }
-		// }
-		//
-		//
-		//
-		// //}
-		// prevPiece = p;
-		// prevCircle = circle;
-		// }
-		//
-		// });
+		 circle.setOnMousePressed(new EventHandler<MouseEvent>() {
+			 @Override public void handle(MouseEvent event) {
+				 circle.setStroke(Color.WHITE);
+			 }
+		 });
+		
+		 circle.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			 @Override public void handle(MouseEvent event) {
+		
+				 selected = p;
+				 if(prevPiece != null && prevPiece.getPossibleMoves() != null){
+					 fillInSquares(prevPiece.getPossibleMoves(), Color.LIGHTGRAY, Color.BLACK, 1,
+							 pane);
+				 }
+				 if(prevCircle != null){
+					 prevCircle.setStroke(Color.BLACK);
+				 }
+				 circle.setStroke(Color.WHITE);
+		
+				 if(selected.getIsInPlay()){
+					 if(selected.getPossibleMoves() != null){
+						 moves = selected.getPossibleMoves();
+						 fillInSquares(moves, Color.LIGHTGRAY, selected.getColor().getColor(),
+								 .7, pane);
+					 }
+				 }else{
+					 if(selected.getPossibleMoves() != null){
+						 moves = selected.getPossibleMoves();
+						 fillInSquares(moves, selected.getColor().getColor(), Color.WHITE, .7,
+								 pane);
+					 }
+				 }
+		
+		
+		
+		 //}
+		 prevPiece = p;
+		 prevCircle = circle;
+		 }
+		
+		 });
 	}
 
 	public void drawBoard(GridPane pane, Board board) {
@@ -440,27 +440,26 @@ public class Main extends Application {
 				int[][] location = new int[1][2];
 				location[0][0] = i;
 				location[0][1] = j;
-				// rectangle.setOnMouseReleased(new EventHandler<MouseEvent>() {
-				// @Override public void handle(MouseEvent event) {
-				// if(selected.getPossibleMoves() != null && selected != null){
-				// System.out.println(Arrays.deepToString(selected.getLocation()));
-				// for(int k = 0; k < selected.getPossibleMoves().length; k++){
-				// if(Arrays.equals(selected.getPossibleMoves()[k], location[0])){
-				// pane.getChildren().remove(prevCircle);
-				// pane.add(prevCircle, location[0][0], location[0][1]);
-				// prevCircle.setStroke(Color.BLACK);
-				// if (prevPiece.getPossibleMoves() != null){
-				// fillInSquares(prevPiece.getPossibleMoves(), Color.LIGHTGRAY, Color.BLACK, 1,
-				// pane);
-				// }
-				// prevPiece.setPossibleMoves(null);
-				// moves = null;
-				// }
-				// }
-				// }
-				//
-				// }
-				// });
+				
+				 rectangle.setOnMouseReleased(new EventHandler<MouseEvent>() {
+				 @Override public void handle(MouseEvent event) {
+					 if(selected.getPossibleMoves() != null && selected != null){
+						 	for(int k = 0; k < selected.getPossibleMoves().size(); k++){
+						 		if((selected.getPossibleMoves().get(k).get(0) == location[k][0]) 
+						 				&& selected.getPossibleMoves().get(k).get(1) == location[k][1]){
+						 			if(!selected.getIsInPlay()) {
+						 				selected.setInPlay();
+						 			}
+//						 			pane.getChildren().remove(prevCircle);
+						 			pane.add(prevCircle, location[0][0], location[0][1]);
+//						 			prevCircle.setStroke(Color.BLACK);
+//						 			
+						 		}
+						 	}
+					 }
+				
+				 }
+				 });
 
 			}
 		}
@@ -473,7 +472,7 @@ public class Main extends Application {
 		pane.getChildren().remove(circle);
 		pane.add(circle, firstSpot.get(0).get(0), firstSpot.get(0).get(1));
 		p.setLocation(firstSpot);
-		// p.setInPlay(true);
+		p.setInPlay();
 		circle.setStroke(Color.BLACK);
 	}
 
