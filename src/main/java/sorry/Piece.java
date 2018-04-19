@@ -6,7 +6,6 @@ public class Piece {
 	private int[][] location;
 	private int[][] possibleMoves;
 	private int movement;
-	private boolean occupied;
 	private Player player;
 
 	public Piece(PieceColor c, Player p) {
@@ -16,10 +15,6 @@ public class Piece {
 
 	public void Move(int squareNum) {
 		movement = squareNum;
-	}
-
-	public void canMove(boolean isOccupied) {
-		occupied = isOccupied;
 	}
 
 	public void setLocation(int[][] sq) {
