@@ -31,6 +31,15 @@ public class Player {
 			pieceArray[i] = new Piece(c, this, temp);
 		}
 	}
+	
+	public boolean hasPiecesOnBoard() {
+		for(Piece piece : pieceArray) {
+			if(piece.getIsInPlay()) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public void removeStartPieces() {
 		startPieces--;

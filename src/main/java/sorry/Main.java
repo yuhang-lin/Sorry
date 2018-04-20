@@ -56,6 +56,8 @@ public class Main extends Application {
 	int currentTerm = 0; // current term for the player
 	
 	boolean hasDrawn;
+	
+	Text turnText;
 
 	/**
 	 * Save the current game status.
@@ -128,11 +130,16 @@ public class Main extends Application {
 		Text option2 = new Text("");
 		pane.add(option1, 20, 6);
 		pane.add(option2, 20, 7);
+		
+		turnText = new Text("Blue player's turn");
+		turnText.setFill(Color.BLUE);
+		pane.add(turnText, 20, 1);
+		
 		Player blue = new Computer(new Blue(), Computer.NiceLevel.MEAN, Computer.SmartLevel.SMART); // for testing only
 		Player green = new Player(new Green());
 		Player red = new Player(new Red());
 		Player yellow = new Player(new Yellow());
-		Player[] players = { blue, green, red, yellow };
+		Player[] players = { blue, yellow, green, red };
 		// board.addPlayers(players);
 
 		for (int i = 0; i < players.length; i++) {
@@ -212,98 +219,138 @@ public class Main extends Application {
 					break;
 
 				case "3":
-					option1.setText("You must move a pawn forward 3 spaces.");
-					option2.setText("");
+					if(currentPlayer.hasPiecesOnBoard()) {
+						option1.setText("You must move a pawn forward 3 spaces.");
+						option2.setText("");
 
-					for (Piece p : currentPlayer.getPieces()) {
-						ArrayList<ArrayList<Integer>> threeMoves = new ArrayList<ArrayList<Integer>>();
+						for (Piece p : currentPlayer.getPieces()) {
+							ArrayList<ArrayList<Integer>> threeMoves = new ArrayList<ArrayList<Integer>>();
 
-						threeMoves.add(getMoveFromInt(board, p, 3));
-						p.setPossibleMoves(threeMoves);
+							threeMoves.add(getMoveFromInt(board, p, 3));
+							p.setPossibleMoves(threeMoves);
+						}
+					}else {
+						option1.setText("Unable to move this turn!");
+						option2.setText("");
 					}
 
 					break;
 
 				case "4":
-					option1.setText("You must move a pawn backwards 4 spaces.");
-					option2.setText("");
+					if(currentPlayer.hasPiecesOnBoard()) {
+						option1.setText("You must move a pawn backwards 4 spaces.");
+						option2.setText("");
 
-					for (Piece p : currentPlayer.getPieces()) {
-						ArrayList<ArrayList<Integer>> fourMoves = new ArrayList<ArrayList<Integer>>();
+						for (Piece p : currentPlayer.getPieces()) {
+							ArrayList<ArrayList<Integer>> fourMoves = new ArrayList<ArrayList<Integer>>();
 
-						fourMoves.add(getMoveFromInt(board, p, -4));
-						p.setPossibleMoves(fourMoves);
+							fourMoves.add(getMoveFromInt(board, p, -4));
+							p.setPossibleMoves(fourMoves);
+						}
+					}else {
+						option1.setText("Unable to move this turn!");
+						option2.setText("");
 					}
 					break;
 
 				case "5":
-					option1.setText("You must move a pawn forward 5 spaces.");
-					option2.setText("");
+					if(currentPlayer.hasPiecesOnBoard()) {
+						option1.setText("You must move a pawn forward 5 spaces.");
+						option2.setText("");
 
-					for (Piece p : currentPlayer.getPieces()) {
-						ArrayList<ArrayList<Integer>> fiveMoves = new ArrayList<ArrayList<Integer>>();
+						for (Piece p : currentPlayer.getPieces()) {
+							ArrayList<ArrayList<Integer>> fiveMoves = new ArrayList<ArrayList<Integer>>();
 
-						fiveMoves.add(getMoveFromInt(board, p, 5));
-						p.setPossibleMoves(fiveMoves);
+							fiveMoves.add(getMoveFromInt(board, p, 5));
+							p.setPossibleMoves(fiveMoves);
+						}
+					}else {
+						option1.setText("Unable to move this turn!");
+						option2.setText("");
 					}
 
 					break;
 
 				case "7":
-					option1.setText("You must move a pawn forward 7 spaces.");
-					option2.setText("");
+					if(currentPlayer.hasPiecesOnBoard()) {
+						option1.setText("You must move a pawn forward 7 spaces.");
+						option2.setText("");
 
-					for (Piece p : currentPlayer.getPieces()) {
-						ArrayList<ArrayList<Integer>> sevenMoves = new ArrayList<ArrayList<Integer>>();
-						sevenMoves.add(getMoveFromInt(board, p, 7));
-						p.setPossibleMoves(sevenMoves);
+						for (Piece p : currentPlayer.getPieces()) {
+							ArrayList<ArrayList<Integer>> sevenMoves = new ArrayList<ArrayList<Integer>>();
+							sevenMoves.add(getMoveFromInt(board, p, 7));
+							p.setPossibleMoves(sevenMoves);
+						}
+					}else {
+						option1.setText("Unable to move this turn!");
+						option2.setText("");
 					}
 					break;
 
 				case "8":
-					option1.setText("You must move a pawn forward 8 spaces.");
-					option2.setText("");
-					for (Piece p : currentPlayer.getPieces()) {
-						ArrayList<ArrayList<Integer>> eightMoves = new ArrayList<ArrayList<Integer>>();
+					if(currentPlayer.hasPiecesOnBoard()) {
+						option1.setText("You must move a pawn forward 8 spaces.");
+						option2.setText("");
+						for (Piece p : currentPlayer.getPieces()) {
+							ArrayList<ArrayList<Integer>> eightMoves = new ArrayList<ArrayList<Integer>>();
 
-						eightMoves.add(getMoveFromInt(board, p, 8));
-						p.setPossibleMoves(eightMoves);
+							eightMoves.add(getMoveFromInt(board, p, 8));
+							p.setPossibleMoves(eightMoves);
+						}
+					}else {
+						option1.setText("Unable to move this turn!");
+						option2.setText("");
 					}
 
 					break;
 
 				case "10":
-					option1.setText("You must move a pawn forward 10 spaces.");
-					option2.setText("");
-					for (Piece p : currentPlayer.getPieces()) {
-						ArrayList<ArrayList<Integer>>tenMoves = new ArrayList<ArrayList<Integer>>();
+					if(currentPlayer.hasPiecesOnBoard()) {
+						option1.setText("You must move a pawn forward 10 spaces.");
+						option2.setText("");
+						for (Piece p : currentPlayer.getPieces()) {
+							ArrayList<ArrayList<Integer>>tenMoves = new ArrayList<ArrayList<Integer>>();
 
-						tenMoves.add(getMoveFromInt(board, p, 10));
-						p.setPossibleMoves(tenMoves);
+							tenMoves.add(getMoveFromInt(board, p, 10));
+							p.setPossibleMoves(tenMoves);
+						}
+					}else {
+						option1.setText("Unable to move this turn!");
+						option2.setText("");
 					}
 
 					break;
 
 				case "11":
-					option1.setText("You must move a pawn forward 11 spaces.");
-					option2.setText("");
-					for (Piece p : currentPlayer.getPieces()) {
-						ArrayList<ArrayList<Integer>> elevenMoves = new ArrayList<ArrayList<Integer>>();
+					if(currentPlayer.hasPiecesOnBoard()) {
+						option1.setText("You must move a pawn forward 11 spaces.");
+						option2.setText("");
+						for (Piece p : currentPlayer.getPieces()) {
+							ArrayList<ArrayList<Integer>> elevenMoves = new ArrayList<ArrayList<Integer>>();
 
-						elevenMoves.add(getMoveFromInt(board, p, 11));
-						p.setPossibleMoves(elevenMoves);
+							elevenMoves.add(getMoveFromInt(board, p, 11));
+							p.setPossibleMoves(elevenMoves);
+						}
+					}else {
+						option1.setText("Unable to move this turn!");
+						option2.setText("");
 					}
 
 					break;
 
 				case "12":
-					option1.setText("You must move a pawn forward 12 spaces.");
-					option2.setText("");
-					for (Piece p : currentPlayer.getPieces()) {
-						ArrayList<ArrayList<Integer>> twelveMoves = new ArrayList<ArrayList<Integer>>();
+					if(currentPlayer.hasPiecesOnBoard()) {
+						option1.setText("You must move a pawn forward 12 spaces.");
+						option2.setText("");
+						for (Piece p : currentPlayer.getPieces()) {
+							ArrayList<ArrayList<Integer>> twelveMoves = new ArrayList<ArrayList<Integer>>();
 
-						twelveMoves.add(getMoveFromInt(board, p, 12));
-						p.setPossibleMoves(twelveMoves);
+							twelveMoves.add(getMoveFromInt(board, p, 12));
+							p.setPossibleMoves(twelveMoves);
+						}
+					}else {
+						option1.setText("Unable to move this turn!");
+						option2.setText("");
 					}
 
 					break;
@@ -344,6 +391,31 @@ public class Main extends Application {
 	}
 
 
+	public void nextTurn() {
+		if(currentTerm == 3) {
+				currentTerm = 0;
+			}else{
+				currentTerm++;
+			}
+		switch (currentTerm) {
+		case 0:
+			turnText.setText("Blue player's turn");
+			turnText.setStroke(Color.BLUE);
+			break;
+		case 1:
+			turnText.setText("Yellow player's turn");
+			turnText.setStroke(Color.YELLOW);
+			break;
+		case 2:
+			turnText.setText("Green player's turn");
+			turnText.setStroke(Color.GREEN);
+			break;
+		case 3: 
+			turnText.setText("Red player's turn");
+			turnText.setStroke(Color.RED);
+		}
+	}
+	
 	public ArrayList<Integer> getMoveFromInt(Board board, Piece piece, int increment) {
 		ArrayList<Integer> move = new ArrayList<Integer>();
 		for (int i = 0; i < board.getPathCoords().size(); i++) {
@@ -442,6 +514,8 @@ public class Main extends Application {
 					 			selectedCircle.setStroke(Color.BLACK);
 					 			
 					 			fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, Color.BLACK, 1, pane);
+					 			nextTurn();
+					 			
 					 		}
 					 	}
 				 	}
