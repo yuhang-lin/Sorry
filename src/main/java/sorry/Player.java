@@ -6,14 +6,11 @@
 package sorry;
 
 
-import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 /**
  *
- * @author austinbatistoni
+ * @author austinbatistoni, Yuhang Lin
  */
 public class Player {
 	final int NUM_PIECES = 4;
