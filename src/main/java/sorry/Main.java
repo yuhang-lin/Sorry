@@ -109,11 +109,11 @@ public class Main extends Application {
 	}
 
 	/**
-	 * Restore the game status from a text file.
+	 * Resume the game status from a text file.
 	 * 
 	 * @return 0 if there is no error, 1 if file is not found, 2 otherwise.
 	 */
-	public int restore() {
+	public int resume() {
 		try (BufferedReader br = new BufferedReader(new FileReader(logFile))) {
 			String cardList = br.readLine();
 			Card[] newCards = new Card[deck.NUM_CARDS];
@@ -152,7 +152,7 @@ public class Main extends Application {
 		pane.add(btnDraw, 20, 2);
 		Button btnSave = new Button("Save game");
 		pane.add(btnSave, 30, 2);
-		Button btnRestore = new Button("Restore game");
+		Button btnRestore = new Button("Resume game");
 		pane.add(btnRestore, 50, 2);
 
 		directions = new Text("Please draw a card.");
@@ -433,7 +433,7 @@ public class Main extends Application {
 
 		btnRestore.setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				int result = restore();
+				int result = resume();
 				if (result == 0) {
 					String timeStamp = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy")
 							.format(Calendar.getInstance().getTime());

@@ -13,7 +13,7 @@ class MainTest {
 		Main main = new Main();
 		int prevNumUsed = main.deck.getNumUsed();
 		main.save();
-		main.restore();
+		main.resume();
 		assertEquals(prevNumUsed, main.deck.getNumUsed());
 	}
 
