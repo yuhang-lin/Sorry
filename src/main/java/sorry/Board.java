@@ -15,10 +15,10 @@ import java.util.HashMap;
  */
 public class Board {
 
-	private final int PATH_LENGTH = 61;
+	private final int PATH_LENGTH = 60;
 	private final int SLIDE_LENGTH = 4;
 	private final ArrayList<BoardSquare> path = new ArrayList<BoardSquare>();
-	private HashMap<String, Integer> pathMap = new HashMap<>();
+	private static HashMap<String, Integer> pathMap = new HashMap<>();
 
 	private int[][] pathArray = { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 7, 0 },
 			{ 8, 0 }, { 9, 0 }, { 10, 0 }, { 11, 0 }, { 12, 0 }, { 13, 0 }, { 14, 0 }, { 15, 0 }, { 15, 1 }, { 15, 2 },
@@ -46,7 +46,7 @@ public class Board {
 		}
 	}
 
-	public int getPathIndex(ArrayList<Integer> coords) {
+	public static int getPathIndex(ArrayList<Integer> coords) {
 		if (coords == null || coords.size() != 2) {
 			return -2;
 		}
