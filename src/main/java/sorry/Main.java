@@ -451,7 +451,7 @@ public class Main extends Application {
 			break;
 		case 1:
 			turnText.setText("Yellow player's turn");
-			turnText.setStroke(Color.YELLOW);
+			turnText.setStroke(Color.rgb(153, 134, 0));
 			break;
 		case 2:
 			turnText.setText("Green player's turn");
