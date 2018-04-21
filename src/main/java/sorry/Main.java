@@ -318,12 +318,12 @@ public class Main extends Application {
 
 				case "10":
 					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn forward 10 spaces.");
+						option1.setText("You must move a pawn forward 10 spaces, or move backward 1 space.");
 						option2.setText("");
 						for (Piece p : currentPlayer.getPieces()) {
 							ArrayList<ArrayList<Integer>> tenMoves = new ArrayList<ArrayList<Integer>>();
-
 							tenMoves.add(getMoveFromInt(board, p, 10));
+							tenMoves.add(getMoveFromInt(board, p, -1));
 							p.setPossibleMoves(tenMoves);
 						}
 					} else {
