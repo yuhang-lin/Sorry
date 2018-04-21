@@ -81,7 +81,9 @@ public class Main extends Application {
 			for (Card card : deck.getCards()) {
 				printWriter.print(card.getName() + ","); // Save all the cards
 			}
-			printWriter.println("\n" + deck.getNumUsed());
+			printWriter.println();
+			printWriter.println(deck.getNumUsed());
+			printWriter.println(currentTerm);
 			printWriter.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
@@ -107,6 +109,7 @@ public class Main extends Application {
 			}
 			deck.setCards(newCards);
 			deck.setNumUsed(Integer.parseInt(br.readLine()));
+			currentTerm = Integer.parseInt(br.readLine());
 		} catch (FileNotFoundException e) {
 			return 1;
 		} catch (IOException e) {
