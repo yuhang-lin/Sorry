@@ -39,7 +39,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- * @author Yuhang Lin
+ * @author Yuhang Lin, Austin Batistoni
  *
  */
 public class Main extends Application {
@@ -84,6 +84,22 @@ public class Main extends Application {
 			printWriter.println();
 			printWriter.println(deck.getNumUsed());
 			printWriter.println(currentTerm);
+			printWriter.println(players.size());
+			// Save location of all pieces
+			for (Player player : players) {
+				printWriter.println(player.getPlayerColor());
+				if (player instanceof Computer) {
+					printWriter.println("computer");
+				} else {
+					printWriter.println("user");
+				}
+				for (Piece piece : player.getPieces()) {
+					ArrayList<ArrayList<Integer>> location = piece.getLocation();
+					for (ArrayList<Integer> point : location) {
+						printWriter.println(point.get(0) + "," + point.get(1));
+					}
+				}
+			}
 			printWriter.close();
 		} catch (IOException ioe) {
 			System.err.println("IOException: " + ioe.getMessage());
@@ -110,6 +126,7 @@ public class Main extends Application {
 			deck.setCards(newCards);
 			deck.setNumUsed(Integer.parseInt(br.readLine()));
 			currentTerm = Integer.parseInt(br.readLine());
+			
 		} catch (FileNotFoundException e) {
 			return 1;
 		} catch (IOException e) {
