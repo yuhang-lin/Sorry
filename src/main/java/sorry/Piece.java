@@ -9,11 +9,13 @@ public class Piece {
 	private Player player;
 	private boolean isInPlay;
 	private boolean isSelected;
+	private int homeIndex;
 
-	public Piece(PieceColor c, Player p, ArrayList<ArrayList<Integer>> location) {
+	public Piece(PieceColor c, Player p, ArrayList<ArrayList<Integer>> location, int index) {
 		this.color = c;
 		this.player = p;
 		this.isInPlay = false;
+		this.homeIndex = index;
 	}
 
 	public void Move(int squareNum) {
@@ -76,5 +78,10 @@ public class Piece {
 	public void unSelect() {
 		this.isSelected = false;
 	}
+
+	public int getHomeIndex() {
+		return homeIndex;
+	}
+
 
 }

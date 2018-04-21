@@ -54,11 +54,18 @@ public class Main extends Application {
 	Deck deck = new Deck();
 	String logFile = "game_status.txt";
 	int currentTerm = 0; // current term for the player
+	Board board;
+	
+	ArrayList<Player> players = new ArrayList<Player>();
 	
 	boolean hasDrawn;
 	
 	Text turnText;
-
+	Text option1;
+	Text option2;
+	Text directions;
+	
+	boolean sorryCard;
 	/**
 	 * Save the current game status.
 	 * 
@@ -108,7 +115,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		GridPane pane = new GridPane();
-		Board board = new Board();
+		board = new Board();
 
 		primaryStage.setTitle("Sorry!");
 		Text t = new Text(0, 0, "SORRY!");
@@ -124,10 +131,10 @@ public class Main extends Application {
 		Button btnRestore = new Button("Restore game");
 		pane.add(btnRestore, 50, 2);
 
-		Text t1 = new Text("Please draw a card");
-		pane.add(t1, 20, 5);
-		Text option1 = new Text("");
-		Text option2 = new Text("");
+		directions = new Text("Please draw a card.");
+		pane.add(directions, 20, 5);
+		option1 = new Text("");
+		option2 = new Text("");
 		pane.add(option1, 20, 6);
 		pane.add(option2, 20, 7);
 		
@@ -139,26 +146,30 @@ public class Main extends Application {
 		Player green = new Player(new Green());
 		Player red = new Player(new Red());
 		Player yellow = new Player(new Yellow());
-		Player[] players = { blue, yellow, green, red };
-		// board.addPlayers(players);
+		players.add(blue);
+		players.add(yellow);
+		players.add(green);
+		players.add(red);
+		//Player[] players = { blue, yellow, green, red };
+		//board.addPlayers(players);
 
-		for (int i = 0; i < players.length; i++) {
-			Piece[] pieces = players[i].getPieces();
+		for (int i = 0; i < players.size(); i++) {
+			Piece[] pieces = players.get(i).getPieces();
 			for (int j = 0; j < pieces.length; j++) {
 				drawPiece(pieces[j], primaryStage, pane, board, j);
 				ArrayList<ArrayList<Integer>> location = new ArrayList<ArrayList<Integer>>();
 				location.add(pieces[j].getColor().getStartCoords().get(i));
 				pieces[j].setLocation(location);
 			}
-			fillInSquares(players[i].getPlayerColor().getStartCoords(), players[i].getPlayerColor().getColor(),
+			fillInSquares(players.get(i).getPlayerColor().getStartCoords(), players.get(i).getPlayerColor().getColor(),
 					Color.BLACK, 1, pane);
-			fillInSquares(players[i].getPlayerColor().getSafeCoords(), players[i].getPlayerColor().getColor(),
+			fillInSquares(players.get(i).getPlayerColor().getSafeCoords(), players.get(i).getPlayerColor().getColor(),
 					Color.BLACK, 1, pane);
-			fillInSquares(players[i].getPlayerColor().getHomeCoords(), players[i].getPlayerColor().getColor(),
+			fillInSquares(players.get(i).getPlayerColor().getHomeCoords(), players.get(i).getPlayerColor().getColor(),
 					Color.BLACK, 1, pane);
-			fillInSquares(players[i].getPlayerColor().getFirstSpot(), players[i].getPlayerColor().getColor(),
+			fillInSquares(players.get(i).getPlayerColor().getFirstSpot(), players.get(i).getPlayerColor().getColor(),
 					Color.BLACK, 1, pane);
-			fillInSquares(players[i].getPlayerColor().getLastSpot(), players[i].getPlayerColor().getColor(),
+			fillInSquares(players.get(i).getPlayerColor().getLastSpot(), players.get(i).getPlayerColor().getColor(),
 					Color.BLACK, 1, pane);
 		}
 
@@ -171,11 +182,12 @@ public class Main extends Application {
 			@Override
 			public void handle(MouseEvent event) {
 				hasDrawn = true;
+				sorryCard = false;
 				Card currCard = deck.draw();
 				String card = currCard.getName();
-				t1.setText("The card is: " + currCard.getName());
+				directions.setText("The card is: " + currCard.getName());
 				
-				Player currentPlayer = players[currentTerm];
+				Player currentPlayer = players.get(currentTerm);
 
 				switch (card) {
 				case "1":
@@ -355,8 +367,30 @@ public class Main extends Application {
 
 					break;
 				case "Sorry":
-					option1.setText(currCard.getInfo());
-					option2.setText("");
+					ArrayList<ArrayList<Integer>> sorryMoves = new ArrayList<ArrayList<Integer>>();
+					ArrayList<Piece> piecesOnBoard = piecesOnBoard();
+					if(!piecesOnBoard.isEmpty()) {
+						option1.setText(currCard.getInfo());
+						option2.setText("Select a piece to bump.");
+						sorryCard = true;
+						
+						for(Piece p: piecesOnBoard) {
+							int xLoc = p.getLocation().get(0).get(0);
+							int yLoc = p.getLocation().get(0).get(1);
+							
+							sorryMoves.add(new ArrayList<Integer>(Arrays.asList(xLoc, yLoc)));
+							System.out.println(xLoc + ", " + yLoc);
+						}
+						
+						for(Piece p : currentPlayer.getPieces()) {
+							p.setPossibleMoves(sorryMoves);
+						}
+						
+					}else{
+						option1.setText("No players on board.");
+						option2.setText("Unable to move");
+					}
+					
 					break;
 				}
 
@@ -368,9 +402,9 @@ public class Main extends Application {
 				boolean isSuccess = save();
 				if (isSuccess) {
 					String timeStamp = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy").format(Calendar.getInstance().getTime());
-					t1.setText("Succesfully saved the game at " + timeStamp);
+					directions.setText("Succesfully saved the game at " + timeStamp);
 				} else {
-					t1.setText("Failed to save the game.");
+					directions.setText("Failed to save the game.");
 				}
 			}
 		});
@@ -380,14 +414,26 @@ public class Main extends Application {
 				int result = restore();
 				if (result == 0) {
 					String timeStamp = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy").format(Calendar.getInstance().getTime());
-					t1.setText("Succesfully restore the game at " + timeStamp);
+					directions.setText("Succesfully restore the game at " + timeStamp);
 				} else if (result == 1) {
-					t1.setText("It seem that you didn't save the game before.");
+					directions.setText("It seem that you didn't save the game before.");
 				} else {
-					t1.setText("Failed to restore the game.");
+					directions.setText("Failed to restore the game.");
 				}
 			}
 		});
+	}
+	
+	public ArrayList<Piece> piecesOnBoard() {
+		ArrayList<Piece> piecesOnBoard = new ArrayList<Piece>();
+		for(Player player : players) {
+			for(Piece piece : player.getPieces()) {
+				if(piece.getIsInPlay()) {
+					piecesOnBoard.add(piece);
+				}
+			}
+		}
+		return piecesOnBoard;
 	}
 
 
@@ -397,6 +443,7 @@ public class Main extends Application {
 			}else{
 				currentTerm++;
 			}
+		
 		switch (currentTerm) {
 		case 0:
 			turnText.setText("Blue player's turn");
@@ -414,6 +461,10 @@ public class Main extends Application {
 			turnText.setText("Red player's turn");
 			turnText.setStroke(Color.RED);
 		}
+		
+		option1.setText("");
+		option2.setText("");
+		directions.setText("Please draw a card.");
 	}
 	
 	public ArrayList<Integer> getMoveFromInt(Board board, Piece piece, int increment) {
@@ -473,13 +524,25 @@ public class Main extends Application {
 		
 		 circle.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			 @Override public void handle(MouseEvent event) {
-				 if(hasDrawn) {
-					 selected = p;
-					 selectedCircle = circle;
-					 System.out.println(selected.getPossibleMoves());
+				 if(sorryCard) {
+					 if(!p.getIsInPlay()) {
+						 selected = p;
+						 selectedCircle = circle;
+						 fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, selected.getColor().getColor(), .7, pane);
+						 System.out.println(selected.getPossibleMoves());
+						 //sorryCard = false;
+					 }
+				 }else {
+					 if(hasDrawn) {
+						 selected = p;
+						 selectedCircle = circle;
+						 System.out.println(selected.getPossibleMoves());
 					 
-					 fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, selected.getColor().getColor(), .7, pane);
+						 fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, selected.getColor().getColor(), .7, pane);
+					 }
 				 }
+				 
+				 
 				 
 				 
 				 
@@ -502,6 +565,38 @@ public class Main extends Application {
 				
 				 rectangle.setOnMouseReleased(new EventHandler<MouseEvent>() {
 				 @Override public void handle(MouseEvent event) {
+					 
+					 if(sorryCard) {
+						System.out.println("SORRY");
+			 			Piece piece = bumpPiece(location);
+			 			Node node = null;
+			 			for (Node n : pane.getChildren()) {
+			 				if(n instanceof Circle 
+			 						&& GridPane.getColumnIndex(n) == location.get(0).get(0)
+			 						&& GridPane.getRowIndex(n) == location.get(0).get(1)) {
+			 						node = n;		
+			 				}
+			 				
+			 			}
+			 			int locX = piece.getColor().startCoords[piece.getHomeIndex()][0];
+			 			int locY = piece.getColor().startCoords[piece.getHomeIndex()][1];
+			 			ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
+			 			temp.add(new ArrayList<Integer>(Arrays.asList(locX, locY)));
+			 			
+			 			pane.getChildren().remove(node);
+	 					pane.add(node, locX, locY);
+			 			pane.getChildren().remove(selectedCircle);
+			 			
+			 			piece.setLocation(temp);
+			 			piece.setOutOfPlay();
+			 			pane.add(selectedCircle, location.get(0).get(0), location.get(0).get(1));
+			 			fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, Color.BLACK, 1, pane);
+			 			selectedCircle.setStroke(Color.BLACK);
+			 			selected.setLocation(location);
+			 			selected.setInPlay();
+			 			sorryCard = false;
+			 			nextTurn();
+			 		}else {
 					 for(int k = 0; k < selected.getPossibleMoves().size(); k++){
 					 		if((selected.getPossibleMoves().get(k).get(0) == location.get(k).get(0)) 
 					 				&& selected.getPossibleMoves().get(k).get(1) == location.get(k).get(1)){
@@ -513,12 +608,15 @@ public class Main extends Application {
 					 			selected.setLocation(location);
 					 			selectedCircle.setStroke(Color.BLACK);
 					 			
+					 			
+					 			
 					 			fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, Color.BLACK, 1, pane);
 					 			nextTurn();
 					 			
 					 		}
 					 	}
 				 	}
+				 }
 				 });
 
 			}
@@ -534,6 +632,15 @@ public class Main extends Application {
 		p.setLocation(firstSpot);
 		p.setInPlay();
 		circle.setStroke(Color.BLACK);
+	}
+	
+	public Piece bumpPiece(ArrayList<ArrayList<Integer>> location) {
+		for(Piece piece : piecesOnBoard()) {
+			if(piece.getLocation() == location) {
+				return piece;
+			}
+		}
+		return null;
 	}
 
 }
