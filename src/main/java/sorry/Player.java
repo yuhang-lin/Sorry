@@ -28,7 +28,7 @@ public class Player {
 		for (int i = 0; i < 4; i++) {
 			ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
 			temp.add(c.getHomeCoords().get(i));
-			pieceArray[i] = new Piece(c, this, temp);
+			pieceArray[i] = new Piece(c, this, temp, i);
 		}
 	}
 	

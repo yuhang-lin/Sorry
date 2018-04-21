@@ -30,7 +30,7 @@ public class Board {
 	
 	private ArrayList<ArrayList<Integer>> pathCoords = new ArrayList<ArrayList<Integer>>();
 
-	private Piece[][] pieces;
+	private ArrayList<ArrayList<Piece>> pieces;
 
 	public Board() {
 		int coordIndex = 0;
@@ -212,7 +212,7 @@ public class Board {
 
 	public void addPlayers(Player[] players) {
 		for (int i = 0; i < players.length; i++) {
-			pieces[i] = players[i].getPieces();
+			pieces.add(new ArrayList<Piece>(Arrays.asList(players[i].getPieces())));
 		}
 	}
 
@@ -229,5 +229,9 @@ public class Board {
 	 */
 	public int getPathLength() {
 		return PATH_LENGTH;
+	}
+	
+	public ArrayList<ArrayList<Piece>> getPieces() {
+		return this.pieces;
 	}
 }
