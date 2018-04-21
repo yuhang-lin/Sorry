@@ -1,4 +1,5 @@
 package sorry;
+
 import java.sql.*;
 import java.util.ResourceBundle;
 
@@ -31,5 +32,3 @@ public class MysqlConnect {
 		return conn;
 	}
 }
-
-

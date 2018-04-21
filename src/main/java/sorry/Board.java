@@ -27,7 +27,7 @@ public class Board {
 			{ 9, 15 }, { 8, 15 }, { 7, 15 }, { 6, 15 }, { 5, 15 }, { 4, 15 }, { 3, 15 }, { 2, 15 }, { 1, 15 },
 			{ 0, 15 }, { 0, 14 }, { 0, 13 }, { 0, 12 }, { 0, 11 }, { 0, 10 }, { 0, 9 }, { 0, 8 }, { 0, 7 }, { 0, 6 },
 			{ 0, 5 }, { 0, 4 }, { 0, 3 }, { 0, 2 }, { 0, 1 } };
-	
+
 	private ArrayList<ArrayList<Integer>> pathCoords = new ArrayList<ArrayList<Integer>>();
 
 	private ArrayList<ArrayList<Piece>> pieces;
@@ -45,7 +45,7 @@ public class Board {
 			pathMap.put(key, coordIndex++);
 		}
 	}
-	
+
 	public int getPathIndex(ArrayList<Integer> coords) {
 		if (coords == null || coords.size() != 2) {
 			return -2;
@@ -222,15 +222,16 @@ public class Board {
 	public ArrayList<ArrayList<Integer>> getPathCoords() {
 		return pathCoords;
 	}
-	
+
 	/**
 	 * Get the length of the path.
+	 * 
 	 * @return an integer repesenting the length of the path
 	 */
 	public int getPathLength() {
 		return PATH_LENGTH;
 	}
-	
+
 	public ArrayList<ArrayList<Piece>> getPieces() {
 		return this.pieces;
 	}

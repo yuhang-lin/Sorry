@@ -1,5 +1,7 @@
 package sorry;
+
 import java.util.ArrayList;
+
 public class Piece {
 
 	private PieceColor color;
@@ -23,7 +25,6 @@ public class Piece {
 	}
 
 	public void setLocation(ArrayList<ArrayList<Integer>> sq) {
-
 
 		location = sq;
 	}
@@ -54,27 +55,27 @@ public class Piece {
 	public void setPossibleMoves(ArrayList<ArrayList<Integer>> possibleMoves) {
 		this.possibleMoves = possibleMoves;
 	}
-	
+
 	public boolean getIsInPlay() {
 		return isInPlay;
 	}
-	
+
 	public void setInPlay() {
 		this.isInPlay = true;
 	}
-	
+
 	public void setOutOfPlay() {
 		this.isInPlay = false;
 	}
-	
+
 	public boolean getIsSelected() {
 		return isSelected;
 	}
-	
+
 	public void select() {
 		this.isSelected = true;
 	}
-	
+
 	public void unSelect() {
 		this.isSelected = false;
 	}
@@ -82,6 +83,5 @@ public class Piece {
 	public int getHomeIndex() {
 		return homeIndex;
 	}
-
 
 }

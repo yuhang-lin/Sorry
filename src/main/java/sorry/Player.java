@@ -5,7 +5,6 @@
  */
 package sorry;
 
-
 import java.util.ArrayList;
 
 /**
@@ -31,10 +30,10 @@ public class Player {
 			pieceArray[i] = new Piece(c, this, temp, i);
 		}
 	}
-	
+
 	public boolean hasPiecesOnBoard() {
-		for(Piece piece : pieceArray) {
-			if(piece.getIsInPlay()) {
+		for (Piece piece : pieceArray) {
+			if (piece.getIsInPlay()) {
 				return true;
 			}
 		}
@@ -60,7 +59,7 @@ public class Player {
 	public Piece[] getPieces() {
 		return pieceArray;
 	}
-	
+
 	public int getPiecesHome() {
 		return piecesHome;
 	}

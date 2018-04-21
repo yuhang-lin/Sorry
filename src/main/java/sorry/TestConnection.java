@@ -16,7 +16,8 @@ public class TestConnection {
 				String pc3 = myResult.getString("pc3") != null ? myResult.getString("pc3") : "";
 				String color = myResult.getString("color");
 				String result = myResult.getString("result");
-				outputList.append(id + " " + name + " " + pc1 + " " + pc2 + " " + pc3 + " " + color + " " + result + "\n");
+				outputList.append(
+						id + " " + name + " " + pc1 + " " + pc2 + " " + pc3 + " " + color + " " + result + "\n");
 			}
 		} catch (SQLException e) {// Catch exception if any
 			System.out.println("SQL-> " + sqlQuery.toString());
