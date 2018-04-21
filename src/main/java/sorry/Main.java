@@ -13,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.ArrayList;
+
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -34,6 +36,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * @author Yuhang Lin
@@ -390,10 +393,8 @@ public class Main extends Application {
 						option1.setText("No players on board.");
 						option2.setText("Unable to move");
 					}
-
 					break;
 				}
-
 			}
 		});
 
@@ -596,25 +597,26 @@ public class Main extends Application {
 							selected.setLocation(location);
 							selected.setInPlay();
 							sorryCard = false;
-							nextTurn();
 						} else {
-							for (int k = 0; k < selected.getPossibleMoves().size(); k++) {
-								if ((selected.getPossibleMoves().get(k).get(0) == location.get(k).get(0))
-										&& selected.getPossibleMoves().get(k).get(1) == location.get(k).get(1)) {
-									pane.getChildren().remove(selectedCircle);
-									pane.add(selectedCircle, location.get(0).get(0), location.get(0).get(1));
-									if (!selected.getIsInPlay()) {
-										selected.setInPlay();
+							if (selected != null && selected.getPossibleMoves() != null) {
+								for (int k = 0; k < selected.getPossibleMoves().size(); k++) {
+									if ((selected.getPossibleMoves().get(k).get(0) == location.get(k).get(0))
+											&& selected.getPossibleMoves().get(k).get(1) == location.get(k).get(1)) {
+										pane.getChildren().remove(selectedCircle);
+										pane.add(selectedCircle, location.get(0).get(0), location.get(0).get(1));
+										if (!selected.getIsInPlay()) {
+											selected.setInPlay();
+										}
+										selected.setLocation(location);
+										selectedCircle.setStroke(Color.BLACK);
+
+										fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, Color.BLACK, 1,
+												pane);
 									}
-									selected.setLocation(location);
-									selectedCircle.setStroke(Color.BLACK);
-
-									fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, Color.BLACK, 1, pane);
-									nextTurn();
-
 								}
 							}
 						}
+						nextTurn();
 					}
 				});
 
