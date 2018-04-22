@@ -563,6 +563,9 @@ public class Main extends Application {
 
 	public void fillInSquares(ArrayList<ArrayList<Integer>> grid, Color inside, Color outside, double radius,
 			GridPane pane) {
+		if (grid == null) {
+			return;
+		}
 		Stop[] stops1 = new Stop[] { new Stop(0.5, inside), new Stop(0.99, outside) };
 		RadialGradient lg1 = new RadialGradient(0, 0, 0.5, 0.5, radius, true, CycleMethod.NO_CYCLE, stops1);
 		for (int i = 0; i < grid.size(); i++) {
