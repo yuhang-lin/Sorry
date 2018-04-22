@@ -9,9 +9,17 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 import java.util.ArrayList;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
@@ -57,7 +65,9 @@ public class Main extends Application {
 	String logFile = "game_status.txt";
 	int currentTerm = 0; // current term for the player
 	Board board;
-	
+
+	String userName = "SorryUser";
+
 
 	ArrayList<Player> players = new ArrayList<Player>();
 
@@ -126,7 +136,51 @@ public class Main extends Application {
 			deck.setCards(newCards);
 			deck.setNumUsed(Integer.parseInt(br.readLine()));
 			currentTerm = Integer.parseInt(br.readLine());
-			
+			int numPlayer = Integer.parseInt(br.readLine());
+			ArrayList<Player> newPlayers = new ArrayList<>();
+			for (int i = 0; i < numPlayer; i++) {
+				String colorName = br.readLine();
+				PieceColor color = null;
+				switch (colorName.toLowerCase()) {
+				case "blue":
+					color = new Blue();
+					break;
+				case "red":
+					color = new Red();
+					break;
+				case "yellow":
+					color = new Yellow();
+					break;
+				case "green":
+					color = new Green();
+					break;
+				default:
+					color = new Blue();
+					break;
+				}
+				String playerSetting = br.readLine();
+				Player player = null;
+				if (playerSetting.equals("user")) {
+					player = new Player(color);
+				} else {
+					player = new Computer(color);
+				}
+				Piece[] pieceArray = new Piece[Player.getNumPieces()];
+				for (int j = 0; j < Player.getNumPieces(); j++) {
+					ArrayList<ArrayList<Integer>> location = new ArrayList<>();
+					String[] indices = br.readLine().split(",");
+					ArrayList<Integer> point = new ArrayList<>();
+					for (String indexPoint : indices) {
+						point.add(Integer.parseInt(indexPoint));
+					}
+					location.add(point);
+					Piece piece = new Piece(color, player, location, j);
+					pieceArray[j] = piece;
+				}
+				player.setPieceArray(pieceArray);
+				newPlayers.add(player);
+			}
+			players = newPlayers;
 		} catch (FileNotFoundException e) {
 			return 1;
 		} catch (IOException e) {
@@ -181,9 +235,6 @@ public class Main extends Application {
 			Piece[] pieces = players.get(i).getPieces();
 			for (int j = 0; j < pieces.length; j++) {
 				drawPiece(pieces[j], primaryStage, pane, board, j);
-				ArrayList<ArrayList<Integer>> location = new ArrayList<ArrayList<Integer>>();
-				location.add(pieces[j].getColor().getStartCoords().get(i));
-				pieces[j].setLocation(location);
 			}
 			fillInSquares(players.get(i).getPlayerColor().getStartCoords(), players.get(i).getPlayerColor().getColor(),
 					Color.BLACK, 1, pane);
@@ -612,6 +663,11 @@ public class Main extends Application {
 	}
 
 	public void nextTurn() {
+		Player currentPlayer = players.get(currentTerm);
+		if (currentPlayer.getPiecesHome() == 4) {
+			directions.setText("Player" + currentPlayer.getPlayerColor() + "wins!");
+			endGame();
+		}
 		if (currentTerm == 3) {
 			currentTerm = 0;
 		} else {
@@ -660,6 +716,9 @@ public class Main extends Application {
 
 	public void fillInSquares(ArrayList<ArrayList<Integer>> grid, Color inside, Color outside, double radius,
 			GridPane pane) {
+		if (grid == null) {
+			return;
+		}
 		Stop[] stops1 = new Stop[] { new Stop(0.5, inside), new Stop(0.99, outside) };
 		RadialGradient lg1 = new RadialGradient(0, 0, 0.5, 0.5, radius, true, CycleMethod.NO_CYCLE, stops1);
 		for (int i = 0; i < grid.size(); i++) {
@@ -821,4 +880,51 @@ public class Main extends Application {
 		return null;
 	}
 
+	/**
+	 * Save record of this game to MySQL database
+	 */
+	private void endGame() {
+		// Add user if not found
+		// Get user id
+		// Add record
+		String sqlQuery = "";
+		try (Connection mysqlConn = MysqlConnect.myConnect(); Statement statement = mysqlConn.createStatement()) {
+			sqlQuery = "INSERT INTO `player`(`name`) VALUES (?)";
+			PreparedStatement preStatement = mysqlConn.prepareStatement(sqlQuery);
+			preStatement.setString(1, userName);
+			try {
+				preStatement.executeUpdate();
+			} catch (MySQLIntegrityConstraintViolationException e) {
+				// The record already exists which can be ignored
+			}
+			sqlQuery = "SELECT id FROM `player` where name = ?";
+			preStatement = mysqlConn.prepareStatement(sqlQuery);
+			preStatement.setString(1, userName);
+			ResultSet myResult = preStatement.executeQuery();
+			int userId = 0;
+			while (myResult.next()) {
+				userId = myResult.getInt("id");
+			}
+			sqlQuery = String.format("UPDATE player SET last_game = now() WHERE id = %d", userId);
+			statement.executeUpdate(sqlQuery);
+			String pc1 = "nice & smart";
+			String pc2 = "mean & smart";
+			String pc3 = "nice & smart";
+			String color = "red";
+			String result = "win";
+			sqlQuery = "INSERT INTO `record` (`player`, `pc1`, `pc2`, `pc3`, `color`, `result`) VALUES (?, ?, ?, ?, ?, ?)";
+			preStatement = mysqlConn.prepareStatement(sqlQuery);
+			preStatement.setInt(1, userId);
+			preStatement.setString(2, pc1);
+			preStatement.setString(3, pc2);
+			preStatement.setString(4, pc3);
+			preStatement.setString(5, color);
+			preStatement.setString(6, result);
+			preStatement.executeUpdate();
+		} catch (SQLException e) {// Catch exception if any
+			System.out.println("SQL-> " + sqlQuery.toString());
+			System.err.println("Error: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }

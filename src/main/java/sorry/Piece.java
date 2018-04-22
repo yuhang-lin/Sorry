@@ -22,6 +22,7 @@ public class Piece {
 		this.homeIndex = index;
 		this.isHome = false;
 		this.isSafe = false;
+		this.location = location;
 	}
 
 	public void Move(int squareNum) {
