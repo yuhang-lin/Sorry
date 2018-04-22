@@ -495,7 +495,7 @@ public class Main extends Application {
 			for (int j = 0; j < 2; j++) {
 				if (piece.getLocation().get(0).get(0) == board.getPathCoords().get(i).get(0)
 						&& piece.getLocation().get(0).get(1) == board.getPathCoords().get(i).get(1)) {
-					int boardIndex = (i + increment) % board.getPathLength();
+					int boardIndex = Math.floorMod((i + increment), board.getPathLength());
 					int newX = board.getPathCoords().get(boardIndex).get(0);
 					int newY = board.getPathCoords().get(boardIndex).get(1);
 					move.add(newX);
