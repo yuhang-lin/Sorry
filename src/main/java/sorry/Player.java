@@ -12,19 +12,19 @@ import java.util.ArrayList;
  * @author austinbatistoni, Yuhang Lin
  */
 public class Player {
-	final int NUM_PIECES = 4;
+	private static final int NUM_PIECES = 4;
 	String name;
 	private int piecesHome;
 	private int startPieces;
 	public BoardSquare[] home = new BoardSquare[5];
 	private PieceColor color;
-	private Piece[] pieceArray = new Piece[4];
+	private Piece[] pieceArray = new Piece[NUM_PIECES];
 
 	public Player(PieceColor c) {
 		this.color = c;
-		this.piecesHome = 4;
+		this.piecesHome = NUM_PIECES;
 		this.startPieces = 0;
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < NUM_PIECES; i++) {
 			ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
 			temp.add(c.getHomeCoords().get(i));
 			pieceArray[i] = new Piece(c, this, temp, i);
@@ -66,5 +66,17 @@ public class Player {
 
 	public int getStartPieces() {
 		return startPieces;
+	}
+
+	public static int getNumPieces() {
+		return NUM_PIECES;
+	}
+	
+	public void setPieceArray(Piece[] pieceArray) {
+		if (pieceArray != null && pieceArray.length == NUM_PIECES) {
+			this.pieceArray = pieceArray;
+		} else {
+			System.out.println("PieceArray is not in the correct format");
+		}
 	}
 }
