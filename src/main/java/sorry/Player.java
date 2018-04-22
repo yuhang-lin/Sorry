@@ -26,7 +26,7 @@ public class Player {
 		this.startPieces = 0;
 		for (int i = 0; i < NUM_PIECES; i++) {
 			ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
-			temp.add(c.getHomeCoords().get(i));
+			temp.add(c.getStartCoords().get(i));
 			pieceArray[i] = new Piece(c, this, temp, i);
 		}
 	}
