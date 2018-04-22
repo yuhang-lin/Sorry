@@ -617,6 +617,7 @@ public class Main extends Application {
 							selected.setLocation(location);
 							selected.setInPlay();
 							sorryCard = false;
+							nextTurn();
 						} else {
 							if (selected != null && selected.getPossibleMoves() != null) {
 								for (int k = 0; k < selected.getPossibleMoves().size(); k++) {
@@ -632,11 +633,11 @@ public class Main extends Application {
 
 										fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, Color.BLACK, 1,
 												pane);
+										nextTurn();
 									}
 								}
 							}
 						}
-						nextTurn();
 					}
 				});
 
