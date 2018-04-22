@@ -18,6 +18,7 @@ public class Piece {
 		this.player = p;
 		this.isInPlay = false;
 		this.homeIndex = index;
+		this.location = location;
 	}
 
 	public void Move(int squareNum) {
