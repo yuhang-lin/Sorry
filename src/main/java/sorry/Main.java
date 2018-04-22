@@ -234,9 +234,6 @@ public class Main extends Application {
 			Piece[] pieces = players.get(i).getPieces();
 			for (int j = 0; j < pieces.length; j++) {
 				drawPiece(pieces[j], primaryStage, pane, board, j);
-				//ArrayList<ArrayList<Integer>> location = new ArrayList<ArrayList<Integer>>();
-				//location.add(pieces[j].getColor().getStartCoords().get(i));
-				//pieces[j].setLocation(location);
 			}
 			fillInSquares(players.get(i).getPlayerColor().getStartCoords(), players.get(i).getPlayerColor().getColor(),
 					Color.BLACK, 1, pane);
