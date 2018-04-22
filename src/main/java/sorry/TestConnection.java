@@ -41,9 +41,9 @@ public class TestConnection {
 			System.out.println(userId);
 			sqlQuery = String.format("UPDATE player SET last_game = now() WHERE id = %d", userId);
 			statement.executeUpdate(sqlQuery);
-			String pc1 = "nice&smart";
-			String pc2 = "mean&smart";
-			String pc3 = "nice&smart";
+			String pc1 = "nice & smart";
+			String pc2 = "mean & smart";
+			String pc3 = "nice & smart";
 			String color = "red";
 			String result = "win";
 			sqlQuery = "INSERT INTO `record` (`player`, `pc1`, `pc2`, `pc3`, `color`, `result`) VALUES (?, ?, ?, ?, ?, ?)";
