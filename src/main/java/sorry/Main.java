@@ -135,7 +135,51 @@ public class Main extends Application {
 			deck.setCards(newCards);
 			deck.setNumUsed(Integer.parseInt(br.readLine()));
 			currentTerm = Integer.parseInt(br.readLine());
-
+			int numPlayer = Integer.parseInt(br.readLine());
+			ArrayList<Player> newPlayers = new ArrayList<>();
+			for (int i = 0; i < numPlayer; i++) {
+				String colorName = br.readLine();
+				PieceColor color = null;
+				switch (colorName.toLowerCase()) {
+				case "blue":
+					color = new Blue();
+					break;
+				case "red":
+					color = new Red();
+					break;
+				case "yellow":
+					color = new Yellow();
+					break;
+				case "green":
+					color = new Green();
+					break;
+				default:
+					color = new Blue();
+					break;
+				}
+				String playerSetting = br.readLine();
+				Player player = null;
+				if (playerSetting.equals("user")) {
+					player = new Player(color);
+				} else {
+					player = new Computer(color);
+				}
+				Piece[] pieceArray = new Piece[Player.getNumPieces()];
+				for (int j = 0; j < Player.getNumPieces(); j++) {
+					ArrayList<ArrayList<Integer>> location = new ArrayList<>();
+					String[] indices = br.readLine().split(",");
+					ArrayList<Integer> point = new ArrayList<>();
+					for (String indexPoint : indices) {
+						point.add(Integer.parseInt(indexPoint));
+					}
+					location.add(point);
+					Piece piece = new Piece(color, player, location, j);
+					pieceArray[j] = piece;
+				}
+				player.setPieceArray(pieceArray);
+				newPlayers.add(player);
+			}
+			players = newPlayers;
 		} catch (FileNotFoundException e) {
 			return 1;
 		} catch (IOException e) {
