@@ -18,12 +18,13 @@ public class Player {
 	private int startPieces;
 	public BoardSquare[] home = new BoardSquare[5];
 	private PieceColor color;
+
 	private Piece[] pieceArray = new Piece[NUM_PIECES];
 
 	public Player(PieceColor c) {
 		this.color = c;
-		this.piecesHome = NUM_PIECES;
-		this.startPieces = 0;
+		this.piecesHome = 0;
+		this.startPieces = NUM_PIECES;
 		for (int i = 0; i < NUM_PIECES; i++) {
 			ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
 			temp.add(c.getStartCoords().get(i));
