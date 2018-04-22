@@ -694,7 +694,7 @@ public class Main extends Application {
 			try {
 				preStatement.executeUpdate();
 			} catch (MySQLIntegrityConstraintViolationException e) {
-				System.out.println("Already exists");
+				// The record already exists which can be ignored
 			}
 			sqlQuery = "SELECT id FROM `player` where name = ?";
 			preStatement = mysqlConn.prepareStatement(sqlQuery);
@@ -704,7 +704,6 @@ public class Main extends Application {
 			while (myResult.next()) {
 				userId = myResult.getInt("id");
 			}
-			System.out.println(userId);
 			sqlQuery = String.format("UPDATE player SET last_game = now() WHERE id = %d", userId);
 			statement.executeUpdate(sqlQuery);
 			String pc1 = "nice&smart";
