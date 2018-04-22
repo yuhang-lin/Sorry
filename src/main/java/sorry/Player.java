@@ -19,11 +19,12 @@ public class Player {
 	public BoardSquare[] home = new BoardSquare[5];
 	private PieceColor color;
 	private Piece[] pieceArray = new Piece[4];
+	
 
 	public Player(PieceColor c) {
 		this.color = c;
-		this.piecesHome = 4;
-		this.startPieces = 0;
+		this.piecesHome = 0;
+		this.startPieces = 4;
 		for (int i = 0; i < 4; i++) {
 			ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
 			temp.add(c.getHomeCoords().get(i));

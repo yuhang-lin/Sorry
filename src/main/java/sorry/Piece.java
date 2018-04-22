@@ -12,12 +12,16 @@ public class Piece {
 	private boolean isInPlay;
 	private boolean isSelected;
 	private int homeIndex;
+	private boolean isSafe;
+	private boolean isHome;
 
 	public Piece(PieceColor c, Player p, ArrayList<ArrayList<Integer>> location, int index) {
 		this.color = c;
 		this.player = p;
 		this.isInPlay = false;
 		this.homeIndex = index;
+		this.isHome = false;
+		this.isSafe = false;
 	}
 
 	public void Move(int squareNum) {
@@ -82,6 +86,38 @@ public class Piece {
 
 	public int getHomeIndex() {
 		return homeIndex;
+	}
+	
+	public boolean isSafe() {
+		return isSafe;
+	}
+	
+	public void setSafe() {
+		this.isSafe = true;
+		this.setOutOfPlay();
+	}
+	
+	public void setNotSafe() {
+		this.isSafe = false;
+		this.setInPlay();
+	}
+	
+	public boolean isPieceSafe() {
+		for(int i = 0; i < this.color.getSafeCoords().size(); i++) {
+			if(this.getLocation().get(0).get(0) == this.color.getSafeCoords().get(i).get(0)
+					&& this.getLocation().get(0).get(1) == this.color.getSafeCoords().get(i).get(1)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isHome() {
+		return isHome;
+	}
+	
+	public void setIsHome() {
+		this.isHome = true;
 	}
 
 }

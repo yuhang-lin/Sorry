@@ -15,8 +15,8 @@ public class Green extends PieceColor {
 
 	public Green() {
 		startCoords = new int[][] { { 10, 13 }, { 10, 14 }, { 11, 13 }, { 11, 14 } };
-		safeCoords = new int[][] { { 13, 9 }, { 13, 8 }, { 12, 9 }, { 12, 8 } };
-		homeCoords = new int[][] { { 13, 14 }, { 13, 13 }, { 13, 12 }, { 13, 11 }, { 13, 10 } };
+		homeCoords = new int[][] { { 13, 9 }, { 13, 8 }, { 12, 9 }, { 12, 8 } };
+		safeCoords = new int[][] { { 13, 14 }, { 13, 13 }, { 13, 12 }, { 13, 11 }, { 13, 10 } };
 		firstSpot = new int[][] { { 11, 15 } };
 		lastSpot = new int[][] { { 13, 15 } };
 		color = Color.GREEN;
