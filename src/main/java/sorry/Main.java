@@ -539,7 +539,7 @@ public class Main extends Application {
 					break;
 				case "Sorry":
 					ArrayList<ArrayList<Integer>> sorryMoves = new ArrayList<ArrayList<Integer>>();
-					ArrayList<Piece> piecesOnBoard = piecesOnBoard();
+					ArrayList<Piece> piecesOnBoard = getPiecesOnBoard();
 					if (!piecesOnBoard.isEmpty()) {
 						option1.setText(currCard.getInfo());
 						option2.setText("Select a piece to bump.");
@@ -657,10 +657,17 @@ public class Main extends Application {
 		return newLocation;
 	}
 
-	public ArrayList<Piece> piecesOnBoard() {
+	/**
+	 * Get all the pieces on board excluding the current player's pieces.
+	 * @return an ArrayList of pieces on board excluding the current player's pieces.
+	 */
+	public ArrayList<Piece> getPiecesOnBoard() {
 		ArrayList<Piece> piecesOnBoard = new ArrayList<Piece>();
-		for (Player player : players) {
-			for (Piece piece : player.getPieces()) {
+		for (int i = 0; i < players.size(); i++) {
+			if (i == currentTerm) {
+				continue;
+			}
+			for (Piece piece : players.get(i).getPieces()) {
 				if (piece.getIsInPlay()) {
 					piecesOnBoard.add(piece);
 				}
@@ -882,7 +889,7 @@ public class Main extends Application {
 	}
 
 	public Piece bumpPiece(ArrayList<ArrayList<Integer>> location) {
-		for (Piece piece : piecesOnBoard()) {
+		for (Piece piece : getPiecesOnBoard()) {
 			if (piece.getLocation() == location) {
 				return piece;
 			}
