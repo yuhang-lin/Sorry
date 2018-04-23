@@ -63,7 +63,7 @@ public class Main extends Application {
 	ArrayList<ArrayList<Integer>> moves;
 	Deck deck = new Deck();
 	String logFile = "game_status.txt";
-	int currentTerm = 0; // current term for the player
+	int currentTurn = 0; // current term for the player
 	Board board;
 	GridPane pane;
 
@@ -94,7 +94,7 @@ public class Main extends Application {
 			}
 			printWriter.println();
 			printWriter.println(deck.getNumUsed());
-			printWriter.println(currentTerm);
+			printWriter.println(currentTurn);
 			printWriter.println(players.size());
 			// Save location of all pieces
 			for (Player player : players) {
@@ -136,7 +136,7 @@ public class Main extends Application {
 			}
 			deck.setCards(newCards);
 			deck.setNumUsed(Integer.parseInt(br.readLine()));
-			currentTerm = Integer.parseInt(br.readLine());
+			currentTurn = Integer.parseInt(br.readLine());
 			int numPlayer = Integer.parseInt(br.readLine());
 			ArrayList<Player> newPlayers = new ArrayList<>();
 			for (int i = 0; i < numPlayer; i++) {
@@ -269,7 +269,7 @@ public class Main extends Application {
 				String card = currCard.getName();
 				directions.setText("The card is: " + currCard.getName());
 
-				Player currentPlayer = players.get(currentTerm);
+				Player currentPlayer = players.get(currentTurn);
 
 				switch (card) {
 				case "1":
@@ -587,7 +587,7 @@ public class Main extends Application {
 							.format(Calendar.getInstance().getTime());
 					directions.setText("Succesfully restore the game at " + timeStamp);
 				} else if (result == 1) {
-					directions.setText("It seem that you didn't save the game before.");
+					directions.setText("It seems that you didn't save the game before.");
 				} else {
 					directions.setText("Failed to restore the game.");
 				}
@@ -664,7 +664,7 @@ public class Main extends Application {
 	public ArrayList<Piece> getPiecesOnBoard() {
 		ArrayList<Piece> piecesOnBoard = new ArrayList<Piece>();
 		for (int i = 0; i < players.size(); i++) {
-			if (i == currentTerm) {
+			if (i == currentTurn) {
 				continue;
 			}
 			for (Piece piece : players.get(i).getPieces()) {
@@ -676,22 +676,28 @@ public class Main extends Application {
 		return piecesOnBoard;
 	}
 
+	/**
+	 * Switch to the next turn.
+	 */
 	public void nextTurn() {
-		Player currentPlayer = players.get(currentTerm);
+		Player currentPlayer = players.get(currentTurn);
 		if (currentPlayer.getPiecesHome() == 4) {
 			directions.setText("Player" + currentPlayer.getPlayerColor() + "wins!");
 			endGame();
 		}
-		if (currentTerm == 3) {
-			currentTerm = 0;
+		if (currentTurn == 3) {
+			currentTurn = 0;
 		} else {
-			currentTerm++;
+			currentTurn++;
 		}
 		resetText();
 	}
 	
+	/**
+	 * Reset the texts on the screen.
+	 */
 	private void resetText() {
-		switch (currentTerm) {
+		switch (currentTurn) {
 		case 0:
 			turnText.setText("Blue player's turn");
 			turnText.setStroke(Color.BLUE);
