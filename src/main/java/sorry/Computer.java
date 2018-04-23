@@ -65,7 +65,7 @@ public class Computer extends Player {
 		return color;
 	}
 
-	public void Move(ArrayList<Piece> piecesOnBoard) {
+	public void move(ArrayList<Piece> piecesOnBoard) {
 		calculateScore(piecesOnBoard);
 		int numChoice = choiceList.size();
 		if (numChoice == 0) {
