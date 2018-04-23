@@ -65,6 +65,7 @@ public class Main extends Application {
 	String logFile = "game_status.txt";
 	int currentTerm = 0; // current term for the player
 	Board board;
+	GridPane pane;
 
 	String userName = "SorryUser";
 
@@ -123,7 +124,7 @@ public class Main extends Application {
 	 * 
 	 * @return 0 if there is no error, 1 if file is not found, 2 otherwise.
 	 */
-	public int resume() {
+	public int resume(Stage stage) {
 		try (BufferedReader br = new BufferedReader(new FileReader(logFile))) {
 			String cardList = br.readLine();
 			Card[] newCards = new Card[deck.NUM_CARDS];
@@ -181,6 +182,8 @@ public class Main extends Application {
 				newPlayers.add(player);
 			}
 			players = newPlayers;
+			resetBoard(stage);
+			resetText();
 		} catch (FileNotFoundException e) {
 			return 1;
 		} catch (IOException e) {
@@ -189,10 +192,29 @@ public class Main extends Application {
 		}
 		return 0;
 	}
+	
+	private void resetBoard(Stage stage) {
+		for (int i = 0; i < players.size(); i++) {
+			Piece[] pieces = players.get(i).getPieces();
+			for (int j = 0; j < pieces.length; j++) {
+				drawPiece(pieces[j], stage, pane, board, j);
+			}
+			fillInSquares(players.get(i).getPlayerColor().getStartCoords(), players.get(i).getPlayerColor().getColor(),
+					Color.BLACK, 1, pane);
+			fillInSquares(players.get(i).getPlayerColor().getSafeCoords(), players.get(i).getPlayerColor().getColor(),
+					Color.BLACK, 1, pane);
+			fillInSquares(players.get(i).getPlayerColor().getHomeCoords(), players.get(i).getPlayerColor().getColor(),
+					Color.BLACK, 1, pane);
+			fillInSquares(players.get(i).getPlayerColor().getFirstSpot(), players.get(i).getPlayerColor().getColor(),
+					Color.BLACK, 1, pane);
+			fillInSquares(players.get(i).getPlayerColor().getLastSpot(), players.get(i).getPlayerColor().getColor(),
+					Color.BLACK, 1, pane);
+		}
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
-		GridPane pane = new GridPane();
+		pane = new GridPane();
 		board = new Board();
 
 		primaryStage.setTitle("Sorry!");
@@ -231,22 +253,7 @@ public class Main extends Application {
 		// Player[] players = { blue, yellow, green, red };
 		// board.addPlayers(players);
 
-		for (int i = 0; i < players.size(); i++) {
-			Piece[] pieces = players.get(i).getPieces();
-			for (int j = 0; j < pieces.length; j++) {
-				drawPiece(pieces[j], primaryStage, pane, board, j);
-			}
-			fillInSquares(players.get(i).getPlayerColor().getStartCoords(), players.get(i).getPlayerColor().getColor(),
-					Color.BLACK, 1, pane);
-			fillInSquares(players.get(i).getPlayerColor().getSafeCoords(), players.get(i).getPlayerColor().getColor(),
-					Color.BLACK, 1, pane);
-			fillInSquares(players.get(i).getPlayerColor().getHomeCoords(), players.get(i).getPlayerColor().getColor(),
-					Color.BLACK, 1, pane);
-			fillInSquares(players.get(i).getPlayerColor().getFirstSpot(), players.get(i).getPlayerColor().getColor(),
-					Color.BLACK, 1, pane);
-			fillInSquares(players.get(i).getPlayerColor().getLastSpot(), players.get(i).getPlayerColor().getColor(),
-					Color.BLACK, 1, pane);
-		}
+		resetBoard(primaryStage);
 
 		Scene scene = new Scene(pane, 1000, 735);
 		scene.setFill(Color.WHITE);
@@ -574,7 +581,7 @@ public class Main extends Application {
 
 		btnRestore.setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				int result = resume();
+				int result = resume(primaryStage);
 				if (result == 0) {
 					String timeStamp = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy")
 							.format(Calendar.getInstance().getTime());
@@ -673,7 +680,10 @@ public class Main extends Application {
 		} else {
 			currentTerm++;
 		}
-
+		resetText();
+	}
+	
+	private void resetText() {
 		switch (currentTerm) {
 		case 0:
 			turnText.setText("Blue player's turn");
@@ -748,7 +758,7 @@ public class Main extends Application {
 		circle.setFill(p.getColor().getColor().deriveColor(0, 1, 10, 1));
 		GridPane.setHalignment(circle, HPos.CENTER);
 		GridPane.setValignment(circle, VPos.CENTER);
-		pane.add(circle, p.getColor().getStartCoords().get(i).get(0), p.getColor().getStartCoords().get(i).get(1));
+		pane.add(circle, p.getLocation().get(0).get(0), p.getLocation().get(0).get(1));
 
 		circle.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
@@ -884,9 +894,6 @@ public class Main extends Application {
 	 * Save record of this game to MySQL database
 	 */
 	private void endGame() {
-		// Add user if not found
-		// Get user id
-		// Add record
 		String sqlQuery = "";
 		try (Connection mysqlConn = MysqlConnect.myConnect(); Statement statement = mysqlConn.createStatement()) {
 			sqlQuery = "INSERT INTO `player`(`name`) VALUES (?)";
@@ -897,6 +904,7 @@ public class Main extends Application {
 			} catch (MySQLIntegrityConstraintViolationException e) {
 				// The record already exists which can be ignored
 			}
+			// Get user id
 			sqlQuery = "SELECT id FROM `player` where name = ?";
 			preStatement = mysqlConn.prepareStatement(sqlQuery);
 			preStatement.setString(1, userName);
@@ -912,6 +920,7 @@ public class Main extends Application {
 			String pc3 = "nice & smart";
 			String color = "red";
 			String result = "win";
+			// Add record
 			sqlQuery = "INSERT INTO `record` (`player`, `pc1`, `pc2`, `pc3`, `color`, `result`) VALUES (?, ?, ?, ?, ?, ?)";
 			preStatement = mysqlConn.prepareStatement(sqlQuery);
 			preStatement.setInt(1, userId);
