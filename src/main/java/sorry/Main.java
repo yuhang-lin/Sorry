@@ -63,14 +63,14 @@ public class Main extends Application {
 	ArrayList<ArrayList<Integer>> moves;
 	Deck deck = new Deck();
 	String logFile = "game_status.txt";
-	int currentTurn = 0; // current term for the player
+	int currentTurn = 0; // current turn of the game
 	Board board;
 	GridPane pane;
 
 	String userName = "SorryUser";
 
 
-	ArrayList<Player> players = new ArrayList<Player>();
+	ArrayList<Player> players = new ArrayList<>();
 
 	boolean hasDrawn;
 
