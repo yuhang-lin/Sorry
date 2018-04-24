@@ -17,6 +17,7 @@ public class Computer extends Player {
 	private NiceLevel niceLevel;
 	private SmartLevel smartLevel;
 	private ArrayList<Choice> choiceList = new ArrayList<>();
+	private HashMap<Integer, Piece> boardMap = new HashMap<>();
 	
 	class Choice implements Comparable<Choice>{
 		Piece piece;
@@ -79,6 +80,19 @@ public class Computer extends Player {
 		Piece piece = choice.piece;
 		ArrayList<ArrayList<Integer>> nextLocation = new ArrayList<>();
 		nextLocation.add(choice.move);
+		int targetIndex = Board.getPathIndex(choice.move);
+		int firstSpotIndex = Board.getPathIndex(piece.getColor().getFirstSpot().get(0));
+		if (boardMap.containsKey(targetIndex)) {
+			Piece bumped = boardMap.get(targetIndex);
+			bumped.setOutOfPlay();
+			bumped.getPlayer().addStartPieces();
+		}
+		if (firstSpotIndex == targetIndex) {
+			piece.getPlayer().removeStartPieces();
+		}
+		if (!piece.getIsInPlay() && !piece.isPieceSafe()) {
+			piece.setInPlay();
+		}
 		piece.setLocation(nextLocation);
 	}
 
@@ -103,7 +117,7 @@ public class Computer extends Player {
 	 * higher the score is.
 	 */
 	private void calculateScore(ArrayList<Piece> piecesOnBoard) {
-		HashMap<Integer, Piece> boardMap = new HashMap<>();
+		boardMap.clear();
 		for (Piece piece : piecesOnBoard) {
 			boardMap.put(Board.getPathIndex(piece.getLocation().get(0)), piece);
 		}
@@ -119,9 +133,9 @@ public class Computer extends Player {
 				int score = Math.abs(safeIndex - targetIndex);
 				if (boardMap.containsKey(targetIndex)) {
 					if (this.niceLevel == NiceLevel.MEAN) {
-						score += 10;
+						score += 5;
 					} else if (this.niceLevel == NiceLevel.NICE) {
-						score -= 10;
+						score -= 5;
 					}
 				}
 				choiceList.add(new Choice(piece, move, score));
