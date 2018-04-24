@@ -95,7 +95,7 @@ public class Computer extends Player {
 			}
 			for (ArrayList<Integer> move : piece.getPossibleMoves()) {
 				// Get the entry to the safe space
-				ArrayList<Integer> safe = piece.getColor().getSafeCoords().get(0);
+				ArrayList<Integer> safe = piece.getColor().getLastSpot().get(0);
 				int safeIndex = Board.getPathIndex(safe);
 				int targetIndex = Board.getPathIndex(move);
 				int score = Math.abs(safeIndex - targetIndex);
