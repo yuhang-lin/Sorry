@@ -821,32 +821,34 @@ public class Main extends Application {
 
 						if (sorryCard) {
 							Piece piece = bumpPiece(location);
-							Node node = null;
-							for (Node n : pane.getChildren()) {
-								if (n instanceof Circle && GridPane.getColumnIndex(n) == location.get(0).get(0)
-										&& GridPane.getRowIndex(n) == location.get(0).get(1)) {
-									node = n;
+							if (piece != null) {
+								Node node = null;
+								for (Node n : pane.getChildren()) {
+									if (n instanceof Circle && GridPane.getColumnIndex(n) == location.get(0).get(0)
+											&& GridPane.getRowIndex(n) == location.get(0).get(1)) {
+										node = n;
+									}
+	
 								}
-
+								int locX = piece.getColor().startCoords[piece.getHomeIndex()][0];
+								int locY = piece.getColor().startCoords[piece.getHomeIndex()][1];
+								ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
+								temp.add(new ArrayList<Integer>(Arrays.asList(locX, locY)));
+	
+								pane.getChildren().remove(node);
+								pane.add(node, locX, locY);
+								pane.getChildren().remove(selectedCircle);
+	
+								piece.setLocation(temp);
+								piece.setOutOfPlay();
+								pane.add(selectedCircle, location.get(0).get(0), location.get(0).get(1));
+								fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, Color.BLACK, 1, pane);
+								selectedCircle.setStroke(Color.BLACK);
+								selected.setLocation(location);
+								selected.setInPlay();
+								sorryCard = false;
+								nextTurn();
 							}
-							int locX = piece.getColor().startCoords[piece.getHomeIndex()][0];
-							int locY = piece.getColor().startCoords[piece.getHomeIndex()][1];
-							ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
-							temp.add(new ArrayList<Integer>(Arrays.asList(locX, locY)));
-
-							pane.getChildren().remove(node);
-							pane.add(node, locX, locY);
-							pane.getChildren().remove(selectedCircle);
-
-							piece.setLocation(temp);
-							piece.setOutOfPlay();
-							pane.add(selectedCircle, location.get(0).get(0), location.get(0).get(1));
-							fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, Color.BLACK, 1, pane);
-							selectedCircle.setStroke(Color.BLACK);
-							selected.setLocation(location);
-							selected.setInPlay();
-							sorryCard = false;
-							nextTurn();
 						} else {
 							if (selected != null && selected.getPossibleMoves() != null) {
 								for (int k = 0; k < selected.getPossibleMoves().size(); k++) {
