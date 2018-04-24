@@ -69,7 +69,6 @@ public class Main extends Application {
 
 	String userName = "SorryUser";
 
-
 	ArrayList<Player> players = new ArrayList<>();
 
 	boolean hasDrawn;
@@ -192,7 +191,7 @@ public class Main extends Application {
 		}
 		return 0;
 	}
-	
+
 	private void resetBoard(Stage stage) {
 		for (int i = 0; i < players.size(); i++) {
 			Piece[] pieces = players.get(i).getPieces();
@@ -278,32 +277,30 @@ public class Main extends Application {
 
 					for (Piece p : currentPlayer.getPieces()) {
 						ArrayList<ArrayList<Integer>> oneMoves = new ArrayList<ArrayList<Integer>>();
-						if(canPieceFinish(p, 1)) {
+						if (canPieceFinish(p, 1)) {
 							p.getPlayer().addFinishedPieces();
-							if(p.getPlayer().getPiecesHome() == 4) {
+							if (p.getPlayer().getPiecesHome() == 4) {
 							}
 							oneMoves.add(p.getColor().getHomeCoords().get(p.getHomeIndex()));
 						}
-						if(p.isPieceSafe()) {
-							if(canMoveWithinSafe(p, 1)) {
+						if (p.isPieceSafe()) {
+							if (canMoveWithinSafe(p, 1)) {
 								oneMoves.add(moveWithinSafeZone(p, 1));
 							}
 						}
 						if (p.getIsInPlay()) {
-							if(canMoveToSafe(p, 1)) {
-								oneMoves.add(getSafeLocation(p,1));
-							}else {
+							if (canMoveToSafe(p, 1)) {
+								oneMoves.add(getSafeLocation(p, 1));
+							} else {
 								oneMoves.add(getMoveFromInt(board, p, 1));
 							}
 						} else {
-							
-							
-								ArrayList<Integer> temp = new ArrayList<Integer>();
-								temp.add(p.getColor().getFirstSpot().get(0).get(0));
-								temp.add(p.getColor().getFirstSpot().get(0).get(1));
-								oneMoves.add(temp);
+
+							ArrayList<Integer> temp = new ArrayList<Integer>();
+							temp.add(p.getColor().getFirstSpot().get(0).get(0));
+							temp.add(p.getColor().getFirstSpot().get(0).get(1));
+							oneMoves.add(temp);
 						}
-						
 
 						p.setPossibleMoves(oneMoves);
 					}
@@ -316,19 +313,19 @@ public class Main extends Application {
 
 					for (Piece p : currentPlayer.getPieces()) {
 						ArrayList<ArrayList<Integer>> twoMoves = new ArrayList<ArrayList<Integer>>();
-						if(canPieceFinish(p, 2)) {
+						if (canPieceFinish(p, 2)) {
 							p.getPlayer().addFinishedPieces();
 							twoMoves.add(p.getColor().getHomeCoords().get(p.getHomeIndex()));
 						}
-						if(p.isPieceSafe()) {
-							if(canMoveWithinSafe(p, 2)) {
+						if (p.isPieceSafe()) {
+							if (canMoveWithinSafe(p, 2)) {
 								twoMoves.add(moveWithinSafeZone(p, 2));
 							}
 						}
 						if (p.getIsInPlay()) {
-							if(canMoveToSafe(p,2)) {
-								twoMoves.add(getSafeLocation(p,2));
-							}else {
+							if (canMoveToSafe(p, 2)) {
+								twoMoves.add(getSafeLocation(p, 2));
+							} else {
 								twoMoves.add(getMoveFromInt(board, p, 2));
 							}
 						} else {
@@ -349,19 +346,19 @@ public class Main extends Application {
 
 						for (Piece p : currentPlayer.getPieces()) {
 							ArrayList<ArrayList<Integer>> threeMoves = new ArrayList<ArrayList<Integer>>();
-							if(canPieceFinish(p, 3)) {
+							if (canPieceFinish(p, 3)) {
 								p.getPlayer().addFinishedPieces();
 								threeMoves.add(p.getColor().getHomeCoords().get(p.getHomeIndex()));
 							}
-							if(p.isPieceSafe()) {
-								if(canMoveWithinSafe(p, 3)) {
+							if (p.isPieceSafe()) {
+								if (canMoveWithinSafe(p, 3)) {
 									threeMoves.add(moveWithinSafeZone(p, 3));
 								}
 							}
-							
-							if(canMoveToSafe(p, 3)) {
+
+							if (canMoveToSafe(p, 3)) {
 								threeMoves.add(getSafeLocation(p, 3));
-							}else {
+							} else {
 								threeMoves.add(getMoveFromInt(board, p, 3));
 							}
 							p.setPossibleMoves(threeMoves);
@@ -377,15 +374,15 @@ public class Main extends Application {
 					if (currentPlayer.hasPiecesOnBoard()) {
 						option1.setText("You must move a pawn backwards 4 spaces.");
 						option2.setText("");
-						
-						//TODO: IMPLEMENT moving backwards out of safe array with a 4
+
+						// TODO: IMPLEMENT moving backwards out of safe array with a 4
 
 						for (Piece p : currentPlayer.getPieces()) {
 							ArrayList<ArrayList<Integer>> fourMoves = new ArrayList<ArrayList<Integer>>();
-							
-							if(canMoveToSafe(p,-4)) {
-								fourMoves.add(getSafeLocation(p,-4));
-							}else {
+
+							if (canMoveToSafe(p, -4)) {
+								fourMoves.add(getSafeLocation(p, -4));
+							} else {
 								fourMoves.add(getMoveFromInt(board, p, -4));
 							}
 							p.setPossibleMoves(fourMoves);
@@ -403,18 +400,18 @@ public class Main extends Application {
 
 						for (Piece p : currentPlayer.getPieces()) {
 							ArrayList<ArrayList<Integer>> fiveMoves = new ArrayList<ArrayList<Integer>>();
-							if(canPieceFinish(p, 5)) {
+							if (canPieceFinish(p, 5)) {
 								p.getPlayer().addFinishedPieces();
 								fiveMoves.add(p.getColor().getHomeCoords().get(p.getHomeIndex()));
 							}
-							if(p.isPieceSafe()) {
-								if(canMoveWithinSafe(p, 5)) {
+							if (p.isPieceSafe()) {
+								if (canMoveWithinSafe(p, 5)) {
 									fiveMoves.add(moveWithinSafeZone(p, 5));
 								}
 							}
-							if(canMoveToSafe(p,5)) {
-								fiveMoves.add(getSafeLocation(p,5));
-							}else {
+							if (canMoveToSafe(p, 5)) {
+								fiveMoves.add(getSafeLocation(p, 5));
+							} else {
 								fiveMoves.add(getMoveFromInt(board, p, 5));
 							}
 							p.setPossibleMoves(fiveMoves);
@@ -433,16 +430,16 @@ public class Main extends Application {
 
 						for (Piece p : currentPlayer.getPieces()) {
 							ArrayList<ArrayList<Integer>> sevenMoves = new ArrayList<ArrayList<Integer>>();
-							if(canPieceFinish(p, 7)) {
+							if (canPieceFinish(p, 7)) {
 								p.getPlayer().addFinishedPieces();
 								sevenMoves.add(p.getColor().getHomeCoords().get(p.getHomeIndex()));
 							}
-							if(canMoveToSafe(p, 7)) {
-								sevenMoves.add(getSafeLocation(p,7));
-							}else {
+							if (canMoveToSafe(p, 7)) {
+								sevenMoves.add(getSafeLocation(p, 7));
+							} else {
 								sevenMoves.add(getMoveFromInt(board, p, 7));
 							}
-							
+
 							p.setPossibleMoves(sevenMoves);
 						}
 					} else {
@@ -457,9 +454,9 @@ public class Main extends Application {
 						option2.setText("");
 						for (Piece p : currentPlayer.getPieces()) {
 							ArrayList<ArrayList<Integer>> eightMoves = new ArrayList<ArrayList<Integer>>();
-							if(canMoveToSafe(p,8)) {
-								eightMoves.add(getSafeLocation(p,8));
-							}else {
+							if (canMoveToSafe(p, 8)) {
+								eightMoves.add(getSafeLocation(p, 8));
+							} else {
 								eightMoves.add(getMoveFromInt(board, p, 8));
 							}
 							p.setPossibleMoves(eightMoves);
@@ -477,15 +474,15 @@ public class Main extends Application {
 						option2.setText("");
 						for (Piece p : currentPlayer.getPieces()) {
 							ArrayList<ArrayList<Integer>> tenMoves = new ArrayList<ArrayList<Integer>>();
-							if(canMoveToSafe(p,10)) {
-								tenMoves.add(getSafeLocation(p,10));
-							}else {
+							if (canMoveToSafe(p, 10)) {
+								tenMoves.add(getSafeLocation(p, 10));
+							} else {
 								tenMoves.add(getMoveFromInt(board, p, 10));
 							}
-							
-							if(canMoveToSafe(p,-1)) {
-								tenMoves.add(getSafeLocation(p,-1));
-							}else {
+
+							if (canMoveToSafe(p, -1)) {
+								tenMoves.add(getSafeLocation(p, -1));
+							} else {
 								tenMoves.add(getMoveFromInt(board, p, -1));
 							}
 							p.setPossibleMoves(tenMoves);
@@ -503,10 +500,10 @@ public class Main extends Application {
 						option2.setText("");
 						for (Piece p : currentPlayer.getPieces()) {
 							ArrayList<ArrayList<Integer>> elevenMoves = new ArrayList<ArrayList<Integer>>();
-							
-							if(canMoveToSafe(p, 11)) {
-								elevenMoves.add(getSafeLocation(p,11));
-							}else {
+
+							if (canMoveToSafe(p, 11)) {
+								elevenMoves.add(getSafeLocation(p, 11));
+							} else {
 								elevenMoves.add(getMoveFromInt(board, p, 11));
 							}
 							p.setPossibleMoves(elevenMoves);
@@ -524,9 +521,9 @@ public class Main extends Application {
 						option2.setText("");
 						for (Piece p : currentPlayer.getPieces()) {
 							ArrayList<ArrayList<Integer>> twelveMoves = new ArrayList<ArrayList<Integer>>();
-							if(canMoveToSafe(p,12)) {
-								twelveMoves.add(getSafeLocation(p,12));
-							}else {
+							if (canMoveToSafe(p, 12)) {
+								twelveMoves.add(getSafeLocation(p, 12));
+							} else {
 								twelveMoves.add(getMoveFromInt(board, p, 12));
 							}
 							p.setPossibleMoves(twelveMoves);
@@ -594,30 +591,30 @@ public class Main extends Application {
 			}
 		});
 	}
-	
+
 	public boolean canPieceFinish(Piece p, int card) {
-		if(p.isPieceSafe()) {
+		if (p.isPieceSafe()) {
 			int i = getIndexOfSafeArray(p);
-			if(i + card == 5) {
+			if (i + card == 5) {
 				return true;
-			}		
-		}else {
-			//TODO: Implement logic for a piece going home from outside of safe array
+			}
+		} else {
+			// TODO: Implement logic for a piece going home from outside of safe array
 		}
 		return false;
 	}
-	
-	public boolean canMoveWithinSafe(Piece p, int card){
+
+	public boolean canMoveWithinSafe(Piece p, int card) {
 		int i = getIndexOfSafeArray(p);
-		if(i + card > p.getColor().getSafeCoords().size() - 1) {
+		if (i + card > p.getColor().getSafeCoords().size() - 1) {
 			return false;
 		}
 		return true;
 	}
-	
+
 	public int getIndexOfSafeArray(Piece p) {
-		for(int i = 0; i < p.getColor().getSafeCoords().size(); i++) {
-			if(p.getColor().getSafeCoords().get(i).get(0) == p.getLocation().get(0).get(0)
+		for (int i = 0; i < p.getColor().getSafeCoords().size(); i++) {
+			if (p.getColor().getSafeCoords().get(i).get(0) == p.getLocation().get(0).get(0)
 					&& p.getColor().getSafeCoords().get(i).get(1) == p.getLocation().get(0).get(1)) {
 				return i;
 			}
@@ -625,41 +622,42 @@ public class Main extends Application {
 		return 0;
 	}
 
-	
 	public ArrayList<Integer> moveWithinSafeZone(Piece p, int card) {
 		ArrayList<Integer> newLocation = new ArrayList<Integer>();
 		int i = getIndexOfSafeArray(p);
 		newLocation = p.getColor().getSafeCoords().get(i + card);
 		return newLocation;
 	}
-	
+
 	public boolean canMoveToSafe(Piece p, int card) {
 		int currentIndex = board.getPathIndex(p.getLocation().get(0));
 		int playersLastSpot = board.getPathIndex(p.getColor().getLastSpot().get(0));
-		if((currentIndex <= playersLastSpot && currentIndex + card > playersLastSpot) 
-			&& (card - (playersLastSpot - currentIndex) - 1) < p.getColor().getSafeCoords().size()) {
-			//p.setOutOfPlay();
+		if ((currentIndex <= playersLastSpot && currentIndex + card > playersLastSpot)
+				&& (card - (playersLastSpot - currentIndex) - 1) < p.getColor().getSafeCoords().size()) {
+			// p.setOutOfPlay();
 			return true;
 		}
 		return false;
 	}
-	
+
 	public ArrayList<Integer> getSafeLocation(Piece p, int card) {
 		int currentIndex = board.getPathIndex(p.getLocation().get(0));
 		int playersLastSpot = board.getPathIndex(p.getColor().getLastSpot().get(0));
-		
+
 		ArrayList<Integer> newLocation = new ArrayList<Integer>();
-		
+
 		ArrayList<ArrayList<Integer>> playersSafeArray = p.getColor().getSafeCoords();
-		
+
 		newLocation = playersSafeArray.get(card - (playersLastSpot - currentIndex) - 1);
-		
+
 		return newLocation;
 	}
 
 	/**
 	 * Get all the pieces on board excluding the current player's pieces.
-	 * @return an ArrayList of pieces on board excluding the current player's pieces.
+	 * 
+	 * @return an ArrayList of pieces on board excluding the current player's
+	 *         pieces.
 	 */
 	public ArrayList<Piece> getPiecesOnBoard() {
 		ArrayList<Piece> piecesOnBoard = new ArrayList<Piece>();
@@ -692,7 +690,7 @@ public class Main extends Application {
 		}
 		resetText();
 	}
-	
+
 	/**
 	 * Reset the texts on the screen.
 	 */
@@ -861,10 +859,12 @@ public class Main extends Application {
 										}
 										selected.setLocation(location);
 										boolean safe = false;
-										for(int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
-											
-											if(selected.getLocation().get(0).get(0) == selected.getColor().getSafeCoords().get(i).get(0)
-													&& selected.getLocation().get(0).get(1) == selected.getColor().getSafeCoords().get(i).get(1)) {
+										for (int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
+
+											if (selected.getLocation().get(0).get(0) == selected.getColor()
+													.getSafeCoords().get(i).get(0)
+													&& selected.getLocation().get(0).get(1) == selected.getColor()
+															.getSafeCoords().get(i).get(1)) {
 												safe = true;
 											}
 										}
