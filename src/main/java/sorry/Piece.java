@@ -1,6 +1,7 @@
 package sorry;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Piece {
 
@@ -70,6 +71,11 @@ public class Piece {
 	}
 
 	public void setOutOfPlay() {
+		int locX = getColor().startCoords[getHomeIndex()][0];
+		int locY = getColor().startCoords[getHomeIndex()][1];
+		ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
+		temp.add(new ArrayList<Integer>(Arrays.asList(locX, locY)));
+		setLocation(temp);
 		this.isInPlay = false;
 	}
 
