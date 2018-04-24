@@ -680,6 +680,23 @@ public class Main extends Application {
 
 		return newLocation;
 	}
+	
+	public void returnSquareColor() {
+		fillInSquares(board.getPathCoords(), Color.LIGHTGRAY, Color.BLACK, 1, pane);
+		for (int i = 0; i < players.size(); i++) {
+			fillInSquares(players.get(i).getPlayerColor().getStartCoords(), players.get(i).getPlayerColor().getColor(),
+				Color.BLACK, 1, pane);
+			fillInSquares(players.get(i).getPlayerColor().getSafeCoords(), players.get(i).getPlayerColor().getColor(),
+				Color.BLACK, 1, pane);
+			fillInSquares(players.get(i).getPlayerColor().getHomeCoords(), players.get(i).getPlayerColor().getColor(),
+				Color.BLACK, 1, pane);
+			fillInSquares(players.get(i).getPlayerColor().getFirstSpot(), players.get(i).getPlayerColor().getColor(),
+				Color.BLACK, 1, pane);
+			fillInSquares(players.get(i).getPlayerColor().getLastSpot(), players.get(i).getPlayerColor().getColor(),
+				Color.BLACK, 1, pane);
+		}
+		
+	}
 
 	/**
 	 * Get all the pieces on board excluding the current player's pieces.
@@ -846,7 +863,7 @@ public class Main extends Application {
 				rectangle.setOnMouseReleased(new EventHandler<MouseEvent>() {
 					@Override
 					public void handle(MouseEvent event) {
-
+						returnSquareColor();
 						if (sorryCard) {
 							Piece piece = bumpPiece(location);
 							if (piece != null) {
@@ -870,7 +887,7 @@ public class Main extends Application {
 								piece.setLocation(temp);
 								piece.setOutOfPlay();
 								pane.add(selectedCircle, location.get(0).get(0), location.get(0).get(1));
-								fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, Color.BLACK, 1, pane);
+								//returnSquareColor();
 								selectedCircle.setStroke(Color.BLACK);
 								selected.setLocation(location);
 								selected.setInPlay();
@@ -899,14 +916,15 @@ public class Main extends Application {
 											}
 										}
 										selectedCircle.setStroke(Color.BLACK);
-										fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, Color.BLACK, 1,
-												pane);
+										
 										nextTurn();
 									}
 								}
 							}
 						}
-					}
+						
+					}					
+					
 				});
 
 			}
