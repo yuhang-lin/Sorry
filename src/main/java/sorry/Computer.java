@@ -108,6 +108,9 @@ public class Computer extends Player {
 			boardMap.put(Board.getPathIndex(piece.getLocation().get(0)), piece);
 		}
 		for (Piece piece : getPieces()) {
+			if (piece == null || piece.getPossibleMoves() == null) {
+				continue;
+			}
 			for (ArrayList<Integer> move : piece.getPossibleMoves()) {
 				// Get the entry to the safe space
 				ArrayList<Integer> safe = piece.getColor().getSafeCoords().get(0);
