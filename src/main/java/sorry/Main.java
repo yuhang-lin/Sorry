@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 
-//import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 import java.util.ArrayList;
 import javafx.animation.PauseTransition;
@@ -958,49 +958,47 @@ public class Main extends Application {
 	/**
 	 * Save record of this game to MySQL database
 	 */
-//	private void endGame() {
-//		String sqlQuery = "";
-//		try (Connection mysqlConn = MysqlConnect.myConnect(); Statement statement = mysqlConn.createStatement()) {
-//			sqlQuery = "INSERT INTO `player`(`name`) VALUES (?)";
-//			PreparedStatement preStatement = mysqlConn.prepareStatement(sqlQuery);
-//			preStatement.setString(1, userName);
-//			try {
-////				preStatement.executeUpdate();
-////			} catch (MySQLIntegrityConstraintViolationException e) {
-////				// The record already exists which can be ignored
-////			}
-//			// Get user id
-//			sqlQuery = "SELECT id FROM `player` where name = ?";
-//			preStatement = mysqlConn.prepareStatement(sqlQuery);
-//			preStatement.setString(1, userName);
-//			ResultSet myResult = preStatement.executeQuery();
-//			int userId = 0;
-//			while (myResult.next()) {
-//				userId = myResult.getInt("id");
-//			}
-//			sqlQuery = String.format("UPDATE player SET last_game = now() WHERE id = %d", userId);
-//			statement.executeUpdate(sqlQuery);
-//			String pc1 = "nice & smart";
-//			String pc2 = "mean & smart";
-//			String pc3 = "nice & smart";
-//			String color = "red";
-//			String result = "win";
-//			// Add record
-//			sqlQuery = "INSERT INTO `record` (`player`, `pc1`, `pc2`, `pc3`, `color`, `result`) VALUES (?, ?, ?, ?, ?, ?)";
-//			preStatement = mysqlConn.prepareStatement(sqlQuery);
-//			preStatement.setInt(1, userId);
-//			preStatement.setString(2, pc1);
-//			preStatement.setString(3, pc2);
-//			preStatement.setString(4, pc3);
-//			preStatement.setString(5, color);
-//			preStatement.setString(6, result);
-//			preStatement.executeUpdate();
-//		} catch (SQLException e) {// Catch exception if any
-//			System.out.println("SQL-> " + sqlQuery.toString());
-//			System.err.println("Error: " + e.getMessage());
-//			e.printStackTrace();
-//		}
-//	}
-//}
-
+	private void endGame() {
+		String sqlQuery = "";
+		try (Connection mysqlConn = MysqlConnect.myConnect(); Statement statement = mysqlConn.createStatement()) {
+			sqlQuery = "INSERT INTO `player`(`name`) VALUES (?)";
+			PreparedStatement preStatement = mysqlConn.prepareStatement(sqlQuery);
+			preStatement.setString(1, userName);
+			try {
+				preStatement.executeUpdate();
+			} catch (MySQLIntegrityConstraintViolationException e) {
+				// The record already exists which can be ignored
+			}
+			// Get user id
+			sqlQuery = "SELECT id FROM `player` where name = ?";
+			preStatement = mysqlConn.prepareStatement(sqlQuery);
+			preStatement.setString(1, userName);
+			ResultSet myResult = preStatement.executeQuery();
+			int userId = 0;
+			while (myResult.next()) {
+				userId = myResult.getInt("id");
+			}
+			sqlQuery = String.format("UPDATE player SET last_game = now() WHERE id = %d", userId);
+			statement.executeUpdate(sqlQuery);
+			String pc1 = "nice & smart";
+			String pc2 = "mean & smart";
+			String pc3 = "nice & smart";
+			String color = "red";
+			String result = "win";
+			// Add record
+			sqlQuery = "INSERT INTO `record` (`player`, `pc1`, `pc2`, `pc3`, `color`, `result`) VALUES (?, ?, ?, ?, ?, ?)";
+			preStatement = mysqlConn.prepareStatement(sqlQuery);
+			preStatement.setInt(1, userId);
+			preStatement.setString(2, pc1);
+			preStatement.setString(3, pc2);
+			preStatement.setString(4, pc3);
+			preStatement.setString(5, color);
+			preStatement.setString(6, result);
+			preStatement.executeUpdate();
+		} catch (SQLException e) {// Catch exception if any
+			System.out.println("SQL-> " + sqlQuery.toString());
+			System.err.println("Error: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }
