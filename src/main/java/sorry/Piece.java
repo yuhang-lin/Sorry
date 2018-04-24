@@ -3,6 +3,8 @@ package sorry;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javafx.scene.shape.Circle;
+
 public class Piece {
 
 	private PieceColor color;
@@ -15,6 +17,7 @@ public class Piece {
 	private int homeIndex;
 	private boolean isSafe;
 	private boolean isHome;
+	private Circle circle;
 
 	public Piece(PieceColor c, Player p, ArrayList<ArrayList<Integer>> location, int index) {
 		this.color = c;
@@ -120,6 +123,14 @@ public class Piece {
 	
 	public void setIsHome() {
 		this.isHome = true;
+	}
+	
+	public void setCircle(Circle c) {
+		this.circle = c;
+	}
+	
+	public Circle getCircle() {
+		return circle;
 	}
 
 }

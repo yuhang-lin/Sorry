@@ -851,6 +851,7 @@ public class Main extends Application {
 			}
 
 		});
+		p.setCircle(circle);
 	}
 
 	public void drawBoard(GridPane pane, Board board) {
