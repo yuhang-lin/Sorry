@@ -44,16 +44,7 @@ public class Computer extends Player {
 	}
 
 	public void move(ArrayList<Piece> piecesOnBoard) {
-		calculateScore(piecesOnBoard);
-		int numChoice = choiceList.size();
-		if (numChoice == 0) {
-			return;
-		}
-		Choice choice = choiceList.get(numChoice - 1);
-		if (this.smartLevel == SmartLevel.DUMB) {
-			int randomNum = ThreadLocalRandom.current().nextInt(0, numChoice);
-			choice = choiceList.get(randomNum);
-		}
+		Choice choice = getSelectedChoice(piecesOnBoard);
 		Piece piece = choice.piece;
 		ArrayList<ArrayList<Integer>> nextLocation = new ArrayList<>();
 		nextLocation.add(choice.move);
@@ -119,5 +110,24 @@ public class Computer extends Player {
 			}
 		}
 		Collections.sort(choiceList);
+	}
+	
+	/**
+	 * Get selected choice of next move.
+	 * @param piecesOnBoard an ArrayList of all the pieces on the board of other players
+	 * @return the selected choice
+	 */
+	public Choice getSelectedChoice(ArrayList<Piece> piecesOnBoard) {
+		calculateScore(piecesOnBoard);
+		int numChoice = choiceList.size();
+		if (numChoice == 0) {
+			return null;
+		}
+		Choice choice = choiceList.get(numChoice - 1);
+		if (this.smartLevel == SmartLevel.DUMB) {
+			int randomNum = ThreadLocalRandom.current().nextInt(0, numChoice);
+			choice = choiceList.get(randomNum);
+		}
+		return choice;
 	}
 }
