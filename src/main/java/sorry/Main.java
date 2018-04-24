@@ -819,6 +819,10 @@ public class Main extends Application {
 		circle.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+				returnSquareColor();
+				if(selectedCircle != null) {
+					selectedCircle.setStroke(Color.BLACK);
+				}
 				circle.setStroke(Color.WHITE);
 			}
 		});
