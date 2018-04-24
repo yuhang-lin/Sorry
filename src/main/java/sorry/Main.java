@@ -649,6 +649,9 @@ public class Main extends Application {
 	public boolean canMoveToSafe(Piece p, int card) {
 		int currentIndex = board.getPathIndex(p.getLocation().get(0));
 		int playersLastSpot = board.getPathIndex(p.getColor().getLastSpot().get(0));
+		if(p.getColor() instanceof Blue) {
+			playersLastSpot += 60;
+		}
 		if ((currentIndex <= playersLastSpot && currentIndex + card > playersLastSpot)
 				&& (card - (playersLastSpot - currentIndex) - 1) < p.getColor().getSafeCoords().size()) {
 			// p.setOutOfPlay();
@@ -660,6 +663,9 @@ public class Main extends Application {
 	public boolean canMoveToHome(Piece p, int card) {
 		int currentIndex = board.getPathIndex(p.getLocation().get(0));
 		int playersLastSpot = board.getPathIndex(p.getColor().getLastSpot().get(0));
+		if(p.getColor() instanceof Blue) {
+			playersLastSpot += 60;
+		}
 		if ((currentIndex <= playersLastSpot && currentIndex + card > playersLastSpot)
 				&& (card - (playersLastSpot - currentIndex) - 1) == p.getColor().getSafeCoords().size()) {
 			// p.setOutOfPlay();
@@ -675,7 +681,9 @@ public class Main extends Application {
 		ArrayList<Integer> newLocation = new ArrayList<Integer>();
 
 		ArrayList<ArrayList<Integer>> playersSafeArray = p.getColor().getSafeCoords();
-
+		if(p.getColor() instanceof Blue) {
+			playersLastSpot += 60;
+		}
 		newLocation = playersSafeArray.get(card - (playersLastSpot - currentIndex) - 1);
 
 		return newLocation;
