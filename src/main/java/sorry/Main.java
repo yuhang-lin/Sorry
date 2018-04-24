@@ -726,7 +726,7 @@ public class Main extends Application {
 		Player currentPlayer = players.get(currentTurn);
 		if (currentPlayer.getPiecesHome() == 4) {
 			directions.setText("Player" + currentPlayer.getPlayerColor() + "wins!");
-			//endGame();
+			endGame();
 		}
 		if (currentTurn == 3) {
 			currentTurn = 0;
