@@ -47,7 +47,7 @@ public class Leaderboard {
 
 	public void start(Stage stage) {
 		Scene scene = new Scene(new Group());
-		stage.setTitle("Leader Board of Sorry");
+		stage.setTitle("Leader Board of Sorry!");
 		stage.setWidth(1440);
 		stage.setHeight(500);
 
