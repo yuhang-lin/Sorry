@@ -35,6 +35,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -246,12 +247,14 @@ public class Main extends Application {
 
 		Button btnDraw = new Button("Draw");
 		pane.add(btnDraw, 20, 2);
+		
+		HBox buttonGroup = new HBox();
+		
 		Button btnSave = new Button("Save game");
-		pane.add(btnSave, 30, 2);
 		Button btnLeaderBoard = new Button("Leader Board");
-		pane.add(btnLeaderBoard, 40, 2);
 		Button btnRestore = new Button("Resume game");
-		pane.add(btnRestore, 50, 2);
+		buttonGroup.getChildren().addAll(btnSave,btnLeaderBoard,btnRestore);
+		pane.add(buttonGroup, 20, 12);
 
 		directions = new Text("Please draw a card.");
 		pane.add(directions, 20, 5);
