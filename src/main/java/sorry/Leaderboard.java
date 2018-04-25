@@ -48,7 +48,7 @@ public class Leaderboard {
 	public void start(Stage stage) {
 		Scene scene = new Scene(new Group());
 		stage.setTitle("Leader Board of Sorry!");
-		stage.setWidth(1440);
+		stage.setWidth(1240);
 		stage.setHeight(500);
 
 		final Label label = new Label("Leader Board");
@@ -83,7 +83,7 @@ public class Leaderboard {
 		pc3Col.setSortType(TableColumn.SortType.ASCENDING);
 		
 		TableColumn colorCol = new TableColumn("Color");
-		colorCol.setMinWidth(200);
+		colorCol.setMinWidth(100);
 		colorCol.setCellValueFactory(new PropertyValueFactory<GameRecord, String>("color"));
 		colorCol.setSortType(TableColumn.SortType.ASCENDING);
 		
@@ -93,7 +93,7 @@ public class Leaderboard {
 		timeCol.setSortType(TableColumn.SortType.ASCENDING);
 		
 		TableColumn resultCol = new TableColumn("Result");
-		resultCol.setMinWidth(200);
+		resultCol.setMinWidth(100);
 		resultCol.setCellValueFactory(new PropertyValueFactory<GameRecord, String>("result"));
 		resultCol.setSortType(TableColumn.SortType.DESCENDING);
 
