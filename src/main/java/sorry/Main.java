@@ -659,7 +659,8 @@ public class Main extends Application {
 	public boolean canMoveToSafe(Piece p, int card) {
 		int currentIndex = board.getPathIndex(p.getLocation().get(0));
 		int playersLastSpot = board.getPathIndex(p.getColor().getLastSpot().get(0));
-		if (p.getColor() instanceof Blue) {
+		if(p.getColor() instanceof Blue && currentIndex >= 10) {
+
 			playersLastSpot += 60;
 		}
 		if ((currentIndex <= playersLastSpot && currentIndex + card > playersLastSpot)
@@ -691,7 +692,8 @@ public class Main extends Application {
 		ArrayList<Integer> newLocation = new ArrayList<Integer>();
 
 		ArrayList<ArrayList<Integer>> playersSafeArray = p.getColor().getSafeCoords();
-		if (p.getColor() instanceof Blue) {
+		if(p.getColor() instanceof Blue && currentIndex >= 10) {
+
 			playersLastSpot += 60;
 		}
 		newLocation = playersSafeArray.get(card - (playersLastSpot - currentIndex) - 1);
