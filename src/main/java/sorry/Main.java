@@ -210,6 +210,17 @@ public class Main extends Application {
 					Color.BLACK, 1, pane);
 		}
 	}
+	
+	private void setPlayers() {
+		Player blue = new Computer(new Blue(), Computer.NiceLevel.MEAN, Computer.SmartLevel.SMART); // for testing only
+		Player green = new Player(new Green());
+		Player red = new Player(new Red());
+		Player yellow = new Player(new Yellow());
+		players.add(blue);
+		players.add(yellow);
+		players.add(green);
+		players.add(red);
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -243,18 +254,8 @@ public class Main extends Application {
 		turnText = new Text("Blue player's turn");
 		turnText.setFill(Color.BLUE);
 		pane.add(turnText, 20, 1);
-
-		Player blue = new Computer(new Blue(), Computer.NiceLevel.MEAN, Computer.SmartLevel.SMART); // for testing only
-		Player green = new Player(new Green());
-		Player red = new Player(new Red());
-		Player yellow = new Player(new Yellow());
-		players.add(blue);
-		players.add(yellow);
-		players.add(green);
-		players.add(red);
-		// Player[] players = { blue, yellow, green, red };
-		// board.addPlayers(players);
-
+		
+		setPlayers();
 		resetBoard(primaryStage);
 
 		Scene scene = new Scene(pane, 1100, 735);
