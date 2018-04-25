@@ -28,7 +28,8 @@ public class Help {
 		sorryRules.setToggleGroup(group);
 		ToggleButton ourRules = new ToggleButton("Our implementation");
 		sorryRules.setToggleGroup(group);
-		buttons.getChildren().addAll(sorryRules, ourRules);
+		buttons.getChildren().add(sorryRules);
+		buttons.getChildren().add(ourRules);
 		root.getChildren().add(buttons);
 		
 		
@@ -103,26 +104,43 @@ public class Help {
 		Text t11 = new Text("Game Play:");
 		t11.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 		
-		Text t12 = new Text("When it is your turn, you must first draw a card. If there are any available moves,"
-				+ "clicking on one of your color pieces will show the available moves for that piece. \nAvailable moves will"
+		Text t12 = new Text("When it is your turn, you must first draw a card. If there are any available moves, "
+				+ "clicking on one of your color pieces will show the available moves for that piece. \nAvailable moves will "
 				+ "be shown by the your color highlight over the corresponding board square. If there are available moves, clicking "
 				+ "on one of the highlighted \nboardsquares will move your piece to that square.");
 		
-		box.getChildren().addAll(t10, t11, t12);
+		
+		Text t13 = new Text("Sorry Card:");
+		t13.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+		
+		Text t14 = new Text("If a sorry card is drawn, select one of your pieces in start to show the available moves. "
+				+ "All other players' pieces that are in play will light up. Selecting one of these \nspaces will swap "
+				+ "your selected piece with the opponent piece and will send the opponent piece back to its start.");
+		
+		Text t15 = new Text("Finishing A Piece:");
+		t15.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+		
+		Text t16 = new Text("The finished area is denoted by the block of four squares at the end of each color's safe zone. "
+				+ "If at any point you draw a card that will bring the selected piece \nexactly to the finish area, one of the "
+				+ "finish squares will light up as an available move. Selecting that square will move your piece to finish. Whichever "
+				+ "player \nreaches 4 finished pieces first wins the game!");
+		
+		box.getChildren().addAll(t10, t11, t12, t13, t14, t15, t16);
 		ourRulesPane.getChildren().add(box);
-		
-		
-		
 		
 		
 		//Button handlers
 		sorryRules.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if(currentPane == ourRulesPane) {
+				if(currentPane != sorryRulesPane) {
+					sorryRules.setSelected(true);
+					ourRules.setSelected(false);
 					currentPane = sorryRulesPane;
 					root.getChildren().remove(ourRulesPane);
 					root.getChildren().add(sorryRulesPane);
+				}else {
+					sorryRules.setSelected(false);
 				}
 			}
 		});
@@ -130,10 +148,14 @@ public class Help {
 		ourRules.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if(currentPane == sorryRulesPane) {
+				if(currentPane != ourRulesPane) {
+					ourRules.setSelected(true);
+					sorryRules.setSelected(false);
 					currentPane = ourRulesPane;
 					root.getChildren().remove(sorryRulesPane);
 					root.getChildren().add(ourRulesPane);
+				}else {
+					ourRules.setSelected(false);
 				}
 			}
 		});
