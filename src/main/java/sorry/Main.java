@@ -210,7 +210,7 @@ public class Main extends Application {
 					Color.BLACK, 1, pane);
 		}
 	}
-	
+
 	private void setPlayers() {
 		Player blue = new Computer(new Blue(), Computer.NiceLevel.MEAN, Computer.SmartLevel.SMART); // for testing only
 		Player green = new Player(new Green());
@@ -242,7 +242,6 @@ public class Main extends Application {
 		pane.add(btnLeaderBoard, 40, 2);
 		Button btnRestore = new Button("Resume game");
 		pane.add(btnRestore, 50, 2);
-		
 
 		directions = new Text("Please draw a card.");
 		pane.add(directions, 20, 5);
@@ -254,7 +253,7 @@ public class Main extends Application {
 		turnText = new Text("Blue player's turn");
 		turnText.setFill(Color.BLUE);
 		pane.add(turnText, 20, 1);
-		
+
 		setPlayers();
 		resetBoard(primaryStage);
 
@@ -289,7 +288,7 @@ public class Main extends Application {
 							if (canMoveWithinSafe(p, 1)) {
 								oneMoves.add(moveWithinSafeZone(p, 1));
 							}
-						}else {
+						} else {
 							if (p.getIsInPlay()) {
 								if (canMoveToSafe(p, 1)) {
 									oneMoves.add(getSafeLocation(p, 1));
@@ -298,10 +297,10 @@ public class Main extends Application {
 								}
 							} else {
 
-							ArrayList<Integer> temp = new ArrayList<Integer>();
-							temp.add(p.getColor().getFirstSpot().get(0).get(0));
-							temp.add(p.getColor().getFirstSpot().get(0).get(1));
-							oneMoves.add(temp);
+								ArrayList<Integer> temp = new ArrayList<Integer>();
+								temp.add(p.getColor().getFirstSpot().get(0).get(0));
+								temp.add(p.getColor().getFirstSpot().get(0).get(1));
+								oneMoves.add(temp);
 							}
 						}
 
@@ -324,7 +323,7 @@ public class Main extends Application {
 							if (canMoveWithinSafe(p, 2)) {
 								twoMoves.add(moveWithinSafeZone(p, 2));
 							}
-						}else {
+						} else {
 							if (p.getIsInPlay()) {
 								if (canMoveToSafe(p, 2)) {
 									twoMoves.add(getSafeLocation(p, 2));
@@ -433,9 +432,9 @@ public class Main extends Application {
 
 						for (Piece p : currentPlayer.getPieces()) {
 							ArrayList<ArrayList<Integer>> sevenMoves = new ArrayList<ArrayList<Integer>>();
-							if(canMoveToHome(p,7)) {
+							if (canMoveToHome(p, 7)) {
 								sevenMoves.add(p.getColor().getHomeCoords().get(p.getHomeIndex()));
-							}else {
+							} else {
 								if (canMoveToSafe(p, 7)) {
 									sevenMoves.add(getSafeLocation(p, 7));
 								} else {
@@ -457,9 +456,9 @@ public class Main extends Application {
 						option2.setText("");
 						for (Piece p : currentPlayer.getPieces()) {
 							ArrayList<ArrayList<Integer>> eightMoves = new ArrayList<ArrayList<Integer>>();
-							if(canMoveToHome(p,8)) {
+							if (canMoveToHome(p, 8)) {
 								eightMoves.add(p.getColor().getHomeCoords().get(p.getHomeIndex()));
-							}else {
+							} else {
 								if (canMoveToSafe(p, 8)) {
 									eightMoves.add(getSafeLocation(p, 8));
 								} else {
@@ -481,16 +480,15 @@ public class Main extends Application {
 						option2.setText("");
 						for (Piece p : currentPlayer.getPieces()) {
 							ArrayList<ArrayList<Integer>> tenMoves = new ArrayList<ArrayList<Integer>>();
-							if(canMoveToHome(p,10)) {
+							if (canMoveToHome(p, 10)) {
 								tenMoves.add(p.getColor().getHomeCoords().get(p.getHomeIndex()));
-							}else {
+							} else {
 								if (canMoveToSafe(p, 10)) {
 									tenMoves.add(getSafeLocation(p, 10));
 								} else {
 									tenMoves.add(getMoveFromInt(board, p, 10));
 								}
 							}
-							
 
 							if (canMoveToSafe(p, -1)) {
 								tenMoves.add(getSafeLocation(p, -1));
@@ -513,9 +511,9 @@ public class Main extends Application {
 						for (Piece p : currentPlayer.getPieces()) {
 							ArrayList<ArrayList<Integer>> elevenMoves = new ArrayList<ArrayList<Integer>>();
 
-							if(canMoveToHome(p,11)) {
+							if (canMoveToHome(p, 11)) {
 								elevenMoves.add(p.getColor().getHomeCoords().get(p.getHomeIndex()));
-							}else {
+							} else {
 								if (canMoveToSafe(p, 11)) {
 									elevenMoves.add(getSafeLocation(p, 11));
 								} else {
@@ -537,9 +535,9 @@ public class Main extends Application {
 						option2.setText("");
 						for (Piece p : currentPlayer.getPieces()) {
 							ArrayList<ArrayList<Integer>> twelveMoves = new ArrayList<ArrayList<Integer>>();
-							if(canMoveToHome(p,12)) {
+							if (canMoveToHome(p, 12)) {
 								twelveMoves.add(p.getColor().getHomeCoords().get(p.getHomeIndex()));
-							}else {
+							} else {
 								if (canMoveToSafe(p, 12)) {
 									twelveMoves.add(getSafeLocation(p, 12));
 								} else {
@@ -563,7 +561,7 @@ public class Main extends Application {
 						sorryCard = true;
 
 						for (Piece p : piecesOnBoard) {
-							if(p.getIsInPlay()) {
+							if (p.getIsInPlay()) {
 								int xLoc = p.getLocation().get(0).get(0);
 								int yLoc = p.getLocation().get(0).get(1);
 
@@ -612,7 +610,7 @@ public class Main extends Application {
 				}
 			}
 		});
-		
+
 		btnLeaderBoard.setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
 				Leaderboard leaderBoard = new Leaderboard();
@@ -662,6 +660,7 @@ public class Main extends Application {
 		int currentIndex = board.getPathIndex(p.getLocation().get(0));
 		int playersLastSpot = board.getPathIndex(p.getColor().getLastSpot().get(0));
 		if(p.getColor() instanceof Blue && currentIndex >= 10) {
+
 			playersLastSpot += 60;
 		}
 		if ((currentIndex <= playersLastSpot && currentIndex + card > playersLastSpot)
@@ -671,11 +670,11 @@ public class Main extends Application {
 		}
 		return false;
 	}
-	
+
 	public boolean canMoveToHome(Piece p, int card) {
 		int currentIndex = board.getPathIndex(p.getLocation().get(0));
 		int playersLastSpot = board.getPathIndex(p.getColor().getLastSpot().get(0));
-		if(p.getColor() instanceof Blue) {
+		if (p.getColor() instanceof Blue) {
 			playersLastSpot += 60;
 		}
 		if ((currentIndex <= playersLastSpot && currentIndex + card > playersLastSpot)
@@ -694,28 +693,29 @@ public class Main extends Application {
 
 		ArrayList<ArrayList<Integer>> playersSafeArray = p.getColor().getSafeCoords();
 		if(p.getColor() instanceof Blue && currentIndex >= 10) {
+
 			playersLastSpot += 60;
 		}
 		newLocation = playersSafeArray.get(card - (playersLastSpot - currentIndex) - 1);
 
 		return newLocation;
 	}
-	
+
 	public void returnSquareColor() {
 		fillInSquares(board.getPathCoords(), Color.LIGHTGRAY, Color.BLACK, 1, pane);
 		for (int i = 0; i < players.size(); i++) {
 			fillInSquares(players.get(i).getPlayerColor().getStartCoords(), players.get(i).getPlayerColor().getColor(),
-				Color.BLACK, 1, pane);
+					Color.BLACK, 1, pane);
 			fillInSquares(players.get(i).getPlayerColor().getSafeCoords(), players.get(i).getPlayerColor().getColor(),
-				Color.BLACK, 1, pane);
+					Color.BLACK, 1, pane);
 			fillInSquares(players.get(i).getPlayerColor().getHomeCoords(), players.get(i).getPlayerColor().getColor(),
-				Color.BLACK, 1, pane);
+					Color.BLACK, 1, pane);
 			fillInSquares(players.get(i).getPlayerColor().getFirstSpot(), players.get(i).getPlayerColor().getColor(),
-				Color.BLACK, 1, pane);
+					Color.BLACK, 1, pane);
 			fillInSquares(players.get(i).getPlayerColor().getLastSpot(), players.get(i).getPlayerColor().getColor(),
-				Color.BLACK, 1, pane);
+					Color.BLACK, 1, pane);
 		}
-		
+
 	}
 
 	/**
@@ -730,21 +730,20 @@ public class Main extends Application {
 			if (i == currentTurn) {
 				continue;
 			}
-			
+
 			for (Piece piece : players.get(i).getPieces()) {
-				for(ArrayList<Integer> location : board.getPathCoords()) {
-					
-					if(piece.getLocation().get(0).get(0) == location.get(0) &&
-							piece.getLocation().get(0).get(1) == location.get(1)) {
+				for (ArrayList<Integer> location : board.getPathCoords()) {
+
+					if (piece.getLocation().get(0).get(0) == location.get(0)
+							&& piece.getLocation().get(0).get(1) == location.get(1)) {
 						System.out.println(location);
 						piecesOnBoard.add(piece);
 					}
 				}
-				
-				
-//				if (piece.getIsInPlay()) {
-//					piecesOnBoard.add(piece);
-//				}
+
+				// if (piece.getIsInPlay()) {
+				// piecesOnBoard.add(piece);
+				// }
 			}
 		}
 		return piecesOnBoard;
@@ -851,31 +850,35 @@ public class Main extends Application {
 			@Override
 			public void handle(MouseEvent event) {
 				returnSquareColor();
-				if(selectedCircle != null) {
-					selectedCircle.setStroke(Color.BLACK);
+				if (p.getColor() == (players.get(currentTurn)).getPlayerColor()) {
+					if (selectedCircle != null) {
+						selectedCircle.setStroke(Color.BLACK);
+					}
+					circle.setStroke(Color.WHITE);
 				}
-				circle.setStroke(Color.WHITE);
 			}
 		});
 
 		circle.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if (sorryCard) {
-					if (!p.getIsInPlay()) {
-						selected = p;
-						selectedCircle = circle;
-						fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, selected.getColor().getColor(), .7,
-								pane);
-						// sorryCard = false;
-					}
-				} else {
-					if (hasDrawn) {
-						selected = p;
-						selectedCircle = circle;
+				if (p.getColor() == (players.get(currentTurn)).getPlayerColor()) {
+					if (sorryCard) {
+						if (!p.getIsInPlay()) {
+							selected = p;
+							selectedCircle = circle;
+							fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, selected.getColor().getColor(),
+									.7, pane);
+							// sorryCard = false;
+						}
+					} else {
+						if (hasDrawn) {
+							selected = p;
+							selectedCircle = circle;
 
-						fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, selected.getColor().getColor(), .7,
-								pane);
+							fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, selected.getColor().getColor(),
+									.7, pane);
+						}
 					}
 				}
 
@@ -909,21 +912,21 @@ public class Main extends Application {
 											&& GridPane.getRowIndex(n) == location.get(0).get(1)) {
 										node = n;
 									}
-	
+
 								}
 								int locX = piece.getColor().startCoords[piece.getHomeIndex()][0];
 								int locY = piece.getColor().startCoords[piece.getHomeIndex()][1];
 								ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
 								temp.add(new ArrayList<Integer>(Arrays.asList(locX, locY)));
-	
+
 								pane.getChildren().remove(node);
 								pane.add(node, locX, locY);
 								pane.getChildren().remove(selectedCircle);
-	
+
 								piece.setLocation(temp);
 								piece.setOutOfPlay();
 								pane.add(selectedCircle, location.get(0).get(0), location.get(0).get(1));
-								//returnSquareColor();
+								// returnSquareColor();
 								selectedCircle.setStroke(Color.BLACK);
 								selected.setLocation(location);
 								selected.setInPlay();
@@ -935,16 +938,18 @@ public class Main extends Application {
 								for (int k = 0; k < selected.getPossibleMoves().size(); k++) {
 									if ((selected.getPossibleMoves().get(k).get(0) == location.get(k).get(0))
 											&& selected.getPossibleMoves().get(k).get(1) == location.get(k).get(1)) {
-										
-										for(int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
-											if((location.get(k).get(0) == selected.getColor().getSafeCoords().get(i).get(0)) 
-													&& (location.get(k).get(1) == selected.getColor().getSafeCoords().get(i).get(1))) {
+
+										for (int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
+											if ((location.get(k).get(0) == selected.getColor().getSafeCoords().get(i)
+													.get(0))
+													&& (location.get(k).get(1) == selected.getColor().getSafeCoords()
+															.get(i).get(1))) {
 												selected.setOutOfPlay();
 												System.out.println("Out of play");
-												
+
 											}
 										}
-										
+
 										pane.getChildren().remove(selectedCircle);
 										pane.add(selectedCircle, location.get(0).get(0), location.get(0).get(1));
 										if (!selected.getIsInPlay() && !selected.isPieceSafe()) {
@@ -962,15 +967,15 @@ public class Main extends Application {
 											}
 										}
 										selectedCircle.setStroke(Color.BLACK);
-										
+
 										nextTurn();
 									}
 								}
 							}
 						}
-						
-					}					
-					
+
+					}
+
 				});
 
 			}
