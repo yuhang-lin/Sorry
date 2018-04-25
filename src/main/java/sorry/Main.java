@@ -263,14 +263,30 @@ public class Main extends Application {
 		turnText = new Text("Blue player's turn");
 		turnText.setFill(Color.BLUE);
 		pane.add(turnText, 20, 1);
+		
+		Button showHelp = new Button("Help");
+		pane.add(showHelp, 20, 10);
+		
+		showHelp.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				Help help = new Help();
+				help.start(new Stage());
+				
+			}
+		});
 
 		setPlayers();
 		resetBoard(primaryStage);
+		
 
 		Scene scene = new Scene(pane, 1100, 735);
 		scene.setFill(Color.WHITE);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
+		
+		
 
 		btnDraw.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
@@ -457,6 +473,8 @@ public class Main extends Application {
 			}
 		});
 	}
+	
+
 
 	private void setPossibleMoves(ArrayList<Integer> moveNumList) {
 		selfPieceSet.clear();
