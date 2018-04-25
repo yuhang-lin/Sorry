@@ -279,27 +279,26 @@ public class Main extends Application {
 						ArrayList<ArrayList<Integer>> oneMoves = new ArrayList<ArrayList<Integer>>();
 						if (canPieceFinish(p, 1)) {
 							p.getPlayer().addFinishedPieces();
-							if (p.getPlayer().getPiecesHome() == 4) {
-							}
 							oneMoves.add(p.getColor().getHomeCoords().get(p.getHomeIndex()));
 						}
 						if (p.isPieceSafe()) {
 							if (canMoveWithinSafe(p, 1)) {
 								oneMoves.add(moveWithinSafeZone(p, 1));
 							}
-						}
-						if (p.getIsInPlay()) {
-							if (canMoveToSafe(p, 1)) {
-								oneMoves.add(getSafeLocation(p, 1));
+						}else {
+							if (p.getIsInPlay()) {
+								if (canMoveToSafe(p, 1)) {
+									oneMoves.add(getSafeLocation(p, 1));
+								} else {
+									oneMoves.add(getMoveFromInt(board, p, 1));
+								}
 							} else {
-								oneMoves.add(getMoveFromInt(board, p, 1));
-							}
-						} else {
 
 							ArrayList<Integer> temp = new ArrayList<Integer>();
 							temp.add(p.getColor().getFirstSpot().get(0).get(0));
 							temp.add(p.getColor().getFirstSpot().get(0).get(1));
 							oneMoves.add(temp);
+							}
 						}
 
 						p.setPossibleMoves(oneMoves);
@@ -321,20 +320,20 @@ public class Main extends Application {
 							if (canMoveWithinSafe(p, 2)) {
 								twoMoves.add(moveWithinSafeZone(p, 2));
 							}
-						}
-						if (p.getIsInPlay()) {
-							if (canMoveToSafe(p, 2)) {
-								twoMoves.add(getSafeLocation(p, 2));
+						}else {
+							if (p.getIsInPlay()) {
+								if (canMoveToSafe(p, 2)) {
+									twoMoves.add(getSafeLocation(p, 2));
+								} else {
+									twoMoves.add(getMoveFromInt(board, p, 2));
+								}
 							} else {
-								twoMoves.add(getMoveFromInt(board, p, 2));
+								ArrayList<Integer> temp = new ArrayList<Integer>();
+								temp.add(p.getColor().getFirstSpot().get(0).get(0));
+								temp.add(p.getColor().getFirstSpot().get(0).get(1));
+								twoMoves.add(temp);
 							}
-						} else {
-							ArrayList<Integer> temp = new ArrayList<Integer>();
-							temp.add(p.getColor().getFirstSpot().get(0).get(0));
-							temp.add(p.getColor().getFirstSpot().get(0).get(1));
-							twoMoves.add(temp);
 						}
-
 						p.setPossibleMoves(twoMoves);
 					}
 					break;
@@ -560,11 +559,13 @@ public class Main extends Application {
 						sorryCard = true;
 
 						for (Piece p : piecesOnBoard) {
-							int xLoc = p.getLocation().get(0).get(0);
-							int yLoc = p.getLocation().get(0).get(1);
+							if(p.getIsInPlay()) {
+								int xLoc = p.getLocation().get(0).get(0);
+								int yLoc = p.getLocation().get(0).get(1);
 
-							sorryMoves.add(new ArrayList<Integer>(Arrays.asList(xLoc, yLoc)));
-							System.out.println(xLoc + ", " + yLoc);
+								sorryMoves.add(new ArrayList<Integer>(Arrays.asList(xLoc, yLoc)));
+								System.out.println(xLoc + ", " + yLoc);
+							}
 						}
 
 						for (Piece p : currentPlayer.getPieces()) {
@@ -718,10 +719,21 @@ public class Main extends Application {
 			if (i == currentTurn) {
 				continue;
 			}
+			
 			for (Piece piece : players.get(i).getPieces()) {
-				if (piece.getIsInPlay()) {
-					piecesOnBoard.add(piece);
+				for(ArrayList<Integer> location : board.getPathCoords()) {
+					
+					if(piece.getLocation().get(0).get(0) == location.get(0) &&
+							piece.getLocation().get(0).get(1) == location.get(1)) {
+						System.out.println(location);
+						piecesOnBoard.add(piece);
+					}
 				}
+				
+				
+//				if (piece.getIsInPlay()) {
+//					piecesOnBoard.add(piece);
+//				}
 			}
 		}
 		return piecesOnBoard;
@@ -912,6 +924,16 @@ public class Main extends Application {
 								for (int k = 0; k < selected.getPossibleMoves().size(); k++) {
 									if ((selected.getPossibleMoves().get(k).get(0) == location.get(k).get(0))
 											&& selected.getPossibleMoves().get(k).get(1) == location.get(k).get(1)) {
+										
+										for(int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
+											if((location.get(k).get(0) == selected.getColor().getSafeCoords().get(i).get(0)) 
+													&& (location.get(k).get(1) == selected.getColor().getSafeCoords().get(i).get(1))) {
+												selected.setOutOfPlay();
+												System.out.println("Out of play");
+												
+											}
+										}
+										
 										pane.getChildren().remove(selectedCircle);
 										pane.add(selectedCircle, location.get(0).get(0), location.get(0).get(1));
 										if (!selected.getIsInPlay() && !selected.isPieceSafe()) {
