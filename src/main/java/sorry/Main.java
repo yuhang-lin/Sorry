@@ -17,6 +17,8 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
@@ -70,6 +72,9 @@ public class Main extends Application {
 	String userName = "SorryUser";
 
 	ArrayList<Player> players = new ArrayList<>();
+	
+	HashMap<String, Piece> otherPieceMap = new HashMap<>();
+	HashSet<String> selfPieceSet = new HashSet<>();
 
 	boolean hasDrawn;
 
@@ -454,42 +459,51 @@ public class Main extends Application {
 	}
 
 	private void setPossibleMoves(ArrayList<Integer> moveNumList) {
-		for (Piece p : players.get(currentTurn).getPieces()) {
+		selfPieceSet.clear();
+		Player currentPlayer = players.get(currentTurn);
+		for (Piece p: currentPlayer.getPieces()) {
+			selfPieceSet.add(p.getLocation().toString());
+		}
+		for (Piece p : currentPlayer.getPieces()) {
 			ArrayList<ArrayList<Integer>> moves = new ArrayList<ArrayList<Integer>>();
 			for (int cardNum : moveNumList) {
+				ArrayList<Integer> move = new ArrayList<>();
 				if (cardNum >= 1 && cardNum <= 5) {
 					if (canPieceFinish(p, cardNum)) {
 						p.getPlayer().addFinishedPieces();
-						moves.add(p.getColor().getHomeCoords().get(p.getHomeIndex()));
+						move = p.getColor().getHomeCoords().get(p.getHomeIndex());
 					}
 					if (p.isPieceSafe()) {
 						if (canMoveWithinSafe(p, cardNum)) {
-							moves.add(moveWithinSafeZone(p, cardNum));
+							move = moveWithinSafeZone(p, cardNum);
 						}
 					} else {
 						if (p.getIsInPlay()) {
 							if (canMoveToSafe(p, cardNum)) {
-								moves.add(getSafeLocation(p, cardNum));
+								move = getSafeLocation(p, cardNum);
 							} else {
-								moves.add(getMoveFromInt(board, p, cardNum));
+								move = getMoveFromInt(board, p, cardNum);
 							}
 						} else if (cardNum >= 1 && cardNum <= 2){ // Start a pawn
 							ArrayList<Integer> temp = new ArrayList<Integer>();
 							temp.add(p.getColor().getFirstSpot().get(0).get(0));
 							temp.add(p.getColor().getFirstSpot().get(0).get(1));
-							moves.add(temp);
+							move = temp;
 						}
 					}
 				} else {
 					if (cardNum >= 6 && canMoveToHome(p, cardNum)) {
-						moves.add(p.getColor().getHomeCoords().get(p.getHomeIndex()));
+						move = p.getColor().getHomeCoords().get(p.getHomeIndex());
 					} else {
 						if (canMoveToSafe(p, cardNum)) {
-							moves.add(getSafeLocation(p, cardNum));
+							move = getSafeLocation(p, cardNum);
 						} else {
-							moves.add(getMoveFromInt(board, p, cardNum));
+							move = getMoveFromInt(board, p, cardNum);
 						}
 					}
+				}
+				if (!selfPieceSet.contains(move.toString())) {
+					moves.add(move);
 				}
 			}
 			p.setPossibleMoves(moves);
@@ -780,6 +794,10 @@ public class Main extends Application {
 					@Override
 					public void handle(MouseEvent event) {
 						returnSquareColor();
+						otherPieceMap.clear();
+						for (Piece piece : getPiecesOnBoard()) {
+							otherPieceMap.put(piece.getLocation().toString(), piece);
+						}
 						if (sorryCard) {
 							Piece piece = bumpPiece(location);
 							if (piece != null) {
