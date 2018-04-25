@@ -6,7 +6,7 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
 
 public class TestConnection {
 	public static String listRecord() {
-		String sqlQuery = "SELECT record.id, player.name, pc1, pc2, pc3, color, result FROM `record` JOIN player ON player.id = player";
+		String sqlQuery = "SELECT record.id, player.name, pc1, pc2, pc3, color, time, result FROM `record` JOIN player ON player.id = player";
 		StringBuffer outputList = new StringBuffer("");
 		try (Connection mysqlConn = MysqlConnect.myConnect(); Statement statement = mysqlConn.createStatement()) {
 			ResultSet myResult = statement.executeQuery(sqlQuery);
@@ -17,9 +17,10 @@ public class TestConnection {
 				String pc2 = myResult.getString("pc2") != null ? myResult.getString("pc2") : "";
 				String pc3 = myResult.getString("pc3") != null ? myResult.getString("pc3") : "";
 				String color = myResult.getString("color");
+				String time = myResult.getString("time");
 				String result = myResult.getString("result");
 				outputList.append(
-						id + " " + name + " " + pc1 + " " + pc2 + " " + pc3 + " " + color + " " + result + "\n");
+						id + " " + name + " " + pc1 + " " + pc2 + " " + pc3 + " " + color + " " + time + " " + result + "\n");
 			}
 			String userName = "Yuhang Lin";
 			sqlQuery = "INSERT INTO `player`(`name`) VALUES (?)";

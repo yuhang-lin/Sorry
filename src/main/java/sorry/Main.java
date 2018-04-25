@@ -227,8 +227,11 @@ public class Main extends Application {
 		pane.add(btnDraw, 20, 2);
 		Button btnSave = new Button("Save game");
 		pane.add(btnSave, 30, 2);
+		Button btnLeaderBoard = new Button("Leader Board");
+		pane.add(btnLeaderBoard, 40, 2);
 		Button btnRestore = new Button("Resume game");
 		pane.add(btnRestore, 50, 2);
+		
 
 		directions = new Text("Please draw a card.");
 		pane.add(directions, 20, 5);
@@ -254,7 +257,7 @@ public class Main extends Application {
 
 		resetBoard(primaryStage);
 
-		Scene scene = new Scene(pane, 1000, 735);
+		Scene scene = new Scene(pane, 1100, 735);
 		scene.setFill(Color.WHITE);
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -606,6 +609,13 @@ public class Main extends Application {
 				} else {
 					directions.setText("Failed to restore the game.");
 				}
+			}
+		});
+		
+		btnLeaderBoard.setOnMousePressed(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				Leaderboard leaderBoard = new Leaderboard();
+				leaderBoard.start(new Stage());
 			}
 		});
 	}
