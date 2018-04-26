@@ -78,7 +78,7 @@ public class Main extends Application {
 	HashSet<String> selfPieceSet = new HashSet<>();
 
 	boolean hasDrawn;
-	int numDrawn = 1;
+	int numDrawLeft = 1;
 
 	Text turnText;
 	Text option1;
@@ -309,8 +309,8 @@ public class Main extends Application {
 		btnDraw.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if (numDrawn > 0) {
-					numDrawn--;
+				if (numDrawLeft > 0) {
+					numDrawLeft--;
 					hasDrawn = true;
 					sorryCard = false;
 					currCard = deck.draw();
@@ -321,7 +321,7 @@ public class Main extends Application {
 	
 					directions.setText("The card is: " + card);
 					if (card.equals("2")) {
-						numDrawn++;
+						numDrawLeft++;
 					}
 					cardToMoves(card);
 					Player currentPlayer = players.get(currentTurn);
@@ -828,20 +828,23 @@ public class Main extends Application {
 	 * Switch to the next turn.
 	 */
 	public void nextTurn() {
-		Player currentPlayer = players.get(currentTurn);
-		sideBar.getChildren().remove(4);
-		sideBar.getChildren().add(4, new CardPane(new Card("Draw")));
-		
-		//If the player has 4 pieces home they win!!
-		if (currentPlayer.getPiecesHome() == Player.getNumPieces()) {
-			DisplayWinner d = new DisplayWinner(currentPlayer);
-			d.Start(new Stage());
-			directions.setText("Player" + currentPlayer.getPlayerColor() + "wins!");
-			endGame();
+		if (numDrawLeft == 0) {
+			Player currentPlayer = players.get(currentTurn);
+			sideBar.getChildren().remove(4);
+			sideBar.getChildren().add(4, new CardPane(new Card("Draw")));
+			
+			//If the player has 4 pieces home they win!!
+			if (currentPlayer.getPiecesHome() == Player.getNumPieces()) {
+				DisplayWinner d = new DisplayWinner(currentPlayer);
+				d.Start(new Stage());
+				directions.setText("Player" + currentPlayer.getPlayerColor() + "wins!");
+				endGame();
+			}
+			currentTurn = (currentTurn + 1) % players.size();
+			resetText();
+			numDrawLeft = 1;
+			sorryCard = false;
 		}
-		currentTurn = (currentTurn + 1) % players.size();
-		resetText();
-		numDrawn = 1;
 	}
 
 	/**
