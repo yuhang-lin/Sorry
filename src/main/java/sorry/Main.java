@@ -640,12 +640,16 @@ public class Main extends Application {
 			if (i + card == 5) {
 				return true;
 			}
-		} else {
-			// TODO: Implement logic for a piece going home from outside of safe array
 		}
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param p
+	 * @param card
+	 * @return
+	 */
 	public boolean canMoveWithinSafe(Piece p, int card) {
 		int i = getIndexOfSafeArray(p);
 		if (i + card > p.getColor().getSafeCoords().size() - 1) {
@@ -654,6 +658,11 @@ public class Main extends Application {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @param p
+	 * @return
+	 */
 	public int getIndexOfSafeArray(Piece p) {
 		for (int i = 0; i < p.getColor().getSafeCoords().size(); i++) {
 			if (p.getColor().getSafeCoords().get(i).get(0) == p.getLocation().get(0).get(0)
@@ -680,7 +689,6 @@ public class Main extends Application {
 		}
 		if ((currentIndex <= playersLastSpot && currentIndex + card > playersLastSpot)
 				&& (card - (playersLastSpot - currentIndex) - 1) < p.getColor().getSafeCoords().size()) {
-			// p.setOutOfPlay();
 			return true;
 		}
 		return false;
@@ -694,7 +702,6 @@ public class Main extends Application {
 		}
 		if ((currentIndex <= playersLastSpot && currentIndex + card > playersLastSpot)
 				&& (card - (playersLastSpot - currentIndex) - 1) == p.getColor().getSafeCoords().size()) {
-			// p.setOutOfPlay();
 			return true;
 		}
 		return false;
@@ -842,6 +849,13 @@ public class Main extends Application {
 		}
 	}
 
+	/**
+	 * Gets the node from the grid pane
+	 * @param gridPane the grid pane of the game
+	 * @param col column in the grid pane
+	 * @param row row in the grid pane
+	 * @return
+	 */
 	private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
 		for (Node node : gridPane.getChildren()) {
 			if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
@@ -851,6 +865,14 @@ public class Main extends Application {
 		return null;
 	}
 
+	/**
+	 * Draws piece in the GUI.
+	 * @param p piece to draw
+	 * @param primaryStage stage used to be shown the pane
+	 * @param pane the pane for having the board
+	 * @param board the game board
+	 * @param i home index of the piece
+	 */
 	public void drawPiece(Piece p, Stage primaryStage, GridPane pane, Board board, int i) {
 		// p.setLocation(moves);
 		Circle circle = new Circle();
@@ -904,6 +926,11 @@ public class Main extends Application {
 		p.setCircle(circle);
 	}
 
+	/**
+	 * Draws the GUI of the game board.
+	 * @param pane the pane to draw the board
+	 * @param board the game board
+	 */
 	public void drawBoard(GridPane pane, Board board) {
 		for (int i = 0; i <= 15; i++) {
 			for (int j = 0; j <= 15; j++) {
@@ -995,6 +1022,12 @@ public class Main extends Application {
 		}
 	}
 
+	/**
+	 * Removes a piece from start.
+	 * @param p piece to be removed
+	 * @param pane Pane of the game board
+	 * @param circle the circle of the piece in the GUI
+	 */
 	public void moveFromStart(Piece p, GridPane pane, Circle circle) {
 		ArrayList<ArrayList<Integer>> firstSpot = p.getColor().getFirstSpot();
 		pane.getChildren().remove(circle);
@@ -1004,6 +1037,10 @@ public class Main extends Application {
 		circle.setStroke(Color.BLACK);
 	}
 
+	/**
+	 * Removes the other piece from the location.
+	 * @param location the location for pumping
+	 */
 	private void removeBumpedPiece(ArrayList<ArrayList<Integer>> location) {
 		Piece piece = getBumpedPiece(location);
 		if (piece == null) {
