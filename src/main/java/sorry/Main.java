@@ -569,8 +569,8 @@ public class Main extends Application {
 	}
 
 	public boolean canMoveToSafe(Piece p, int card) {
-		int currentIndex = board.getPathIndex(p.getLocation().get(0));
-		int playersLastSpot = board.getPathIndex(p.getColor().getLastSpot().get(0));
+		int currentIndex = Board.getPathIndex(p.getLocation().get(0));
+		int playersLastSpot = Board.getPathIndex(p.getColor().getLastSpot().get(0));
 		if (p.getColor() instanceof Blue && currentIndex >= 10) {
 
 			playersLastSpot += 60;
@@ -584,8 +584,8 @@ public class Main extends Application {
 	}
 
 	public boolean canMoveToHome(Piece p, int card) {
-		int currentIndex = board.getPathIndex(p.getLocation().get(0));
-		int playersLastSpot = board.getPathIndex(p.getColor().getLastSpot().get(0));
+		int currentIndex = Board.getPathIndex(p.getLocation().get(0));
+		int playersLastSpot = Board.getPathIndex(p.getColor().getLastSpot().get(0));
 		if (p.getColor() instanceof Blue) {
 			playersLastSpot += 60;
 		}
@@ -598,8 +598,8 @@ public class Main extends Application {
 	}
 
 	public ArrayList<Integer> getSafeLocation(Piece p, int card) {
-		int currentIndex = board.getPathIndex(p.getLocation().get(0));
-		int playersLastSpot = board.getPathIndex(p.getColor().getLastSpot().get(0));
+		int currentIndex = Board.getPathIndex(p.getLocation().get(0));
+		int playersLastSpot = Board.getPathIndex(p.getColor().getLastSpot().get(0));
 
 		ArrayList<Integer> newLocation = new ArrayList<Integer>();
 
@@ -666,15 +666,11 @@ public class Main extends Application {
 	 */
 	public void nextTurn() {
 		Player currentPlayer = players.get(currentTurn);
-		if (currentPlayer.getPiecesHome() == 4) {
+		if (currentPlayer.getPiecesHome() == Player.getNumPieces()) {
 			directions.setText("Player" + currentPlayer.getPlayerColor() + "wins!");
 			endGame();
 		}
-		if (currentTurn == 3) {
-			currentTurn = 0;
-		} else {
-			currentTurn++;
-		}
+		currentTurn = (currentTurn + 1) % players.size();
 		resetText();
 	}
 
@@ -839,7 +835,6 @@ public class Main extends Application {
 
 										// Check if it can bump other players' pawns
 										if (otherPieceMap.containsKey(location.toString())) {
-											Piece bumped = otherPieceMap.get(location.toString());
 											removeBumpedPiece(location);
 										}
 										for (int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
