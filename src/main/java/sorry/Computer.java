@@ -6,14 +6,14 @@ import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- *
- * @author Chris Bratkovics, Yuhang Lin
+ * Computer opponent of Sorry game.
+ * <p> Basic initial code was created by Chirs Bratkovics, then Yuhang Lin completed all the rest of the functions, 
+ * including getting scores for each movement and getting correct choice.
+ * @author Yuhang Lin, Chris Bratkovics
  */
 public class Computer extends Player {
 
 	private PieceColor color;
-	private int movement;
-	private boolean occupied;
 	private NiceLevel niceLevel;
 	private SmartLevel smartLevel;
 	private ArrayList<Choice> choiceList = new ArrayList<>();
@@ -43,6 +43,10 @@ public class Computer extends Player {
 		return color;
 	}
 
+	/**
+	 * Choose one available from the list of Choice then use than choice to move the piece.
+	 * @param piecesOnBoard pieces by other players
+	 */
 	public void move(ArrayList<Piece> piecesOnBoard) {
 		Choice choice = getSelectedChoice(piecesOnBoard);
 		Piece piece = choice.getPiece();

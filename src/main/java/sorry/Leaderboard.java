@@ -1,6 +1,3 @@
-/**
- * 
- */
 package sorry;
 
 import java.sql.Connection;
@@ -8,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,28 +14,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import javafx.application.Application;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
-
+/**
+ * GUI for the leader board.
+ * <p>
+ * Margaret Caron wrote some initial functions then Yuhang Lin rewrote this
+ * class completely.
+ * 
+ * @author Yuhang Lin, Margaret Caron
+ */
 public class Leaderboard {
 
 	private TableView<GameRecord> table = new TableView<GameRecord>();
@@ -71,7 +58,7 @@ public class Leaderboard {
 		pc1Col.setMinWidth(200);
 		pc1Col.setCellValueFactory(new PropertyValueFactory<GameRecord, String>("pc1"));
 		pc1Col.setSortType(TableColumn.SortType.ASCENDING);
-		
+
 		TableColumn pc2Col = new TableColumn("Computer Opponent 2");
 		pc2Col.setMinWidth(200);
 		pc2Col.setCellValueFactory(new PropertyValueFactory<GameRecord, String>("pc2"));
@@ -81,17 +68,17 @@ public class Leaderboard {
 		pc3Col.setMinWidth(200);
 		pc3Col.setCellValueFactory(new PropertyValueFactory<GameRecord, String>("pc3"));
 		pc3Col.setSortType(TableColumn.SortType.ASCENDING);
-		
+
 		TableColumn colorCol = new TableColumn("Color");
 		colorCol.setMinWidth(100);
 		colorCol.setCellValueFactory(new PropertyValueFactory<GameRecord, String>("color"));
 		colorCol.setSortType(TableColumn.SortType.ASCENDING);
-		
+
 		TableColumn timeCol = new TableColumn("Time");
 		timeCol.setMinWidth(200);
 		timeCol.setCellValueFactory(new PropertyValueFactory<GameRecord, String>("time"));
 		timeCol.setSortType(TableColumn.SortType.ASCENDING);
-		
+
 		TableColumn resultCol = new TableColumn("Result");
 		resultCol.setMinWidth(100);
 		resultCol.setCellValueFactory(new PropertyValueFactory<GameRecord, String>("result"));
@@ -111,9 +98,11 @@ public class Leaderboard {
 		stage.show();
 	}
 
+	/**
+	 * Get data from MySQL database.
+	 */
 	private void getData() {
 		String sqlQuery = "SELECT record.id, player.name, pc1, pc2, pc3, color, time, result FROM `record` JOIN player ON player.id = player";
-		StringBuffer outputList = new StringBuffer("");
 		try (Connection mysqlConn = MysqlConnect.myConnect(); Statement statement = mysqlConn.createStatement()) {
 			ResultSet myResult = statement.executeQuery(sqlQuery);
 			while (myResult.next()) {
@@ -134,6 +123,11 @@ public class Leaderboard {
 		}
 	}
 
+	/**
+	 * Game record for displaying in the table
+	 * 
+	 * @author Yuhang Lin
+	 */
 	public static class GameRecord {
 
 		private final SimpleStringProperty recordNum;
@@ -177,7 +171,7 @@ public class Leaderboard {
 		public String getPc3() {
 			return pc3.get();
 		}
-		
+
 		public String getColor() {
 			return color.get();
 		}

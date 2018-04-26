@@ -1,9 +1,15 @@
+/**
+ * Test connection to MySQL database and try all the SQL queries for the game.
+ */
 package sorry;
 
 import java.sql.*;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
+/**
+ * @author Yuhang Lin
+ */
 public class TestConnection {
 	public static String listRecord() {
 		String sqlQuery = "SELECT record.id, player.name, pc1, pc2, pc3, color, time, result FROM `record` JOIN player ON player.id = player";
