@@ -78,6 +78,7 @@ public class Main extends Application {
 	HashSet<String> selfPieceSet = new HashSet<>();
 
 	boolean hasDrawn;
+	int numDrawn = 1;
 
 	Text turnText;
 	Text option1;
@@ -226,15 +227,15 @@ public class Main extends Application {
 	 * Add all players of the game.
 	 */
 	private void setPlayers() {
-		Computer blue = new Computer(new Blue(), Computer.NiceLevel.MEAN, Computer.SmartLevel.SMART); // for testing
-		// Player blue = new Player(new Blue());
+		//Computer blue = new Computer(new Blue(), Computer.NiceLevel.MEAN, Computer.SmartLevel.SMART); // for testing
+		Player blue = new Player(new Blue());
 		Player green = new Player(new Green());
 		Player red = new Player(new Red());
 		Player yellow = new Player(new Yellow());
 		players.add(blue);
 		players.add(yellow);
-		//players.add(green);
-		//players.add(red);
+		players.add(green);
+		players.add(red);
 	}
 
 	@Override
@@ -308,29 +309,47 @@ public class Main extends Application {
 		btnDraw.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				hasDrawn = true;
-				sorryCard = false;
-				currCard = deck.draw();
-				String card = currCard.getName();
-				directions.setText("The card is: " + currCard.getName());
-				sideBar.getChildren().remove(4);
-				sideBar.getChildren().add(4, (new CardPane(currCard)));
-
-				directions.setText("The card is: " + card);
-				cardToMoves(card);
-				Player currentPlayer = players.get(currentTurn);
-				if (currentPlayer instanceof Computer) {
-					System.out.println("Computer got the card " + card);
-					Choice choice = ((Computer) currentPlayer).getSelectedChoice(getPiecesOnBoard());
-					if (choice != null) {
-						Piece piece = choice.getPiece();
-						ArrayList<ArrayList<Integer>> nextLocation = new ArrayList<>();
-						nextLocation.add(choice.getMove());
-						selected = piece;
-						selectedCircle = selected.getCircle();
-						movePiece(nextLocation);
+				if (numDrawn > 0) {
+					numDrawn--;
+					hasDrawn = true;
+					sorryCard = false;
+					currCard = deck.draw();
+					String card = currCard.getName();
+					directions.setText("The card is: " + currCard.getName());
+					sideBar.getChildren().remove(4);
+					sideBar.getChildren().add(4, (new CardPane(currCard)));
+	
+					directions.setText("The card is: " + card);
+					if (card.equals("2")) {
+						numDrawn++;
+					}
+					cardToMoves(card);
+					Player currentPlayer = players.get(currentTurn);
+					if (currentPlayer instanceof Computer) {
+						System.out.println("Computer got the card " + card);
+						Choice choice = ((Computer) currentPlayer).getSelectedChoice(getPiecesOnBoard());
+						if (choice != null) {
+							Piece piece = choice.getPiece();
+							ArrayList<ArrayList<Integer>> nextLocation = new ArrayList<>();
+							nextLocation.add(choice.getMove());
+							selected = piece;
+							selectedCircle = selected.getCircle();
+							movePiece(nextLocation);
+						} else {
+							nextTurn();
+						}
 					} else {
-						nextTurn();
+						Piece[] pieces = currentPlayer.getPieces();
+						boolean hasMove = false;
+						for (Piece piece : pieces) {
+							ArrayList<ArrayList<Integer>> moves = piece.getPossibleMoves();
+							if (!(moves == null || moves.size() == 0 || moves.get(0).isEmpty())) {
+								hasMove = true;
+							}
+						}
+						if (!hasMove) {
+							nextTurn();
+						}
 					}
 				}
 			}
@@ -812,16 +831,17 @@ public class Main extends Application {
 		Player currentPlayer = players.get(currentTurn);
 		sideBar.getChildren().remove(4);
 		sideBar.getChildren().add(4, new CardPane(new Card("Draw")));
-		DisplayWinner d = new DisplayWinner(currentPlayer);
-		d.Start(new Stage());
+		
 		//If the player has 4 pieces home they win!!
 		if (currentPlayer.getPiecesHome() == Player.getNumPieces()) {
-			
+			DisplayWinner d = new DisplayWinner(currentPlayer);
+			d.Start(new Stage());
 			directions.setText("Player" + currentPlayer.getPlayerColor() + "wins!");
 			endGame();
 		}
 		currentTurn = (currentTurn + 1) % players.size();
 		resetText();
+		numDrawn = 1;
 	}
 
 	/**
