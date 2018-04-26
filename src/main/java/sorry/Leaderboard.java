@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -130,7 +131,7 @@ public class Leaderboard {
 	 */
 	public static class GameRecord {
 
-		private final SimpleStringProperty recordNum;
+		private final SimpleIntegerProperty recordNum;
 		private final SimpleStringProperty name;
 		private final SimpleStringProperty pc1;
 		private final SimpleStringProperty pc2;
@@ -142,7 +143,7 @@ public class Leaderboard {
 		public GameRecord(String recordNum, String name, String pc1, String pc2, String pc3, String color, String time,
 				String result) {
 			super();
-			this.recordNum = new SimpleStringProperty(recordNum);
+			this.recordNum = new SimpleIntegerProperty(Integer.parseInt(recordNum));
 			this.name = new SimpleStringProperty(name);
 			this.pc1 = new SimpleStringProperty(pc1);
 			this.pc2 = new SimpleStringProperty(pc2);
@@ -152,7 +153,7 @@ public class Leaderboard {
 			this.result = new SimpleStringProperty(result);
 		}
 
-		public String getRecordNum() {
+		public int getRecordNum() {
 			return recordNum.get();
 		}
 
