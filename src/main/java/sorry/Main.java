@@ -834,8 +834,8 @@ public class Main extends Application {
 						} else {
 							if (selected != null && selected.getPossibleMoves() != null) {
 								for (int k = 0; k < selected.getPossibleMoves().size(); k++) {
-									if ((selected.getPossibleMoves().get(k).get(0) == location.get(k).get(0))
-											&& selected.getPossibleMoves().get(k).get(1) == location.get(k).get(1)) {
+									if ((selected.getPossibleMoves().get(k).get(0) == location.get(0).get(0))
+											&& selected.getPossibleMoves().get(k).get(1) == location.get(0).get(1)) {
 
 										// Check if it can bump other players' pawns
 										if (otherPieceMap.containsKey(location.toString())) {
@@ -843,9 +843,9 @@ public class Main extends Application {
 											removeBumpedPiece(location);
 										}
 										for (int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
-											if ((location.get(k).get(0) == selected.getColor().getSafeCoords().get(i)
+											if ((location.get(0).get(0) == selected.getColor().getSafeCoords().get(i)
 													.get(0))
-													&& (location.get(k).get(1) == selected.getColor().getSafeCoords()
+													&& (location.get(0).get(1) == selected.getColor().getSafeCoords()
 															.get(i).get(1))) {
 												selected.setOutOfPlay();
 												System.out.println("Out of play");
