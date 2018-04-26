@@ -483,7 +483,7 @@ public class Main extends Application {
 		selfPieceSet.clear();
 		Player currentPlayer = players.get(currentTurn);
 		for (Piece p: currentPlayer.getPieces()) {
-			selfPieceSet.add(p.getLocation().toString());
+			selfPieceSet.add(p.getLocation().get(0).toString());
 		}
 		for (Piece p : currentPlayer.getPieces()) {
 			ArrayList<ArrayList<Integer>> moves = new ArrayList<ArrayList<Integer>>();
