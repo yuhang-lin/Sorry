@@ -817,27 +817,9 @@ public class Main extends Application {
 							otherPieceMap.put(piece.getLocation().toString(), piece);
 						}
 						if (sorryCard) {
-							Piece piece = bumpPiece(location);
+							Piece piece = getBumpedPiece(location);
 							if (piece != null) {
-								Node node = null;
-								for (Node n : pane.getChildren()) {
-									if (n instanceof Circle && GridPane.getColumnIndex(n) == location.get(0).get(0)
-											&& GridPane.getRowIndex(n) == location.get(0).get(1)) {
-										node = n;
-									}
-
-								}
-								int locX = piece.getColor().startCoords[piece.getHomeIndex()][0];
-								int locY = piece.getColor().startCoords[piece.getHomeIndex()][1];
-								ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
-								temp.add(new ArrayList<Integer>(Arrays.asList(locX, locY)));
-
-								pane.getChildren().remove(node);
-								pane.add(node, locX, locY);
-								pane.getChildren().remove(selectedCircle);
-
-								piece.setLocation(temp);
-								piece.setOutOfPlay();
+								removeBumpedPiece(location);
 								pane.add(selectedCircle, location.get(0).get(0), location.get(0).get(1));
 								// returnSquareColor();
 								selectedCircle.setStroke(Color.BLACK);
@@ -852,6 +834,11 @@ public class Main extends Application {
 									if ((selected.getPossibleMoves().get(k).get(0) == location.get(k).get(0))
 											&& selected.getPossibleMoves().get(k).get(1) == location.get(k).get(1)) {
 
+										// Check if it can bump other players' pawns
+										if (otherPieceMap.containsKey(location.toString())) {
+											Piece bumped = otherPieceMap.get(location.toString());
+											removeBumpedPiece(location);
+										}
 										for (int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
 											if ((location.get(k).get(0) == selected.getColor().getSafeCoords().get(i)
 													.get(0))
@@ -905,8 +892,34 @@ public class Main extends Application {
 		p.setInPlay();
 		circle.setStroke(Color.BLACK);
 	}
+	
+	private void removeBumpedPiece(ArrayList<ArrayList<Integer>> location) {
+		Piece piece = getBumpedPiece(location);
+		if (piece == null) {
+			return;
+		}
+		Node node = null;
+		for (Node n : pane.getChildren()) {
+			if (n instanceof Circle && GridPane.getColumnIndex(n) == location.get(0).get(0)
+					&& GridPane.getRowIndex(n) == location.get(0).get(1)) {
+				node = n;
+			}
 
-	public Piece bumpPiece(ArrayList<ArrayList<Integer>> location) {
+		}
+		int locX = piece.getColor().startCoords[piece.getHomeIndex()][0];
+		int locY = piece.getColor().startCoords[piece.getHomeIndex()][1];
+		ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
+		temp.add(new ArrayList<Integer>(Arrays.asList(locX, locY)));
+
+		pane.getChildren().remove(node);
+		pane.add(node, locX, locY);
+		pane.getChildren().remove(selectedCircle);
+
+		piece.setLocation(temp);
+		piece.setOutOfPlay();
+	}
+
+	public Piece getBumpedPiece(ArrayList<ArrayList<Integer>> location) {
 		for (Piece piece : getPiecesOnBoard()) {
 			if (piece.getLocation() == location) {
 				return piece;
