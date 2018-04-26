@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sorry;
 
 import java.util.ArrayList;
@@ -11,9 +6,10 @@ import java.util.Arrays;
 import javafx.scene.paint.Color;
 
 /**
- * Piece's color of the game.
+ * This class is the superclass for piece color that holds information
+ * on the specific locations of board elements relative to the color 
  * 
- * @author austinbatistoni
+ * @author Austin Batistoni
  */
 public class PieceColor {
 	protected Color color;
@@ -23,6 +19,10 @@ public class PieceColor {
 	protected int[][] firstSpot;
 	protected int[][] lastSpot;
 
+	/**
+	 * Gets the JavaFx color of the player
+	 * @return color
+	 */
 	public Color getColor() {
 		return color;
 	}

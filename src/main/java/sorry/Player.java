@@ -1,19 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sorry;
 
 import java.util.ArrayList;
 
 /**
- * <p>
  * First version was done by Austin Batistoni, then Yuhang Lin refactored the
  * code by adding the setter for the piece array and use constant to initialize
  * the piece array.
  * 
- * @author austinbatistoni, Yuhang Lin
+ * @author Austin Batistoni, Yuhang Lin
  */
 public class Player {
 	private static final int NUM_PIECES = 4;
@@ -80,8 +74,7 @@ public class Player {
 	/**
 	 * Sets the piece array to be the given array.
 	 * 
-	 * @param pieceArray
-	 *            an piece array of NUM_PIECES
+	 * @param pieceArray an piece array of NUM_PIECES
 	 */
 	public void setPieceArray(Piece[] pieceArray) {
 		if (pieceArray != null && pieceArray.length == NUM_PIECES) {

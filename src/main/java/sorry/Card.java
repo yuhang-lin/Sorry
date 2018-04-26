@@ -2,7 +2,7 @@ package sorry;
 
 /**
  * Stores the information about the card.
- * <p>
+ * 
  * Yuhang Lin wrote the first version and Austin Batistoni shortened some
  * descriptions of the card.
  * 

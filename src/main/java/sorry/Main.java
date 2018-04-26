@@ -245,12 +245,6 @@ public class Main extends Application {
 		sideBar.setStyle("-fx-background-color: rgba(0, 0, 0, .1);");
 
 		primaryStage.setTitle("Sorry!");
-		// Text t = new Text(0, 0, "SORRY!");
-		// t.setFont(Font.font("Verdana", FontWeight.BOLD, 60));
-		// DropShadow ds = new DropShadow();
-		// ds.setOffsetY(3.0f);
-		// ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
-		// t.setEffect(ds);
 		sideBar.getChildren().add(sorryTitleEffect());
 		drawBoard(pane, board);
 
@@ -299,6 +293,7 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
+		//--------------------Button Event Handlers-----------------------//
 		btnHelp.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -432,8 +427,7 @@ public class Main extends Application {
 	/**
 	 * Calculate all possible next moves based on the given card name.
 	 * 
-	 * @param card
-	 *            a String representing the card name
+	 * @param card a String representing the card name
 	 */
 	private void cardToMoves(String card) {
 		Player currentPlayer = players.get(currentTurn);
@@ -574,8 +568,7 @@ public class Main extends Application {
 	/**
 	 * Set the possible moves for each piece of the current player.
 	 * 
-	 * @param moveNumList
-	 *            list of available movement number
+	 * @param moveNumList list of available movement number
 	 */
 	private void setPossibleMoves(ArrayList<Integer> moveNumList) {
 		selfPieceSet.clear();
@@ -588,16 +581,20 @@ public class Main extends Application {
 			for (int cardNum : moveNumList) {
 				ArrayList<Integer> move = new ArrayList<>();
 				if (cardNum >= 1 && cardNum <= 5) {
+					//Can the piece finish with the given move
 					if (canPieceFinish(p, cardNum)) {
 						p.getPlayer().addFinishedPieces();
 						move = p.getColor().getHomeCoords().get(p.getHomeIndex());
 					}
+					//Is the piece already in the safety zone?
 					if (p.isPieceSafe()) {
+						//Can the piece move within the safety zone?
 						if (canMoveWithinSafe(p, cardNum)) {
 							move = moveWithinSafeZone(p, cardNum);
 						}
 					} else {
 						if (p.getIsInPlay()) {
+							//Can the piece move to the safety zone from the main path?
 							if (canMoveToSafe(p, cardNum)) {
 								move = getSafeLocation(p, cardNum);
 							} else {
@@ -649,10 +646,8 @@ public class Main extends Application {
 	/**
 	 * Returns true if piece can move within safe zone, false otherwise.
 	 * 
-	 * @param p
-	 *            piece to be moved
-	 * @param card
-	 *            number representation of the card
+	 * @param p- piece to be moved
+	 * @param card- number representation of the card
 	 * @return true if piece can move within safe zone, false otherwise
 	 */
 	public boolean canMoveWithinSafe(Piece p, int card) {
@@ -666,8 +661,7 @@ public class Main extends Application {
 	/**
 	 * Gets the index of safe array.
 	 * 
-	 * @param p
-	 *            piece to move
+	 * @param p- piece to move
 	 * @return index of the safe array of the piece
 	 */
 	public int getIndexOfSafeArray(Piece p) {
@@ -683,10 +677,8 @@ public class Main extends Application {
 	/**
 	 * Returns the next location within the safe zone of the piece given the card.
 	 * 
-	 * @param p
-	 *            the target piece for the next move
-	 * @param card
-	 *            the numerical presentation of the card
+	 * @param p- the target piece for the next move
+	 * @param card- the numerical presentation of the card
 	 * @return the next location within the safe zone of the piece given the card
 	 */
 	public ArrayList<Integer> moveWithinSafeZone(Piece p, int card) {
@@ -699,10 +691,8 @@ public class Main extends Application {
 	/**
 	 * Returns true if the piece can move to home given the card
 	 * 
-	 * @param p
-	 *            the target piece for the next move
-	 * @param card
-	 *            the numerical presentation of the card
+	 * @param p- the target piece for the next move
+	 * @param card- the numerical presentation of the card
 	 * @return true if the piece can move to home given the card, false otherwise
 	 */
 	public boolean canMoveToSafe(Piece p, int card) {
@@ -722,10 +712,8 @@ public class Main extends Application {
 	/**
 	 * Returns true if the piece can move to home given the card.
 	 * 
-	 * @param p
-	 *            the target piece for the next move
-	 * @param card
-	 *            the numerical presentation of the card
+	 * @param p- the target piece for the next move
+	 * @param card- the numerical presentation of the card
 	 * @return true if the piece can move to home given the card, false otherwise
 	 */
 	public boolean canMoveToHome(Piece p, int card) {
@@ -744,10 +732,8 @@ public class Main extends Application {
 	/**
 	 * Gets the safe zone location of the piece based on the card
 	 * 
-	 * @param p
-	 *            the target piece for the next move
-	 * @param card
-	 *            the numerical presentation of the card
+	 * @param p- the target piece for the next move
+	 * @param card- the numerical presentation of the card
 	 * @return ArrayList of new location
 	 */
 	public ArrayList<Integer> getSafeLocation(Piece p, int card) {
@@ -808,10 +794,6 @@ public class Main extends Application {
 						piecesOnBoard.add(piece);
 					}
 				}
-
-				// if (piece.getIsInPlay()) {
-				// piecesOnBoard.add(piece);
-				// }
 			}
 		}
 		return piecesOnBoard;
@@ -826,6 +808,7 @@ public class Main extends Application {
 		sideBar.getChildren().remove(4);
 		sideBar.getChildren().add(4, new CardPane(new Card("Draw")));
 
+		//If the player has 4 pieces home they win!!
 		if (currentPlayer.getPiecesHome() == Player.getNumPieces()) {
 
 			directions.setText("Player" + currentPlayer.getPlayerColor() + "wins!");
@@ -866,12 +849,9 @@ public class Main extends Application {
 	/**
 	 * Gets the next location based on the given increment.
 	 * 
-	 * @param board
-	 *            the game board
-	 * @param piece
-	 *            the target piece for the next move
-	 * @param increment
-	 *            the numerical increment of the next move
+	 * @param board- the game board
+	 * @param piece-the target piece for the next move
+	 * @param increment- the numerical increment of the next move
 	 * @return the next location
 	 */
 	public ArrayList<Integer> getMoveFromInt(Board board, Piece piece, int increment) {
@@ -893,16 +873,11 @@ public class Main extends Application {
 	/**
 	 * Fills in the squares with different color and effects.
 	 * 
-	 * @param grid
-	 *            the internal representation of the grid
-	 * @param inside
-	 *            the inside color of the square
-	 * @param outside
-	 *            the outside color of the square
-	 * @param radius
-	 *            the radius of the effect circle
-	 * @param pane
-	 *            the pane containing the grid
+	 * @param grid- the internal representation of the grid
+	 * @param inside- the inside color of the square
+	 * @param outside- the outside color of the square
+	 * @param radius- the radius of the effect circle
+	 * @param pane- the pane containing the grid
 	 */
 	public void fillInSquares(ArrayList<ArrayList<Integer>> grid, Color inside, Color outside, double radius,
 			GridPane pane) {
@@ -923,12 +898,9 @@ public class Main extends Application {
 	/**
 	 * Gets the node from the grid pane
 	 * 
-	 * @param gridPane
-	 *            the grid pane of the game
-	 * @param col
-	 *            column in the grid pane
-	 * @param row
-	 *            row in the grid pane
+	 * @param gridPane- the grid pane of the game
+	 * @param col- column in the grid pane
+	 * @param row- row in the grid pane
 	 * @return
 	 */
 	private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
@@ -943,16 +915,11 @@ public class Main extends Application {
 	/**
 	 * Draws piece in the GUI.
 	 * 
-	 * @param p
-	 *            piece to draw
-	 * @param primaryStage
-	 *            stage used to be shown the pane
-	 * @param pane
-	 *            the pane for having the board
-	 * @param board
-	 *            the game board
-	 * @param i
-	 *            home index of the piece
+	 * @param p- piece to draw
+	 * @param primaryStage- stage used to be shown the pane
+	 * @param pane- the pane for having the board
+	 * @param board- the game board
+	 * @param i home index of the piece
 	 */
 	public void drawPiece(Piece p, Stage primaryStage, GridPane pane, Board board, int i) {
 		// p.setLocation(moves);
@@ -988,7 +955,6 @@ public class Main extends Application {
 							selectedCircle = circle;
 							fillInSquares(selected.getPossibleMoves(), Color.LIGHTGRAY, selected.getColor().getColor(),
 									.7, pane);
-							// sorryCard = false;
 						}
 					} else {
 						if (hasDrawn) {
@@ -1010,10 +976,8 @@ public class Main extends Application {
 	/**
 	 * Draws the GUI of the game board.
 	 * 
-	 * @param pane
-	 *            the pane to draw the board
-	 * @param board
-	 *            the game board
+	 * @param pane- the pane to draw the board
+	 * @param board- the game board
 	 */
 	public void drawBoard(GridPane pane, Board board) {
 		for (int i = 0; i <= 15; i++) {
@@ -1040,8 +1004,7 @@ public class Main extends Application {
 	/**
 	 * Move the selected piece to the target location
 	 * 
-	 * @param location
-	 *            the target location of the selected piece
+	 * @param location- the target location of the selected piece
 	 */
 	private void movePiece(ArrayList<ArrayList<Integer>> location) {
 		returnSquareColor();
@@ -1109,12 +1072,9 @@ public class Main extends Application {
 	/**
 	 * Removes a piece from start.
 	 * 
-	 * @param p
-	 *            piece to be removed
-	 * @param pane
-	 *            Pane of the game board
-	 * @param circle
-	 *            the circle of the piece in the GUI
+	 * @param p- piece to be removed
+	 * @param pane- Pane of the game board
+	 * @param circle- the circle of the piece in the GUI
 	 */
 	public void moveFromStart(Piece p, GridPane pane, Circle circle) {
 		ArrayList<ArrayList<Integer>> firstSpot = p.getColor().getFirstSpot();
@@ -1128,8 +1088,7 @@ public class Main extends Application {
 	/**
 	 * Removes the other piece from the location.
 	 * 
-	 * @param location
-	 *            the location for pumping
+	 * @param location-  the location for pumping
 	 */
 	private void removeBumpedPiece(ArrayList<ArrayList<Integer>> location) {
 		Piece piece = getBumpedPiece(location);
@@ -1159,8 +1118,7 @@ public class Main extends Application {
 	/**
 	 * Get bumped piece based on the given location
 	 * 
-	 * @param location
-	 *            the location of bumping
+	 * @param location- the location of bumping
 	 * @return bumped Piece if found, otherwise null
 	 */
 	public Piece getBumpedPiece(ArrayList<ArrayList<Integer>> location) {

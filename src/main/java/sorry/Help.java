@@ -23,7 +23,7 @@ public class Help {
 	Pane currentPane;
 
 	public void start(Stage stage) {
-		// Root pane
+		//------------------------Root pane-------------------------------
 		VBox root = new VBox();
 		HBox buttons = new HBox();
 		final ToggleGroup group = new ToggleGroup();
@@ -36,7 +36,7 @@ public class Help {
 		buttons.getChildren().add(ourRules);
 		root.getChildren().add(buttons);
 
-		// Sorry rules pane
+		//------------------------Sorry rules pane-----------------------------
 		Pane sorryRulesPane = new Pane();
 		currentPane = sorryRulesPane;
 		VBox pane = new VBox(5);
@@ -86,7 +86,7 @@ public class Help {
 
 		pane.getChildren().addAll(t1, t2, t3, t4, t5, t6, t7, t8, t9);
 
-		// Our rules pane
+		//-----------------------Our Implementation Pane-------------------------//
 		Pane ourRulesPane = new Pane();
 		VBox box = new VBox(5);
 		Text t10 = new Text("Our Implementation:");
@@ -118,8 +118,10 @@ public class Help {
 
 		box.getChildren().addAll(t10, t11, t12, t13, t14, t15, t16);
 		ourRulesPane.getChildren().add(box);
+		
+		
 
-		// Button handlers
+		//----------------------------Button handlers----------------------------//
 		sorryRules.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {

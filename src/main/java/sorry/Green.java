@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 
 /**
  * Green color for the piece.
- * <p>
+ * 
  * First version was done by Austin Batistoni, then Yuhang Lin refactored the
  * code by removing duplicate functions already implemented in the super class.
  * 

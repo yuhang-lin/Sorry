@@ -5,6 +5,11 @@ import java.util.Arrays;
 
 import javafx.scene.shape.Circle;
 
+/**
+ * Piece class representing the individual pawns
+ * @author Austin Batistoni
+ *
+ */
 public class Piece {
 
 	private PieceColor color;
@@ -58,8 +63,7 @@ public class Piece {
 	}
 
 	/**
-	 * @param possibleMoves
-	 *            the possibleMoves to set
+	 * @param possibleMoves the possibleMoves to set
 	 */
 	public void setPossibleMoves(ArrayList<ArrayList<Integer>> possibleMoves) {
 		this.possibleMoves = possibleMoves;
