@@ -28,15 +28,20 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
@@ -44,6 +49,7 @@ import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -59,7 +65,7 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
+	Card currCard;
 	Piece selected;
 	Piece prevPiece;
 	Circle selectedCircle;
@@ -69,7 +75,7 @@ public class Main extends Application {
 	int currentTurn = 0; // current turn of the game
 	Board board;
 	GridPane pane;
-
+	VBox sideBar;
 	String userName = "SorryUser";
 
 	ArrayList<Player> players = new ArrayList<>();
@@ -231,18 +237,39 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
+		HBox root = new HBox();
 		pane = new GridPane();
 		board = new Board();
+		
+		sideBar = new VBox(20);
+		sideBar.setPrefWidth(1100);
+		sideBar.setStyle("-fx-background-color: rgba(0, 0, 0, .1);");
+		
 
 		primaryStage.setTitle("Sorry!");
-		Text t = new Text(0, 0, "SORRY!");
-		t.setFont(new Font(30));
-		pane.add(t, 20, 0);
+		//Text t = new Text(0, 0, "SORRY!");
+		//t.setFont(Font.font("Verdana", FontWeight.BOLD, 60));
+		//DropShadow ds = new DropShadow();
+		//ds.setOffsetY(3.0f);
+		//ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+		//t.setEffect(ds);
+		sideBar.getChildren().add(sorryTitleEffect());
 		drawBoard(pane, board);
-		// t.setRotate(45);
-
+		
+		DropShadow ds = new DropShadow();
+		ds.setOffsetY(3.0f);
+		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+		
+		turnText = new Text("Blue player's turn");
+		turnText.setEffect(ds);
+		turnText.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+		turnText.setFill(Color.BLUE);
+		turnText.setFont(new Font(20));
+		sideBar.getChildren().add(turnText);
 		Button btnDraw = new Button("Draw");
-		pane.add(btnDraw, 20, 2);
+		btnDraw.setMaxWidth(200);
+		
+		sideBar.getChildren().add(btnDraw);
 		
 		HBox buttonGroup = new HBox();
 		
@@ -250,21 +277,21 @@ public class Main extends Application {
 		Button btnLeaderBoard = new Button("Leader Board");
 		Button btnRestore = new Button("Resume game");
 		buttonGroup.getChildren().addAll(btnSave,btnLeaderBoard,btnRestore);
-		pane.add(buttonGroup, 20, 12);
-
+		sideBar.getChildren().add(buttonGroup);
+		sideBar.getChildren().add(new CardPane(new Card("Draw")));
 		directions = new Text("Please draw a card.");
-		pane.add(directions, 20, 5);
+		sideBar.getChildren().add(directions);
 		option1 = new Text("");
 		option2 = new Text("");
-		pane.add(option1, 20, 6);
-		pane.add(option2, 20, 7);
+		sideBar.getChildren().add(option1);
+		sideBar.getChildren().add(option2);
 
-		turnText = new Text("Blue player's turn");
-		turnText.setFill(Color.BLUE);
-		pane.add(turnText, 20, 1);
 		
+		
+
 		Button btnHelp = new Button("Help");
-		pane.add(btnHelp, 20, 10);
+		sideBar.getChildren().add(btnHelp);
+		sideBar.setAlignment(Pos.CENTER);
 		
 		btnHelp.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
@@ -277,8 +304,10 @@ public class Main extends Application {
 		setPlayers();
 		resetBoard(primaryStage);
 		
-
-		Scene scene = new Scene(pane, 1100, 735);
+		root.getChildren().add(sideBar);
+		root.getChildren().add(pane);
+		
+		Scene scene = new Scene(root, 1030, 735);
 		scene.setFill(Color.WHITE);
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -289,8 +318,12 @@ public class Main extends Application {
 			public void handle(MouseEvent event) {
 				hasDrawn = true;
 				sorryCard = false;
-				Card currCard = deck.draw();
+				currCard = deck.draw();
 				String card = currCard.getName();
+				directions.setText("The card is: " + currCard.getName());
+				sideBar.getChildren().remove(4);
+				sideBar.getChildren().add(4, (new CardPane(currCard)));
+				
 				directions.setText("The card is: " + card);
 				cardToMoves(card);
 				Player currentPlayer = players.get(currentTurn);
@@ -348,6 +381,56 @@ public class Main extends Application {
 		});
 	}
 	
+
+	private HBox sorryTitleEffect() {
+		HBox text = new HBox();
+		
+		Text s = new Text("S");
+		s.setFont(Font.font("Verdana", FontWeight.BOLD, 80));
+		DropShadow red = new DropShadow();
+		red.setOffsetY(3.0f);
+		red.setColor(Color.RED);
+		s.setEffect(red);
+		
+		Text o = new Text("o");
+		o.setFont(Font.font("Verdana", FontWeight.BOLD, 80));
+		DropShadow orange = new DropShadow();
+		orange.setOffsetY(3.0f);
+		orange.setColor(Color.ORANGE);
+		o.setEffect(orange);
+		
+		Text r = new Text("r");
+		r.setFont(Font.font("Verdana", FontWeight.BOLD, 80));
+		DropShadow yellow = new DropShadow();
+		yellow.setOffsetY(3.0f);
+		yellow.setColor(Color.YELLOW);
+		r.setEffect(yellow);
+		
+		Text r2 = new Text("r");
+		r2.setFont(Font.font("Verdana", FontWeight.BOLD, 80));
+		DropShadow green = new DropShadow();
+		green.setOffsetY(3.0f);
+		green.setColor(Color.GREEN);
+		r2.setEffect(green);
+		
+		Text y = new Text("y");
+		y.setFont(Font.font("Verdana", FontWeight.BOLD, 80));
+		DropShadow blue = new DropShadow();
+		blue.setOffsetY(3.0f);
+		blue.setColor(Color.BLUE);
+		y.setEffect(blue);
+		
+		Text exc = new Text("!");
+		exc.setFont(Font.font("Verdana", FontWeight.BOLD, 85));
+		DropShadow ds5 = new DropShadow();
+		ds5.setOffsetY(3.0f);
+		ds5.setColor(Color.PURPLE);
+		exc.setEffect(ds5);
+		
+		text.getChildren().addAll(s,o,r,r2,y,exc);
+				
+		return text;
+  } 
 	/**
 	 * Calculate all possible next moves based on the given card name.
 	 * @param card a String representing the card name
@@ -466,7 +549,7 @@ public class Main extends Application {
 			ArrayList<ArrayList<Integer>> sorryMoves = new ArrayList<ArrayList<Integer>>();
 			ArrayList<Piece> piecesOnBoard = getPiecesOnBoard();
 			if (!piecesOnBoard.isEmpty()) {
-				option1.setText("You may BUMP any opponent's pawn with your pawn from START");
+				option1.setText("You may BUMP any opponent's \npawn with your pawn from START");
 				option2.setText("Select a piece to bump.");
 				sorryCard = true;
 
@@ -491,6 +574,8 @@ public class Main extends Application {
 			break;
 		}
 	}
+
+	
 
 	private void setPossibleMoves(ArrayList<Integer> moveNumList) {
 		selfPieceSet.clear();
@@ -679,7 +764,12 @@ public class Main extends Application {
 	 */
 	public void nextTurn() {
 		Player currentPlayer = players.get(currentTurn);
+
+		sideBar.getChildren().remove(4);
+		sideBar.getChildren().add(4, new CardPane(new Card("Draw")));
+
 		if (currentPlayer.getPiecesHome() == Player.getNumPieces()) {
+
 			directions.setText("Player" + currentPlayer.getPlayerColor() + "wins!");
 			endGame();
 		}
@@ -691,24 +781,25 @@ public class Main extends Application {
 	 * Reset the texts on the screen.
 	 */
 	private void resetText() {
+
 		switch (currentTurn) {
 		case 0:
 			turnText.setText("Blue player's turn");
-			turnText.setStroke(Color.BLUE);
+			turnText.setFill(Color.BLUE);
 			break;
 		case 1:
 			turnText.setText("Yellow player's turn");
-			turnText.setStroke(Color.rgb(153, 134, 0));
+			turnText.setFill(Color.YELLOW);
+			
 			break;
 		case 2:
 			turnText.setText("Green player's turn");
-			turnText.setStroke(Color.GREEN);
+			turnText.setFill(Color.GREEN);
 			break;
 		case 3:
 			turnText.setText("Red player's turn");
-			turnText.setStroke(Color.RED);
+			turnText.setFill(Color.RED);
 		}
-
 		option1.setText("");
 		option2.setText("");
 		directions.setText("Please draw a card.");
