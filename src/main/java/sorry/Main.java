@@ -219,7 +219,7 @@ public class Main extends Application {
 
 	private void setPlayers() {
 		Computer blue = new Computer(new Blue(), Computer.NiceLevel.MEAN, Computer.SmartLevel.SMART); // for testing
-																										// only
+		//Player blue = new Player(new Blue());
 		Player green = new Player(new Green());
 		Player red = new Player(new Red());
 		Player yellow = new Player(new Yellow());
@@ -263,15 +263,14 @@ public class Main extends Application {
 		turnText.setFill(Color.BLUE);
 		pane.add(turnText, 20, 1);
 		
-		Button showHelp = new Button("Help");
-		pane.add(showHelp, 20, 10);
+		Button btnHelp = new Button("Help");
+		pane.add(btnHelp, 20, 10);
 		
-		showHelp.setOnMousePressed(new EventHandler<MouseEvent>() {
+		btnHelp.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				Help help = new Help();
 				help.start(new Stage());
-				
 			}
 		});
 
@@ -284,8 +283,6 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
-		
-		
 
 		btnDraw.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
@@ -296,6 +293,22 @@ public class Main extends Application {
 				String card = currCard.getName();
 				directions.setText("The card is: " + card);
 				cardToMoves(card);
+				Player currentPlayer = players.get(currentTurn);
+				if (currentPlayer instanceof Computer) {
+					System.out.println("Computer got the card " + card);
+					Choice choice = ((Computer)currentPlayer).getSelectedChoice(getPiecesOnBoard());
+					if (choice != null) {
+						Piece piece = choice.getPiece();
+						ArrayList<ArrayList<Integer>> nextLocation = new ArrayList<>();
+						nextLocation.add(choice.getMove());
+						selected = piece;
+						selectedCircle = selected.getCircle();
+						movePiece(nextLocation);
+						// TODO: Uncomment below two lines before submission
+//					} else {
+//						nextTurn();
+					}
+				}
 			}
 		});
 
@@ -335,6 +348,10 @@ public class Main extends Application {
 		});
 	}
 	
+	/**
+	 * Calculate all possible next moves based on the given card name.
+	 * @param card a String representing the card name
+	 */
 	private void cardToMoves(String card) {
 		Player currentPlayer = players.get(currentTurn);
 		switch (card) {
@@ -700,15 +717,14 @@ public class Main extends Application {
 	public ArrayList<Integer> getMoveFromInt(Board board, Piece piece, int increment) {
 		ArrayList<Integer> move = new ArrayList<Integer>();
 		for (int i = 0; i < board.getPathCoords().size(); i++) {
-			for (int j = 0; j < 2; j++) {
-				if (piece.getLocation().get(0).get(0) == board.getPathCoords().get(i).get(0)
-						&& piece.getLocation().get(0).get(1) == board.getPathCoords().get(i).get(1)) {
-					int boardIndex = Math.floorMod((i + increment), board.getPathLength());
-					int newX = board.getPathCoords().get(boardIndex).get(0);
-					int newY = board.getPathCoords().get(boardIndex).get(1);
-					move.add(newX);
-					move.add(newY);
-				}
+			if (piece.getLocation().get(0).get(0) == board.getPathCoords().get(i).get(0)
+					&& piece.getLocation().get(0).get(1) == board.getPathCoords().get(i).get(1)) {
+				int boardIndex = Math.floorMod((i + increment), board.getPathLength());
+				int newX = board.getPathCoords().get(boardIndex).get(0);
+				int newY = board.getPathCoords().get(boardIndex).get(1);
+				move.add(newX);
+				move.add(newY);
+				return move;
 			}
 		}
 		return move;
@@ -793,9 +809,7 @@ public class Main extends Application {
 	}
 
 	public void drawBoard(GridPane pane, Board board) {
-
 		for (int i = 0; i <= 15; i++) {
-
 			for (int j = 0; j <= 15; j++) {
 				Rectangle rectangle;
 				rectangle = new Rectangle(45, 45, Color.WHITE);
@@ -806,78 +820,85 @@ public class Main extends Application {
 				rectangle.setOnMouseReleased(new EventHandler<MouseEvent>() {
 					@Override
 					public void handle(MouseEvent event) {
-						returnSquareColor();
-						otherPieceMap.clear();
-						for (Piece piece : getPiecesOnBoard()) {
-							otherPieceMap.put(piece.getLocation().toString(), piece);
-						}
-						if (sorryCard) {
-							Piece piece = getBumpedPiece(location);
-							if (piece != null) {
-								removeBumpedPiece(location);
-								pane.add(selectedCircle, location.get(0).get(0), location.get(0).get(1));
-								// returnSquareColor();
-								selectedCircle.setStroke(Color.BLACK);
-								selected.setLocation(location);
-								selected.setInPlay();
-								sorryCard = false;
-								nextTurn();
-							}
-						} else {
-							if (selected != null && selected.getPossibleMoves() != null) {
-								for (int k = 0; k < selected.getPossibleMoves().size(); k++) {
-									if ((selected.getPossibleMoves().get(k).get(0) == location.get(0).get(0))
-											&& selected.getPossibleMoves().get(k).get(1) == location.get(0).get(1)) {
-
-										// Check if it can bump other players' pawns
-										if (otherPieceMap.containsKey(location.toString())) {
-											removeBumpedPiece(location);
-										}
-										for (int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
-											if ((location.get(0).get(0) == selected.getColor().getSafeCoords().get(i)
-													.get(0))
-													&& (location.get(0).get(1) == selected.getColor().getSafeCoords()
-															.get(i).get(1))) {
-												selected.setOutOfPlay();
-												System.out.println("Out of play");
-
-											}
-										}
-
-										pane.getChildren().remove(selectedCircle);
-										pane.add(selectedCircle, location.get(0).get(0), location.get(0).get(1));
-										if (!selected.getIsInPlay() && !selected.isPieceSafe()) {
-											selected.setInPlay();
-										}
-										selected.setLocation(location);
-										boolean safe = false;
-										for (int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
-
-											if (selected.getLocation().get(0).get(0) == selected.getColor()
-													.getSafeCoords().get(i).get(0)
-													&& selected.getLocation().get(0).get(1) == selected.getColor()
-															.getSafeCoords().get(i).get(1)) {
-												safe = true;
-											}
-										}
-										selectedCircle.setStroke(Color.BLACK);
-
-										nextTurn();
-									}
-								}
-							}
-						}
-
+						movePiece(location);
 					}
 
 				});
 
 			}
 		}
-
 		fillInSquares(board.getPathCoords(), Color.LIGHTGRAY, Color.BLACK, 1, pane);
 	}
 
+	/**
+	 * Move the selected piece to the target location
+	 * @param location the target location of the selected piece
+	 */
+	private void movePiece(ArrayList<ArrayList<Integer>> location) {
+		returnSquareColor();
+		if (location == null || location.size() == 0) {
+			return;
+		}
+		otherPieceMap.clear();
+		for (Piece piece : getPiecesOnBoard()) {
+			otherPieceMap.put(piece.getLocation().toString(), piece);
+		}
+		if (sorryCard) {
+			Piece piece = getBumpedPiece(location);
+			if (piece != null) {
+				removeBumpedPiece(location);
+				pane.add(selectedCircle, location.get(0).get(0), location.get(0).get(1));
+				// returnSquareColor();
+				selectedCircle.setStroke(Color.BLACK);
+				selected.setLocation(location);
+				selected.setInPlay();
+				sorryCard = false;
+				nextTurn();
+			}
+		} else {
+			if (selected != null && selected.getPossibleMoves() != null) {
+				for (int k = 0; k < selected.getPossibleMoves().size(); k++) {
+					if ((selected.getPossibleMoves().get(k).get(0) == location.get(0).get(0))
+							&& selected.getPossibleMoves().get(k).get(1) == location.get(0).get(1)) {
+
+						// Check if it can bump other players' pawns
+						if (otherPieceMap.containsKey(location.toString())) {
+							removeBumpedPiece(location);
+						}
+						for (int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
+							if ((location.get(0).get(0) == selected.getColor().getSafeCoords().get(i)
+									.get(0))
+									&& (location.get(0).get(1) == selected.getColor().getSafeCoords()
+											.get(i).get(1))) {
+								selected.setOutOfPlay();
+								System.out.println("Out of play");
+
+							}
+						}
+
+						pane.getChildren().remove(selectedCircle);
+						pane.add(selectedCircle, location.get(0).get(0), location.get(0).get(1));
+						if (!selected.getIsInPlay() && !selected.isPieceSafe()) {
+							selected.setInPlay();
+						}
+						selected.setLocation(location);
+						boolean safe = false;
+						for (int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
+							if (selected.getLocation().get(0).get(0) == selected.getColor()
+									.getSafeCoords().get(i).get(0)
+									&& selected.getLocation().get(0).get(1) == selected.getColor()
+											.getSafeCoords().get(i).get(1)) {
+								safe = true;
+							}
+						}
+						selectedCircle.setStroke(Color.BLACK);
+						nextTurn();
+					}
+				}
+			}
+		}
+	}
+	
 	public void moveFromStart(Piece p, GridPane pane, Circle circle) {
 		ArrayList<ArrayList<Integer>> firstSpot = p.getColor().getFirstSpot();
 		pane.getChildren().remove(circle);
@@ -898,7 +919,6 @@ public class Main extends Application {
 					&& GridPane.getRowIndex(n) == location.get(0).get(1)) {
 				node = n;
 			}
-
 		}
 		int locX = piece.getColor().startCoords[piece.getHomeIndex()][0];
 		int locY = piece.getColor().startCoords[piece.getHomeIndex()][1];
@@ -913,6 +933,11 @@ public class Main extends Application {
 		piece.setOutOfPlay();
 	}
 
+	/**
+	 * Get bumped piece based on the given location
+	 * @param location the location of bumping
+	 * @return bumped Piece if found, otherwise null
+	 */
 	public Piece getBumpedPiece(ArrayList<ArrayList<Integer>> location) {
 		for (Piece piece : getPiecesOnBoard()) {
 			if (piece.getLocation() == location) {
