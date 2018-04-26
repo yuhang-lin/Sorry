@@ -505,7 +505,7 @@ public class Main extends Application {
 
 		case "10":
 			if (currentPlayer.hasPiecesOnBoard()) {
-				option1.setText("You must move a pawn forward 10 spaces, or move backward 1 space.");
+				option1.setText("You must move a pawn forward 10 \nspaces, or move backward 1 space.");
 				option2.setText("");
 				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(10, -1)));
 			} else {
