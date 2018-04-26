@@ -24,11 +24,14 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -230,8 +233,8 @@ public class Main extends Application {
 		Player yellow = new Player(new Yellow());
 		players.add(blue);
 		players.add(yellow);
-		players.add(green);
-		players.add(red);
+		//players.add(green);
+		//players.add(red);
 	}
 
 	@Override
@@ -583,7 +586,7 @@ public class Main extends Application {
 				if (cardNum >= 1 && cardNum <= 5) {
 					//Can the piece finish with the given move
 					if (canPieceFinish(p, cardNum)) {
-						p.getPlayer().addFinishedPieces();
+						//p.getPlayer().addFinishedPieces();
 						move = p.getColor().getHomeCoords().get(p.getHomeIndex());
 					}
 					//Is the piece already in the safety zone?
@@ -609,6 +612,7 @@ public class Main extends Application {
 					}
 				} else {
 					if (cardNum >= 6 && canMoveToHome(p, cardNum)) {
+
 						move = p.getColor().getHomeCoords().get(p.getHomeIndex());
 					} else {
 						if (canMoveToSafe(p, cardNum)) {
@@ -637,6 +641,7 @@ public class Main extends Application {
 		if (p.isPieceSafe()) {
 			int i = getIndexOfSafeArray(p);
 			if (i + card == 5) {
+				//p.setCanGoHome();
 				return true;
 			}
 		}
@@ -724,6 +729,7 @@ public class Main extends Application {
 		}
 		if ((currentIndex <= playersLastSpot && currentIndex + card > playersLastSpot)
 				&& (card - (playersLastSpot - currentIndex) - 1) == p.getColor().getSafeCoords().size()) {
+			//p.setCanGoHome();
 			return true;
 		}
 		return false;
@@ -804,13 +810,13 @@ public class Main extends Application {
 	 */
 	public void nextTurn() {
 		Player currentPlayer = players.get(currentTurn);
-
 		sideBar.getChildren().remove(4);
 		sideBar.getChildren().add(4, new CardPane(new Card("Draw")));
-
+		DisplayWinner d = new DisplayWinner(currentPlayer);
+		d.Start(new Stage());
 		//If the player has 4 pieces home they win!!
 		if (currentPlayer.getPiecesHome() == Player.getNumPieces()) {
-
+			
 			directions.setText("Player" + currentPlayer.getPlayerColor() + "wins!");
 			endGame();
 		}
@@ -1037,6 +1043,13 @@ public class Main extends Application {
 						if (otherPieceMap.containsKey(location.toString())) {
 							removeBumpedPiece(location);
 						}
+						ArrayList<ArrayList<Integer>> homeCoords = selected.getPlayer().getPlayerColor().getHomeCoords();
+						
+						if(homeCoords.get(selected.getHomeIndex()).get(0) == location.get(0).get(0) &&
+								homeCoords.get(selected.getHomeIndex()).get(1) == location.get(0).get(1)) {
+							selected.getPlayer().addFinishedPieces();
+						}
+							
 						for (int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
 							if ((location.get(0).get(0) == selected.getColor().getSafeCoords().get(i).get(0))
 									&& (location.get(0).get(1) == selected.getColor().getSafeCoords().get(i).get(1))) {
@@ -1085,6 +1098,7 @@ public class Main extends Application {
 		circle.setStroke(Color.BLACK);
 	}
 
+
 	/**
 	 * Removes the other piece from the location.
 	 * 
@@ -1130,6 +1144,9 @@ public class Main extends Application {
 		return null;
 	}
 
+	private void displayWinner(Player p) {
+		
+	}
 	/**
 	 * Save record of this game to MySQL database
 	 */
