@@ -531,7 +531,7 @@ public class Main extends Application {
 			ArrayList<ArrayList<Integer>> sorryMoves = new ArrayList<ArrayList<Integer>>();
 			ArrayList<Piece> piecesOnBoard = getPiecesOnBoard();
 			if (!piecesOnBoard.isEmpty()) {
-				option1.setText("You may BUMP any opponent's pawn with your pawn from START");
+				option1.setText("You may BUMP any opponent's \npawn with your pawn from START");
 				option2.setText("Select a piece to bump.");
 				sorryCard = true;
 
@@ -555,6 +555,7 @@ public class Main extends Application {
 			}
 			break;
 		}
+	}
 
 	
 
