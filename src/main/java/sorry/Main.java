@@ -227,10 +227,6 @@ public class Main extends Application {
 		players.add(yellow);
 		players.add(green);
 		players.add(red);
-		/*
-		 * if (players.get(0) instanceof Computer) { System.out.println("hi"); }
-		 */
-		// ((Computer)players.get(0)).getSelectedChoice();
 	}
 
 	@Override
@@ -298,146 +294,8 @@ public class Main extends Application {
 				sorryCard = false;
 				Card currCard = deck.draw();
 				String card = currCard.getName();
-				directions.setText("The card is: " + currCard.getName());
-
-				Player currentPlayer = players.get(currentTurn);
-				
-				switch (card) {
-				case "1":
-					option1.setText("You can move a pawn to the start square.");
-					option2.setText("You can move a pawn forward 1 space.");
-					setPossibleMoves(new ArrayList<Integer>(Arrays.asList(1)));
-					break;
-
-				case "2":
-					option1.setText("You can move a pawn to the start square.");
-					option2.setText("You can move a pawn forward 2 spaces.");
-					setPossibleMoves(new ArrayList<Integer>(Arrays.asList(2)));
-					break;
-
-				case "3":
-					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn forward 3 spaces.");
-						option2.setText("");
-						setPossibleMoves(new ArrayList<Integer>(Arrays.asList(3)));
-					} else {
-						option1.setText("Unable to move this turn!");
-						option2.setText("");
-					}
-
-					break;
-
-				case "4":
-					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn backwards 4 spaces.");
-						option2.setText("");
-
-						// TODO: IMPLEMENT moving backwards out of safe array with a 4
-						setPossibleMoves(new ArrayList<Integer>(Arrays.asList(-4)));
-					} else {
-						option1.setText("Unable to move this turn!");
-						option2.setText("");
-					}
-					break;
-
-				case "5":
-					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn forward 5 spaces.");
-						option2.setText("");
-						setPossibleMoves(new ArrayList<Integer>(Arrays.asList(5)));
-					} else {
-						option1.setText("Unable to move this turn!");
-						option2.setText("");
-					}
-
-					break;
-
-				case "7":
-					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn forward 7 spaces.");
-						option2.setText("");
-						setPossibleMoves(new ArrayList<Integer>(Arrays.asList(7)));
-					} else {
-						option1.setText("Unable to move this turn!");
-						option2.setText("");
-					}
-					break;
-
-				case "8":
-					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn forward 8 spaces.");
-						option2.setText("");
-						setPossibleMoves(new ArrayList<Integer>(Arrays.asList(8)));
-					} else {
-						option1.setText("Unable to move this turn!");
-						option2.setText("");
-					}
-
-					break;
-
-				case "10":
-					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn forward 10 spaces, or move backward 1 space.");
-						option2.setText("");
-						setPossibleMoves(new ArrayList<Integer>(Arrays.asList(10, -1)));
-					} else {
-						option1.setText("Unable to move this turn!");
-						option2.setText("");
-					}
-
-					break;
-
-				case "11":
-					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn forward 11 spaces.");
-						option2.setText("");
-						setPossibleMoves(new ArrayList<Integer>(Arrays.asList(11)));
-					} else {
-						option1.setText("Unable to move this turn!");
-						option2.setText("");
-					}
-
-					break;
-
-				case "12":
-					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn forward 12 spaces.");
-						option2.setText("");
-						setPossibleMoves(new ArrayList<Integer>(Arrays.asList(12)));
-					} else {
-						option1.setText("Unable to move this turn!");
-						option2.setText("");
-					}
-
-					break;
-				case "Sorry":
-					ArrayList<ArrayList<Integer>> sorryMoves = new ArrayList<ArrayList<Integer>>();
-					ArrayList<Piece> piecesOnBoard = getPiecesOnBoard();
-					if (!piecesOnBoard.isEmpty()) {
-						option1.setText(currCard.getInfo());
-						option2.setText("Select a piece to bump.");
-						sorryCard = true;
-
-						for (Piece p : piecesOnBoard) {
-							if (p.getIsInPlay()) {
-								int xLoc = p.getLocation().get(0).get(0);
-								int yLoc = p.getLocation().get(0).get(1);
-
-								sorryMoves.add(new ArrayList<Integer>(Arrays.asList(xLoc, yLoc)));
-								System.out.println(xLoc + ", " + yLoc);
-							}
-						}
-
-						for (Piece p : currentPlayer.getPieces()) {
-							p.setPossibleMoves(sorryMoves);
-						}
-
-					} else {
-						option1.setText("No players on board.");
-						option2.setText("Unable to move");
-					}
-					break;
-				}
+				directions.setText("The card is: " + card);
+				cardToMoves(card);
 			}
 		});
 
@@ -477,7 +335,145 @@ public class Main extends Application {
 		});
 	}
 	
+	private void cardToMoves(String card) {
+		Player currentPlayer = players.get(currentTurn);
+		switch (card) {
+		case "1":
+			option1.setText("You can move a pawn to the start square.");
+			option2.setText("You can move a pawn forward 1 space.");
+			setPossibleMoves(new ArrayList<Integer>(Arrays.asList(1)));
+			break;
 
+		case "2":
+			option1.setText("You can move a pawn to the start square.");
+			option2.setText("You can move a pawn forward 2 spaces.");
+			setPossibleMoves(new ArrayList<Integer>(Arrays.asList(2)));
+			break;
+
+		case "3":
+			if (currentPlayer.hasPiecesOnBoard()) {
+				option1.setText("You must move a pawn forward 3 spaces.");
+				option2.setText("");
+				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(3)));
+			} else {
+				option1.setText("Unable to move this turn!");
+				option2.setText("");
+			}
+
+			break;
+
+		case "4":
+			if (currentPlayer.hasPiecesOnBoard()) {
+				option1.setText("You must move a pawn backwards 4 spaces.");
+				option2.setText("");
+
+				// TODO: IMPLEMENT moving backwards out of safe array with a 4
+				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(-4)));
+			} else {
+				option1.setText("Unable to move this turn!");
+				option2.setText("");
+			}
+			break;
+
+		case "5":
+			if (currentPlayer.hasPiecesOnBoard()) {
+				option1.setText("You must move a pawn forward 5 spaces.");
+				option2.setText("");
+				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(5)));
+			} else {
+				option1.setText("Unable to move this turn!");
+				option2.setText("");
+			}
+
+			break;
+
+		case "7":
+			if (currentPlayer.hasPiecesOnBoard()) {
+				option1.setText("You must move a pawn forward 7 spaces.");
+				option2.setText("");
+				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(7)));
+			} else {
+				option1.setText("Unable to move this turn!");
+				option2.setText("");
+			}
+			break;
+
+		case "8":
+			if (currentPlayer.hasPiecesOnBoard()) {
+				option1.setText("You must move a pawn forward 8 spaces.");
+				option2.setText("");
+				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(8)));
+			} else {
+				option1.setText("Unable to move this turn!");
+				option2.setText("");
+			}
+
+			break;
+
+		case "10":
+			if (currentPlayer.hasPiecesOnBoard()) {
+				option1.setText("You must move a pawn forward 10 spaces, or move backward 1 space.");
+				option2.setText("");
+				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(10, -1)));
+			} else {
+				option1.setText("Unable to move this turn!");
+				option2.setText("");
+			}
+
+			break;
+
+		case "11":
+			if (currentPlayer.hasPiecesOnBoard()) {
+				option1.setText("You must move a pawn forward 11 spaces.");
+				option2.setText("");
+				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(11)));
+			} else {
+				option1.setText("Unable to move this turn!");
+				option2.setText("");
+			}
+
+			break;
+
+		case "12":
+			if (currentPlayer.hasPiecesOnBoard()) {
+				option1.setText("You must move a pawn forward 12 spaces.");
+				option2.setText("");
+				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(12)));
+			} else {
+				option1.setText("Unable to move this turn!");
+				option2.setText("");
+			}
+
+			break;
+		case "Sorry":
+			ArrayList<ArrayList<Integer>> sorryMoves = new ArrayList<ArrayList<Integer>>();
+			ArrayList<Piece> piecesOnBoard = getPiecesOnBoard();
+			if (!piecesOnBoard.isEmpty()) {
+				option1.setText("You may BUMP any opponent's pawn with your pawn from START");
+				option2.setText("Select a piece to bump.");
+				sorryCard = true;
+
+				for (Piece p : piecesOnBoard) {
+					if (p.getIsInPlay()) {
+						int xLoc = p.getLocation().get(0).get(0);
+						int yLoc = p.getLocation().get(0).get(1);
+
+						sorryMoves.add(new ArrayList<Integer>(Arrays.asList(xLoc, yLoc)));
+						System.out.println(xLoc + ", " + yLoc);
+					}
+				}
+
+				for (Piece p : currentPlayer.getPieces()) {
+					p.setPossibleMoves(sorryMoves);
+				}
+
+			} else {
+				option1.setText("No players on board.");
+				option2.setText("Unable to move");
+			}
+			break;
+		}
+	}
 
 	private void setPossibleMoves(ArrayList<Integer> moveNumList) {
 		selfPieceSet.clear();
