@@ -8,16 +8,20 @@ package sorry;
 import java.util.ArrayList;
 
 /**
- *
+ * <p>
+ * First version was done by Austin Batistoni, then Yuhang Lin refactored the
+ * code by adding the setter for the piece array and use constant to initialize
+ * the piece array.
+ * 
  * @author austinbatistoni, Yuhang Lin
  */
 public class Player {
 	private static final int NUM_PIECES = 4;
 	String name;
-	private int piecesHome;
-	private int startPieces;
+	private int piecesHome; // number of pieces that are in the home
+	private int startPieces; // number of pieces that are in the start
 	public BoardSquare[] home = new BoardSquare[5];
-	private PieceColor color;
+	private PieceColor color; // color of the pieces
 
 	private Piece[] pieceArray = new Piece[NUM_PIECES];
 
@@ -72,7 +76,11 @@ public class Player {
 	public static int getNumPieces() {
 		return NUM_PIECES;
 	}
-	
+
+	/**
+	 * Sets the piece array to be the given array.
+	 * @param pieceArray an piece array of NUM_PIECES
+	 */
 	public void setPieceArray(Piece[] pieceArray) {
 		if (pieceArray != null && pieceArray.length == NUM_PIECES) {
 			this.pieceArray = pieceArray;

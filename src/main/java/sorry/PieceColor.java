@@ -11,7 +11,8 @@ import java.util.Arrays;
 import javafx.scene.paint.Color;
 
 /**
- *
+ * Piece's color of the game.
+ * 
  * @author austinbatistoni
  */
 public class PieceColor {
@@ -50,7 +51,6 @@ public class PieceColor {
 			int y = safeCoords[i][1];
 			temp.add(new ArrayList<Integer>(Arrays.asList(x, y)));
 		}
-
 		return temp;
 	}
 
@@ -64,7 +64,6 @@ public class PieceColor {
 			int y = startCoords[i][1];
 			temp.add(new ArrayList<Integer>(Arrays.asList(x, y)));
 		}
-
 		return temp;
 	}
 

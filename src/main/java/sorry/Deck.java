@@ -1,13 +1,15 @@
-/**
- * Deck of cards in the game.
- */
 package sorry;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
+ * Deck of 45 cards in the game.
+ * <p>
+ * It will first generate all 45 cards, then shuffles the cards. After all the
+ * cards are used, it will automatically shuffle the cards again for the next
+ * drawing.
+ * 
  * @author Yuhang Lin
- *
  */
 public class Deck {
 

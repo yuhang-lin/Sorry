@@ -54,6 +54,7 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+
 	Card currCard;
 	Piece selected;
 	Piece prevPiece;
@@ -68,7 +69,7 @@ public class Main extends Application {
 	String userName = "SorryUser";
 
 	ArrayList<Player> players = new ArrayList<>();
-	
+
 	HashMap<String, Piece> otherPieceMap = new HashMap<>();
 	HashSet<String> selfPieceSet = new HashSet<>();
 
@@ -84,7 +85,7 @@ public class Main extends Application {
 	/**
 	 * Save the current game status.
 	 * 
-	 * @return
+	 * @return true if success, false otherwise
 	 */
 	public boolean save() {
 		try {
@@ -182,7 +183,7 @@ public class Main extends Application {
 				newPlayers.add(player);
 			}
 			players = newPlayers;
-			resetBoard(stage);
+			initBoard(stage);
 			resetText();
 		} catch (FileNotFoundException e) {
 			return 1;
@@ -193,7 +194,12 @@ public class Main extends Application {
 		return 0;
 	}
 
-	private void resetBoard(Stage stage) {
+	/**
+	 * Initialize the game board GUI and corresponding data structure.
+	 * 
+	 * @param stage
+	 */
+	private void initBoard(Stage stage) {
 		for (int i = 0; i < players.size(); i++) {
 			Piece[] pieces = players.get(i).getPieces();
 			for (int j = 0; j < pieces.length; j++) {
@@ -212,9 +218,12 @@ public class Main extends Application {
 		}
 	}
 
+	/**
+	 * Add all players of the game.
+	 */
 	private void setPlayers() {
 		Computer blue = new Computer(new Blue(), Computer.NiceLevel.MEAN, Computer.SmartLevel.SMART); // for testing
-		//Player blue = new Player(new Blue());
+		// Player blue = new Player(new Blue());
 		Player green = new Player(new Green());
 		Player red = new Player(new Red());
 		Player yellow = new Player(new Yellow());
@@ -229,26 +238,25 @@ public class Main extends Application {
 		HBox root = new HBox();
 		pane = new GridPane();
 		board = new Board();
-		
+
 		sideBar = new VBox(20);
 		sideBar.setPrefWidth(1100);
 		sideBar.setStyle("-fx-background-color: rgba(0, 0, 0, .1);");
-		
 
 		primaryStage.setTitle("Sorry!");
-		//Text t = new Text(0, 0, "SORRY!");
-		//t.setFont(Font.font("Verdana", FontWeight.BOLD, 60));
-		//DropShadow ds = new DropShadow();
-		//ds.setOffsetY(3.0f);
-		//ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
-		//t.setEffect(ds);
+		// Text t = new Text(0, 0, "SORRY!");
+		// t.setFont(Font.font("Verdana", FontWeight.BOLD, 60));
+		// DropShadow ds = new DropShadow();
+		// ds.setOffsetY(3.0f);
+		// ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+		// t.setEffect(ds);
 		sideBar.getChildren().add(sorryTitleEffect());
 		drawBoard(pane, board);
-		
+
 		DropShadow ds = new DropShadow();
 		ds.setOffsetY(3.0f);
 		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
-		
+
 		turnText = new Text("Blue player's turn");
 		turnText.setEffect(ds);
 		turnText.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
@@ -257,15 +265,15 @@ public class Main extends Application {
 		sideBar.getChildren().add(turnText);
 		Button btnDraw = new Button("Draw");
 		btnDraw.setMaxWidth(200);
-		
+
 		sideBar.getChildren().add(btnDraw);
-		
+
 		HBox buttonGroup = new HBox();
-		
+
 		Button btnSave = new Button("Save game");
 		Button btnLeaderBoard = new Button("Leader Board");
 		Button btnRestore = new Button("Resume game");
-		buttonGroup.getChildren().addAll(btnSave,btnLeaderBoard,btnRestore);
+		buttonGroup.getChildren().addAll(btnSave, btnLeaderBoard, btnRestore);
 		sideBar.getChildren().add(buttonGroup);
 		sideBar.getChildren().add(new CardPane(new Card("Draw")));
 		directions = new Text("Please draw a card.");
@@ -275,13 +283,21 @@ public class Main extends Application {
 		sideBar.getChildren().add(option1);
 		sideBar.getChildren().add(option2);
 
-		
-		
-
 		Button btnHelp = new Button("Help");
 		sideBar.getChildren().add(btnHelp);
 		sideBar.setAlignment(Pos.CENTER);
-		
+
+		setPlayers();
+		initBoard(primaryStage);
+
+		root.getChildren().add(sideBar);
+		root.getChildren().add(pane);
+
+		Scene scene = new Scene(root, 1030, 735);
+		scene.setFill(Color.WHITE);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+
 		btnHelp.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -289,18 +305,6 @@ public class Main extends Application {
 				help.start(new Stage());
 			}
 		});
-
-		setPlayers();
-		resetBoard(primaryStage);
-		
-		root.getChildren().add(sideBar);
-		root.getChildren().add(pane);
-		
-		Scene scene = new Scene(root, 1030, 735);
-		scene.setFill(Color.WHITE);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		
 
 		btnDraw.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
@@ -312,13 +316,13 @@ public class Main extends Application {
 				directions.setText("The card is: " + currCard.getName());
 				sideBar.getChildren().remove(4);
 				sideBar.getChildren().add(4, (new CardPane(currCard)));
-				
+
 				directions.setText("The card is: " + card);
 				cardToMoves(card);
 				Player currentPlayer = players.get(currentTurn);
 				if (currentPlayer instanceof Computer) {
 					System.out.println("Computer got the card " + card);
-					Choice choice = ((Computer)currentPlayer).getSelectedChoice(getPiecesOnBoard());
+					Choice choice = ((Computer) currentPlayer).getSelectedChoice(getPiecesOnBoard());
 					if (choice != null) {
 						Piece piece = choice.getPiece();
 						ArrayList<ArrayList<Integer>> nextLocation = new ArrayList<>();
@@ -326,9 +330,8 @@ public class Main extends Application {
 						selected = piece;
 						selectedCircle = selected.getCircle();
 						movePiece(nextLocation);
-						// TODO: Uncomment below two lines before submission
-//					} else {
-//						nextTurn();
+					} else {
+						nextTurn();
 					}
 				}
 			}
@@ -369,60 +372,67 @@ public class Main extends Application {
 			}
 		});
 	}
-	
 
+	/**
+	 * Generate title effect.
+	 * 
+	 * @return the title effect
+	 */
 	private HBox sorryTitleEffect() {
 		HBox text = new HBox();
-		
+
 		Text s = new Text("S");
 		s.setFont(Font.font("Verdana", FontWeight.BOLD, 80));
 		DropShadow red = new DropShadow();
 		red.setOffsetY(3.0f);
 		red.setColor(Color.RED);
 		s.setEffect(red);
-		
+
 		Text o = new Text("o");
 		o.setFont(Font.font("Verdana", FontWeight.BOLD, 80));
 		DropShadow orange = new DropShadow();
 		orange.setOffsetY(3.0f);
 		orange.setColor(Color.ORANGE);
 		o.setEffect(orange);
-		
+
 		Text r = new Text("r");
 		r.setFont(Font.font("Verdana", FontWeight.BOLD, 80));
 		DropShadow yellow = new DropShadow();
 		yellow.setOffsetY(3.0f);
 		yellow.setColor(Color.YELLOW);
 		r.setEffect(yellow);
-		
+
 		Text r2 = new Text("r");
 		r2.setFont(Font.font("Verdana", FontWeight.BOLD, 80));
 		DropShadow green = new DropShadow();
 		green.setOffsetY(3.0f);
 		green.setColor(Color.GREEN);
 		r2.setEffect(green);
-		
+
 		Text y = new Text("y");
 		y.setFont(Font.font("Verdana", FontWeight.BOLD, 80));
 		DropShadow blue = new DropShadow();
 		blue.setOffsetY(3.0f);
 		blue.setColor(Color.BLUE);
 		y.setEffect(blue);
-		
+
 		Text exc = new Text("!");
 		exc.setFont(Font.font("Verdana", FontWeight.BOLD, 85));
 		DropShadow ds5 = new DropShadow();
 		ds5.setOffsetY(3.0f);
 		ds5.setColor(Color.PURPLE);
 		exc.setEffect(ds5);
-		
-		text.getChildren().addAll(s,o,r,r2,y,exc);
-				
+
+		text.getChildren().addAll(s, o, r, r2, y, exc);
+
 		return text;
-  } 
+	}
+
 	/**
 	 * Calculate all possible next moves based on the given card name.
-	 * @param card a String representing the card name
+	 * 
+	 * @param card
+	 *            a String representing the card name
 	 */
 	private void cardToMoves(String card) {
 		Player currentPlayer = players.get(currentTurn);
@@ -496,7 +506,6 @@ public class Main extends Application {
 				option1.setText("Unable to move this turn!");
 				option2.setText("");
 			}
-
 			break;
 
 		case "10":
@@ -508,7 +517,6 @@ public class Main extends Application {
 				option1.setText("Unable to move this turn!");
 				option2.setText("");
 			}
-
 			break;
 
 		case "11":
@@ -520,7 +528,6 @@ public class Main extends Application {
 				option1.setText("Unable to move this turn!");
 				option2.setText("");
 			}
-
 			break;
 
 		case "12":
@@ -532,7 +539,6 @@ public class Main extends Application {
 				option1.setText("Unable to move this turn!");
 				option2.setText("");
 			}
-
 			break;
 		case "Sorry":
 			ArrayList<ArrayList<Integer>> sorryMoves = new ArrayList<ArrayList<Integer>>();
@@ -564,12 +570,16 @@ public class Main extends Application {
 		}
 	}
 
-	
-
+	/**
+	 * Set the possible moves for each piece of the current player.
+	 * 
+	 * @param moveNumList
+	 *            list of available movement number
+	 */
 	private void setPossibleMoves(ArrayList<Integer> moveNumList) {
 		selfPieceSet.clear();
 		Player currentPlayer = players.get(currentTurn);
-		for (Piece p: currentPlayer.getPieces()) {
+		for (Piece p : currentPlayer.getPieces()) {
 			selfPieceSet.add(p.getLocation().get(0).toString());
 		}
 		for (Piece p : currentPlayer.getPieces()) {
@@ -592,7 +602,7 @@ public class Main extends Application {
 							} else {
 								move = getMoveFromInt(board, p, cardNum);
 							}
-						} else if (cardNum >= 1 && cardNum <= 2){ // Start a pawn
+						} else if (cardNum >= 1 && cardNum <= 2) { // Start a pawn
 							ArrayList<Integer> temp = new ArrayList<Integer>();
 							temp.add(p.getColor().getFirstSpot().get(0).get(0));
 							temp.add(p.getColor().getFirstSpot().get(0).get(1));
@@ -618,6 +628,12 @@ public class Main extends Application {
 		}
 	}
 
+	/**
+	 * 
+	 * @param p
+	 * @param card
+	 * @return
+	 */
 	public boolean canPieceFinish(Piece p, int card) {
 		if (p.isPieceSafe()) {
 			int i = getIndexOfSafeArray(p);
@@ -779,7 +795,7 @@ public class Main extends Application {
 		case 1:
 			turnText.setText("Yellow player's turn");
 			turnText.setFill(Color.YELLOW);
-			
+
 			break;
 		case 2:
 			turnText.setText("Green player's turn");
@@ -912,7 +928,9 @@ public class Main extends Application {
 
 	/**
 	 * Move the selected piece to the target location
-	 * @param location the target location of the selected piece
+	 * 
+	 * @param location
+	 *            the target location of the selected piece
 	 */
 	private void movePiece(ArrayList<ArrayList<Integer>> location) {
 		returnSquareColor();
@@ -946,10 +964,8 @@ public class Main extends Application {
 							removeBumpedPiece(location);
 						}
 						for (int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
-							if ((location.get(0).get(0) == selected.getColor().getSafeCoords().get(i)
-									.get(0))
-									&& (location.get(0).get(1) == selected.getColor().getSafeCoords()
-											.get(i).get(1))) {
+							if ((location.get(0).get(0) == selected.getColor().getSafeCoords().get(i).get(0))
+									&& (location.get(0).get(1) == selected.getColor().getSafeCoords().get(i).get(1))) {
 								selected.setOutOfPlay();
 								System.out.println("Out of play");
 
@@ -964,10 +980,10 @@ public class Main extends Application {
 						selected.setLocation(location);
 						boolean safe = false;
 						for (int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
-							if (selected.getLocation().get(0).get(0) == selected.getColor()
-									.getSafeCoords().get(i).get(0)
-									&& selected.getLocation().get(0).get(1) == selected.getColor()
-											.getSafeCoords().get(i).get(1)) {
+							if (selected.getLocation().get(0).get(0) == selected.getColor().getSafeCoords().get(i)
+									.get(0)
+									&& selected.getLocation().get(0).get(1) == selected.getColor().getSafeCoords()
+											.get(i).get(1)) {
 								safe = true;
 							}
 						}
@@ -978,7 +994,7 @@ public class Main extends Application {
 			}
 		}
 	}
-	
+
 	public void moveFromStart(Piece p, GridPane pane, Circle circle) {
 		ArrayList<ArrayList<Integer>> firstSpot = p.getColor().getFirstSpot();
 		pane.getChildren().remove(circle);
@@ -987,7 +1003,7 @@ public class Main extends Application {
 		p.setInPlay();
 		circle.setStroke(Color.BLACK);
 	}
-	
+
 	private void removeBumpedPiece(ArrayList<ArrayList<Integer>> location) {
 		Piece piece = getBumpedPiece(location);
 		if (piece == null) {
@@ -1015,7 +1031,9 @@ public class Main extends Application {
 
 	/**
 	 * Get bumped piece based on the given location
-	 * @param location the location of bumping
+	 * 
+	 * @param location
+	 *            the location of bumping
 	 * @return bumped Piece if found, otherwise null
 	 */
 	public Piece getBumpedPiece(ArrayList<ArrayList<Integer>> location) {

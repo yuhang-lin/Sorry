@@ -1,11 +1,12 @@
-/**
- * Store the information about the card.
- */
 package sorry;
 
 /**
- * @author Yuhang Lin
- *
+ * Stores the information about the card.
+ * <p>
+ * Yuhang Lin wrote the first version and Austin Batistoni shortened some
+ * descriptions of the card.
+ * 
+ * @author Yuhang Lin, Austin Batistoni
  */
 public class Card {
 
