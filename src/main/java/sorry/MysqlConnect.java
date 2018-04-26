@@ -3,16 +3,13 @@ package sorry;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-//############################################################################
-//
-// this class makes the connection to the mySQL database.
-//
-// used by all other classes
-//
-//############################################################################
+/**
+ * Makes the connection to the mySQL database.
+ * 
+ * @author Yuhang Lin
+ */
 public class MysqlConnect {
 	public static Connection myConnect() {
-		// System.out.println("MySQL Connect Example.");
 		Connection conn = null;
 
 		ResourceBundle properties = ResourceBundle.getBundle("MysqlConnect");

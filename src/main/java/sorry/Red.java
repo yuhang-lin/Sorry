@@ -1,15 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sorry;
 
 import javafx.scene.paint.Color;
 
 /**
- *
- * @author austinbatistoni
+ * Red color for the piece.
+ * <p>
+ * First version was done by Austin Batistoni, then Yuhang Lin refactored the
+ * code by removing duplicate functions already implemented in the super class.
+ * 
+ * @author Austin Batistoni, Yuhang Lin
  */
 public class Red extends PieceColor {
 
