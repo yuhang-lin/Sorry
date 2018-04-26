@@ -25,8 +25,8 @@ public class TestConnection {
 				String color = myResult.getString("color");
 				String time = myResult.getString("time");
 				String result = myResult.getString("result");
-				outputList.append(
-						id + " " + name + " " + pc1 + " " + pc2 + " " + pc3 + " " + color + " " + time + " " + result + "\n");
+				outputList.append(id + " " + name + " " + pc1 + " " + pc2 + " " + pc3 + " " + color + " " + time + " "
+						+ result + "\n");
 			}
 			String userName = "Yuhang Lin";
 			sqlQuery = "INSERT INTO `player`(`name`) VALUES (?)";

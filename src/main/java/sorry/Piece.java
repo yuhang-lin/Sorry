@@ -92,43 +92,43 @@ public class Piece {
 	public int getHomeIndex() {
 		return homeIndex;
 	}
-	
+
 	public boolean isSafe() {
 		return isSafe;
 	}
-	
+
 	public void setSafe() {
 		this.isSafe = true;
 		this.setOutOfPlay();
 	}
-	
+
 	public void setNotSafe() {
 		this.isSafe = false;
 		this.setInPlay();
 	}
-	
+
 	public boolean isPieceSafe() {
-		for(int i = 0; i < this.color.getSafeCoords().size(); i++) {
-			if(this.getLocation().get(0).get(0) == this.color.getSafeCoords().get(i).get(0)
+		for (int i = 0; i < this.color.getSafeCoords().size(); i++) {
+			if (this.getLocation().get(0).get(0) == this.color.getSafeCoords().get(i).get(0)
 					&& this.getLocation().get(0).get(1) == this.color.getSafeCoords().get(i).get(1)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public boolean isHome() {
 		return isHome;
 	}
-	
+
 	public void setIsHome() {
 		this.isHome = true;
 	}
-	
+
 	public void setCircle(Circle c) {
 		this.circle = c;
 	}
-	
+
 	public Circle getCircle() {
 		return circle;
 	}

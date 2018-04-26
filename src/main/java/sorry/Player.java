@@ -79,7 +79,9 @@ public class Player {
 
 	/**
 	 * Sets the piece array to be the given array.
-	 * @param pieceArray an piece array of NUM_PIECES
+	 * 
+	 * @param pieceArray
+	 *            an piece array of NUM_PIECES
 	 */
 	public void setPieceArray(Piece[] pieceArray) {
 		if (pieceArray != null && pieceArray.length == NUM_PIECES) {

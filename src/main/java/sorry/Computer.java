@@ -7,8 +7,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Computer opponent of Sorry game.
- * <p> Basic initial code was created by Chirs Bratkovics, then Yuhang Lin completed all the rest of the functions, 
- * including getting scores for each movement and getting correct choice.
+ * <p>
+ * Basic initial code was created by Chirs Bratkovics, then Yuhang Lin completed
+ * all the rest of the functions, including getting scores for each movement and
+ * getting correct choice.
+ * 
  * @author Yuhang Lin, Chris Bratkovics
  */
 public class Computer extends Player {
@@ -44,8 +47,11 @@ public class Computer extends Player {
 	}
 
 	/**
-	 * Choose one available from the list of Choice then use than choice to move the piece.
-	 * @param piecesOnBoard pieces by other players
+	 * Choose one available from the list of Choice then use than choice to move the
+	 * piece.
+	 * 
+	 * @param piecesOnBoard
+	 *            pieces by other players
 	 */
 	public void move(ArrayList<Piece> piecesOnBoard) {
 		Choice choice = getSelectedChoice(piecesOnBoard);
@@ -118,10 +124,12 @@ public class Computer extends Player {
 		}
 		Collections.sort(choiceList);
 	}
-	
+
 	/**
 	 * Get selected choice of next move.
-	 * @param piecesOnBoard an ArrayList of all the pieces on the board of other players
+	 * 
+	 * @param piecesOnBoard
+	 *            an ArrayList of all the pieces on the board of other players
 	 * @return the selected choice
 	 */
 	public Choice getSelectedChoice(ArrayList<Piece> piecesOnBoard) {
