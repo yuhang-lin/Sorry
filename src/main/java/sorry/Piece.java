@@ -22,7 +22,9 @@ public class Piece {
 	private int homeIndex;
 	private boolean isSafe;
 	private boolean isHome;
+	private boolean canGoHome;
 	private Circle circle;
+	
 
 	public Piece(PieceColor c, Player p, ArrayList<ArrayList<Integer>> location, int index) {
 		this.color = c;
@@ -135,6 +137,18 @@ public class Piece {
 
 	public Circle getCircle() {
 		return circle;
+	}
+	
+	public void setCanGoHome() {
+		this.canGoHome = true;
+	}
+	
+	public void setCantGoHome() {
+		this.canGoHome = false;
+	}
+	
+	public boolean canGoHome() {
+		return canGoHome;
 	}
 
 }
