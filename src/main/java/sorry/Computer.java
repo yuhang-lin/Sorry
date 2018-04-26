@@ -94,6 +94,9 @@ public class Computer extends Player {
 				continue;
 			}
 			for (ArrayList<Integer> move : piece.getPossibleMoves()) {
+				if (move.isEmpty()) {
+					continue;
+				}
 				// Get the entry to the safe space
 				ArrayList<Integer> safe = piece.getColor().getLastSpot().get(0);
 				int safeIndex = Board.getPathIndex(safe);
