@@ -233,10 +233,6 @@ public class Main extends Application {
 		players.add(yellow);
 		players.add(green);
 		players.add(red);
-		/*
-		 * if (players.get(0) instanceof Computer) { System.out.println("hi"); }
-		 */
-		// ((Computer)players.get(0)).getSelectedChoice();
 	}
 
 	@Override
@@ -329,144 +325,9 @@ public class Main extends Application {
 				directions.setText("The card is: " + currCard.getName());
 				sideBar.getChildren().remove(4);
 				sideBar.getChildren().add(4, (new CardPane(currCard)));
-				Player currentPlayer = players.get(currentTurn);
 				
-				switch (card) {
-				case "1":
-					option1.setText("You can move a pawn to the start square.");
-					option2.setText("You can move a pawn forward 1 space.");
-					setPossibleMoves(new ArrayList<Integer>(Arrays.asList(1)));
-					break;
-
-				case "2":
-					option1.setText("You can move a pawn to the start square.");
-					option2.setText("You can move a pawn forward 2 spaces.");
-					setPossibleMoves(new ArrayList<Integer>(Arrays.asList(2)));
-					break;
-
-				case "3":
-					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn forward 3 spaces.");
-						option2.setText("");
-						setPossibleMoves(new ArrayList<Integer>(Arrays.asList(3)));
-					} else {
-						option1.setText("Unable to move this turn!");
-						option2.setText("");
-					}
-
-					break;
-
-				case "4":
-					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn backwards 4 spaces.");
-						option2.setText("");
-
-						// TODO: IMPLEMENT moving backwards out of safe array with a 4
-						setPossibleMoves(new ArrayList<Integer>(Arrays.asList(-4)));
-					} else {
-						option1.setText("Unable to move this turn!");
-						option2.setText("");
-					}
-					break;
-
-				case "5":
-					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn forward 5 spaces.");
-						option2.setText("");
-						setPossibleMoves(new ArrayList<Integer>(Arrays.asList(5)));
-					} else {
-						option1.setText("Unable to move this turn!");
-						option2.setText("");
-					}
-
-					break;
-
-				case "7":
-					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn forward 7 spaces.");
-						option2.setText("");
-						setPossibleMoves(new ArrayList<Integer>(Arrays.asList(7)));
-					} else {
-						option1.setText("Unable to move this turn!");
-						option2.setText("");
-					}
-					break;
-
-				case "8":
-					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn forward 8 spaces.");
-						option2.setText("");
-						setPossibleMoves(new ArrayList<Integer>(Arrays.asList(8)));
-					} else {
-						option1.setText("Unable to move this turn!");
-						option2.setText("");
-					}
-
-					break;
-
-				case "10":
-					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn forward 10 spaces.");
-						option2.setText("");
-						setPossibleMoves(new ArrayList<Integer>(Arrays.asList(10, -1)));
-					} else {
-						option1.setText("Unable to move this turn!");
-						option2.setText("");
-					}
-
-					break;
-
-				case "11":
-					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn forward 11 spaces.");
-						option2.setText("");
-						setPossibleMoves(new ArrayList<Integer>(Arrays.asList(11)));
-					} else {
-						option1.setText("Unable to move this turn!");
-						option2.setText("");
-					}
-
-					break;
-
-				case "12":
-					if (currentPlayer.hasPiecesOnBoard()) {
-						option1.setText("You must move a pawn forward 12 spaces.");
-						option2.setText("");
-						setPossibleMoves(new ArrayList<Integer>(Arrays.asList(12)));
-					} else {
-						option1.setText("Unable to move this turn!");
-						option2.setText("");
-					}
-
-					break;
-				case "Sorry":
-					ArrayList<ArrayList<Integer>> sorryMoves = new ArrayList<ArrayList<Integer>>();
-					ArrayList<Piece> piecesOnBoard = getPiecesOnBoard();
-					if (!piecesOnBoard.isEmpty()) {
-						option1.setText(currCard.getInfo());
-						option2.setText("Select a piece to bump.");
-						sorryCard = true;
-
-						for (Piece p : piecesOnBoard) {
-							if (p.getIsInPlay()) {
-								int xLoc = p.getLocation().get(0).get(0);
-								int yLoc = p.getLocation().get(0).get(1);
-
-								sorryMoves.add(new ArrayList<Integer>(Arrays.asList(xLoc, yLoc)));
-								System.out.println(xLoc + ", " + yLoc);
-							}
-						}
-
-						for (Piece p : currentPlayer.getPieces()) {
-							p.setPossibleMoves(sorryMoves);
-						}
-
-					} else {
-						option1.setText("No players on board.");
-						option2.setText("Unable to move");
-					}
-					break;
-				}
+				directions.setText("The card is: " + card);
+				cardToMoves(card);
 			}
 		});
 
@@ -506,6 +367,7 @@ public class Main extends Application {
 		});
 	}
 	
+
 	private HBox sorryTitleEffect() {
 		HBox text = new HBox();
 		
@@ -554,13 +416,153 @@ public class Main extends Application {
 		text.getChildren().addAll(s,o,r,r2,y,exc);
 				
 		return text;
-	}
+  } 
+	private void cardToMoves(String card) {
+		Player currentPlayer = players.get(currentTurn);
+		switch (card) {
+		case "1":
+			option1.setText("You can move a pawn to the start square.");
+			option2.setText("You can move a pawn forward 1 space.");
+			setPossibleMoves(new ArrayList<Integer>(Arrays.asList(1)));
+			break;
+
+		case "2":
+			option1.setText("You can move a pawn to the start square.");
+			option2.setText("You can move a pawn forward 2 spaces.");
+			setPossibleMoves(new ArrayList<Integer>(Arrays.asList(2)));
+			break;
+
+		case "3":
+			if (currentPlayer.hasPiecesOnBoard()) {
+				option1.setText("You must move a pawn forward 3 spaces.");
+				option2.setText("");
+				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(3)));
+			} else {
+				option1.setText("Unable to move this turn!");
+				option2.setText("");
+			}
+
+			break;
+
+		case "4":
+			if (currentPlayer.hasPiecesOnBoard()) {
+				option1.setText("You must move a pawn backwards 4 spaces.");
+				option2.setText("");
+
+				// TODO: IMPLEMENT moving backwards out of safe array with a 4
+				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(-4)));
+			} else {
+				option1.setText("Unable to move this turn!");
+				option2.setText("");
+			}
+			break;
+
+		case "5":
+			if (currentPlayer.hasPiecesOnBoard()) {
+				option1.setText("You must move a pawn forward 5 spaces.");
+				option2.setText("");
+				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(5)));
+			} else {
+				option1.setText("Unable to move this turn!");
+				option2.setText("");
+			}
+
+			break;
+
+		case "7":
+			if (currentPlayer.hasPiecesOnBoard()) {
+				option1.setText("You must move a pawn forward 7 spaces.");
+				option2.setText("");
+				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(7)));
+			} else {
+				option1.setText("Unable to move this turn!");
+				option2.setText("");
+			}
+			break;
+
+		case "8":
+			if (currentPlayer.hasPiecesOnBoard()) {
+				option1.setText("You must move a pawn forward 8 spaces.");
+				option2.setText("");
+				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(8)));
+			} else {
+				option1.setText("Unable to move this turn!");
+				option2.setText("");
+			}
+
+			break;
+
+		case "10":
+			if (currentPlayer.hasPiecesOnBoard()) {
+				option1.setText("You must move a pawn forward 10 spaces, or move backward 1 space.");
+				option2.setText("");
+				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(10, -1)));
+			} else {
+				option1.setText("Unable to move this turn!");
+				option2.setText("");
+			}
+
+			break;
+
+		case "11":
+			if (currentPlayer.hasPiecesOnBoard()) {
+				option1.setText("You must move a pawn forward 11 spaces.");
+				option2.setText("");
+				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(11)));
+			} else {
+				option1.setText("Unable to move this turn!");
+				option2.setText("");
+			}
+
+			break;
+
+		case "12":
+			if (currentPlayer.hasPiecesOnBoard()) {
+				option1.setText("You must move a pawn forward 12 spaces.");
+				option2.setText("");
+				setPossibleMoves(new ArrayList<Integer>(Arrays.asList(12)));
+			} else {
+				option1.setText("Unable to move this turn!");
+				option2.setText("");
+			}
+
+			break;
+		case "Sorry":
+			ArrayList<ArrayList<Integer>> sorryMoves = new ArrayList<ArrayList<Integer>>();
+			ArrayList<Piece> piecesOnBoard = getPiecesOnBoard();
+			if (!piecesOnBoard.isEmpty()) {
+				option1.setText("You may BUMP any opponent's pawn with your pawn from START");
+				option2.setText("Select a piece to bump.");
+				sorryCard = true;
+
+				for (Piece p : piecesOnBoard) {
+					if (p.getIsInPlay()) {
+						int xLoc = p.getLocation().get(0).get(0);
+						int yLoc = p.getLocation().get(0).get(1);
+
+						sorryMoves.add(new ArrayList<Integer>(Arrays.asList(xLoc, yLoc)));
+						System.out.println(xLoc + ", " + yLoc);
+					}
+				}
+
+				for (Piece p : currentPlayer.getPieces()) {
+					p.setPossibleMoves(sorryMoves);
+				}
+
+			} else {
+				option1.setText("No players on board.");
+				option2.setText("Unable to move");
+			}
+			break;
+		}
+
+	
 
 	private void setPossibleMoves(ArrayList<Integer> moveNumList) {
 		selfPieceSet.clear();
 		Player currentPlayer = players.get(currentTurn);
 		for (Piece p: currentPlayer.getPieces()) {
-			selfPieceSet.add(p.getLocation().toString());
+			selfPieceSet.add(p.getLocation().get(0).toString());
 		}
 		for (Piece p : currentPlayer.getPieces()) {
 			ArrayList<ArrayList<Integer>> moves = new ArrayList<ArrayList<Integer>>();
@@ -646,8 +648,8 @@ public class Main extends Application {
 	}
 
 	public boolean canMoveToSafe(Piece p, int card) {
-		int currentIndex = board.getPathIndex(p.getLocation().get(0));
-		int playersLastSpot = board.getPathIndex(p.getColor().getLastSpot().get(0));
+		int currentIndex = Board.getPathIndex(p.getLocation().get(0));
+		int playersLastSpot = Board.getPathIndex(p.getColor().getLastSpot().get(0));
 		if (p.getColor() instanceof Blue && currentIndex >= 10) {
 
 			playersLastSpot += 60;
@@ -661,8 +663,8 @@ public class Main extends Application {
 	}
 
 	public boolean canMoveToHome(Piece p, int card) {
-		int currentIndex = board.getPathIndex(p.getLocation().get(0));
-		int playersLastSpot = board.getPathIndex(p.getColor().getLastSpot().get(0));
+		int currentIndex = Board.getPathIndex(p.getLocation().get(0));
+		int playersLastSpot = Board.getPathIndex(p.getColor().getLastSpot().get(0));
 		if (p.getColor() instanceof Blue) {
 			playersLastSpot += 60;
 		}
@@ -675,8 +677,8 @@ public class Main extends Application {
 	}
 
 	public ArrayList<Integer> getSafeLocation(Piece p, int card) {
-		int currentIndex = board.getPathIndex(p.getLocation().get(0));
-		int playersLastSpot = board.getPathIndex(p.getColor().getLastSpot().get(0));
+		int currentIndex = Board.getPathIndex(p.getLocation().get(0));
+		int playersLastSpot = Board.getPathIndex(p.getColor().getLastSpot().get(0));
 
 		ArrayList<Integer> newLocation = new ArrayList<Integer>();
 
@@ -743,17 +745,16 @@ public class Main extends Application {
 	 */
 	public void nextTurn() {
 		Player currentPlayer = players.get(currentTurn);
+
 		sideBar.getChildren().remove(4);
 		sideBar.getChildren().add(4, new CardPane(new Card("Draw")));
-		if (currentPlayer.getPiecesHome() == 4) {
+
+		if (currentPlayer.getPiecesHome() == Player.getNumPieces()) {
+
 			directions.setText("Player" + currentPlayer.getPlayerColor() + "wins!");
 			endGame();
 		}
-		if (currentTurn == 3) {
-			currentTurn = 0;
-		} else {
-			currentTurn++;
-		}
+		currentTurn = (currentTurn + 1) % players.size();
 		resetText();
 	}
 
@@ -900,27 +901,9 @@ public class Main extends Application {
 							otherPieceMap.put(piece.getLocation().toString(), piece);
 						}
 						if (sorryCard) {
-							Piece piece = bumpPiece(location);
+							Piece piece = getBumpedPiece(location);
 							if (piece != null) {
-								Node node = null;
-								for (Node n : pane.getChildren()) {
-									if (n instanceof Circle && GridPane.getColumnIndex(n) == location.get(0).get(0)
-											&& GridPane.getRowIndex(n) == location.get(0).get(1)) {
-										node = n;
-									}
-
-								}
-								int locX = piece.getColor().startCoords[piece.getHomeIndex()][0];
-								int locY = piece.getColor().startCoords[piece.getHomeIndex()][1];
-								ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
-								temp.add(new ArrayList<Integer>(Arrays.asList(locX, locY)));
-
-								pane.getChildren().remove(node);
-								pane.add(node, locX, locY);
-								pane.getChildren().remove(selectedCircle);
-
-								piece.setLocation(temp);
-								piece.setOutOfPlay();
+								removeBumpedPiece(location);
 								pane.add(selectedCircle, location.get(0).get(0), location.get(0).get(1));
 								// returnSquareColor();
 								selectedCircle.setStroke(Color.BLACK);
@@ -932,13 +915,17 @@ public class Main extends Application {
 						} else {
 							if (selected != null && selected.getPossibleMoves() != null) {
 								for (int k = 0; k < selected.getPossibleMoves().size(); k++) {
-									if ((selected.getPossibleMoves().get(k).get(0) == location.get(k).get(0))
-											&& selected.getPossibleMoves().get(k).get(1) == location.get(k).get(1)) {
+									if ((selected.getPossibleMoves().get(k).get(0) == location.get(0).get(0))
+											&& selected.getPossibleMoves().get(k).get(1) == location.get(0).get(1)) {
 
+										// Check if it can bump other players' pawns
+										if (otherPieceMap.containsKey(location.toString())) {
+											removeBumpedPiece(location);
+										}
 										for (int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
-											if ((location.get(k).get(0) == selected.getColor().getSafeCoords().get(i)
+											if ((location.get(0).get(0) == selected.getColor().getSafeCoords().get(i)
 													.get(0))
-													&& (location.get(k).get(1) == selected.getColor().getSafeCoords()
+													&& (location.get(0).get(1) == selected.getColor().getSafeCoords()
 															.get(i).get(1))) {
 												selected.setOutOfPlay();
 												System.out.println("Out of play");
@@ -988,8 +975,34 @@ public class Main extends Application {
 		p.setInPlay();
 		circle.setStroke(Color.BLACK);
 	}
+	
+	private void removeBumpedPiece(ArrayList<ArrayList<Integer>> location) {
+		Piece piece = getBumpedPiece(location);
+		if (piece == null) {
+			return;
+		}
+		Node node = null;
+		for (Node n : pane.getChildren()) {
+			if (n instanceof Circle && GridPane.getColumnIndex(n) == location.get(0).get(0)
+					&& GridPane.getRowIndex(n) == location.get(0).get(1)) {
+				node = n;
+			}
 
-	public Piece bumpPiece(ArrayList<ArrayList<Integer>> location) {
+		}
+		int locX = piece.getColor().startCoords[piece.getHomeIndex()][0];
+		int locY = piece.getColor().startCoords[piece.getHomeIndex()][1];
+		ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
+		temp.add(new ArrayList<Integer>(Arrays.asList(locX, locY)));
+
+		pane.getChildren().remove(node);
+		pane.add(node, locX, locY);
+		pane.getChildren().remove(selectedCircle);
+
+		piece.setLocation(temp);
+		piece.setOutOfPlay();
+	}
+
+	public Piece getBumpedPiece(ArrayList<ArrayList<Integer>> location) {
 		for (Piece piece : getPiecesOnBoard()) {
 			if (piece.getLocation() == location) {
 				return piece;

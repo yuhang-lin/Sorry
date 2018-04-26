@@ -3,9 +3,9 @@ package sorry;
 import java.util.ArrayList;
 
 class Choice implements Comparable<Choice>{
-	Piece piece;
-	ArrayList<Integer> move;
-	int score;
+	private Piece piece;
+	private ArrayList<Integer> move;
+	private int score;
 	
 	public Choice(Piece piece, ArrayList<Integer> move, int score) {
 		this.piece = piece;
@@ -21,6 +21,18 @@ class Choice implements Comparable<Choice>{
 			return 1;
 		}
 		return -1;
+	}
+
+	public Piece getPiece() {
+		return piece;
+	}
+
+	public ArrayList<Integer> getMove() {
+		return move;
+	}
+
+	public int getScore() {
+		return score;
 	}
 	
 }

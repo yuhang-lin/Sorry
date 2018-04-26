@@ -45,10 +45,10 @@ public class Computer extends Player {
 
 	public void move(ArrayList<Piece> piecesOnBoard) {
 		Choice choice = getSelectedChoice(piecesOnBoard);
-		Piece piece = choice.piece;
+		Piece piece = choice.getPiece();
 		ArrayList<ArrayList<Integer>> nextLocation = new ArrayList<>();
-		nextLocation.add(choice.move);
-		int targetIndex = Board.getPathIndex(choice.move);
+		nextLocation.add(choice.getMove());
+		int targetIndex = Board.getPathIndex(choice.getMove());
 		int firstSpotIndex = Board.getPathIndex(piece.getColor().getFirstSpot().get(0));
 		if (boardMap.containsKey(targetIndex)) {
 			Piece bumped = boardMap.get(targetIndex);
