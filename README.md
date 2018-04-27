@@ -7,6 +7,8 @@ A board game Sorry! implemented in Java.
 
 Game rules can be found on [Wikipedia](https://en.wikipedia.org/wiki/Sorry!_(game) "Sorry! game")
 
+This project requires JDK 1.8 or later to compile.
+
 To build this project on Ubuntu (tested on Ubuntu 16.04):
 ```bash
 sudo apt-get install default-jdk
@@ -16,7 +18,7 @@ sudo apt-get install openjfx
 ./gradlew run
 ```
 
-To build this project on Windows (tested on Windows 10 and make sure you installed the latest JDK):
+To build this project on Windows (tested on Windows 7 and 10):
 ```
 gradlew build
 gradlew run
