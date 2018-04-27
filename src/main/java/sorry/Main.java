@@ -1199,7 +1199,7 @@ public class Main extends Application {
 			String pc2 = "mean & smart";
 			String pc3 = "nice & smart";
 			String color = "red";
-			String result = "win";
+			String result = "won";
 			// Add record
 			sqlQuery = "INSERT INTO `record` (`player`, `pc1`, `pc2`, `pc3`, `color`, `result`) VALUES (?, ?, ?, ?, ?, ?)";
 			preStatement = mysqlConn.prepareStatement(sqlQuery);
