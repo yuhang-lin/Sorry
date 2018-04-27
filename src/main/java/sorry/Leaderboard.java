@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -43,7 +44,7 @@ public class Leaderboard {
 		label.setFont(new Font("Arial", 20));
 
 		table.setEditable(true);
-		getData();
+		getGameRecord();
 
 		TableColumn recordNumCol = new TableColumn("Record Number");
 		recordNumCol.setMinWidth(100);
@@ -88,21 +89,55 @@ public class Leaderboard {
 		table.setItems(data);
 		table.getColumns().addAll(recordNumCol, nameCol, pc1Col, pc2Col, pc3Col, colorCol, timeCol, resultCol);
 
+		Text stats = new Text(getStatistics());
+		stats.setFont(new Font("Arial", 15));
+		
 		final VBox vbox = new VBox();
 		vbox.setSpacing(5);
-		vbox.setPadding(new Insets(10, 0, 0, 10));
-		vbox.getChildren().addAll(label, table);
+		vbox.setPadding(new Insets(10));
+		vbox.getChildren().addAll(label, table, stats);
 
 		((Group) scene.getRoot()).getChildren().addAll(vbox);
 
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	/**
+	 * Gets statistics from MySQL database.
+	 */
+	private String getStatistics() {
+		String sqlQuery = "";
+		StringBuilder sb = new StringBuilder();
+		try (Connection mysqlConn = MysqlConnect.myConnect(); Statement statement = mysqlConn.createStatement()) {
+			sqlQuery = "SELECT count(1) as count FROM `record`";
+			ResultSet myResult = statement.executeQuery(sqlQuery);
+			int total = 0;
+			int numWon = 0;
+			while (myResult.next()) {
+				total = myResult.getInt("count");
+				sb.append(String.format("Number of games played:  %d, \t",  total));
+			}
+			sqlQuery = "SELECT count(1) as count FROM `record` WHERE result='win'";
+			myResult = statement.executeQuery(sqlQuery);
+			while (myResult.next()) {
+				numWon = myResult.getInt("count");
+				sb.append(String.format("Number of games won: %d, \t",  numWon));
+			}
+			sb.append(String.format("Number of games lost: %d\t", total - numWon));
+		} catch (SQLException e) {// Catch exception if any
+			System.out.println("SQL-> " + sqlQuery.toString());
+			System.err.println("Error: " + e.getMessage());
+			e.printStackTrace();
+		}
+		return sb.toString();
+	}
+
 
 	/**
-	 * Get data from MySQL database.
+	 * Get game record from MySQL database.
 	 */
-	private void getData() {
+	private void getGameRecord() {
 		String sqlQuery = "SELECT record.id, player.name, pc1, pc2, pc3, color, time, result FROM `record` JOIN player ON player.id = player";
 		try (Connection mysqlConn = MysqlConnect.myConnect(); Statement statement = mysqlConn.createStatement()) {
 			ResultSet myResult = statement.executeQuery(sqlQuery);
