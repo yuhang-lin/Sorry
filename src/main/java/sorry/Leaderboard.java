@@ -10,12 +10,13 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
+
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -35,15 +36,20 @@ public class Leaderboard {
 	private final ObservableList<GameRecord> data = FXCollections.observableArrayList();
 
 	public void start(Stage stage) {
-		Scene scene = new Scene(new Group());
+		BorderPane pane = new BorderPane();
+		pane.setPadding(new Insets(10));
+		Scene scene = new Scene(pane);
 		stage.setTitle("Leader Board of Sorry!");
-		stage.setWidth(1240);
+		stage.setWidth(1250);
 		stage.setHeight(500);
 
 		final Label label = new Label("Leader Board");
 		label.setFont(new Font("Arial", 20));
+		
+		Text stats = new Text(getStatistics());
+		stats.setFont(new Font("Arial", 15));
 
-		table.setEditable(true);
+		table.setEditable(false);
 		getGameRecord();
 
 		TableColumn recordNumCol = new TableColumn("Record Number");
@@ -89,16 +95,13 @@ public class Leaderboard {
 		table.setItems(data);
 		table.getColumns().addAll(recordNumCol, nameCol, pc1Col, pc2Col, pc3Col, colorCol, timeCol, resultCol);
 
-		Text stats = new Text(getStatistics());
-		stats.setFont(new Font("Arial", 15));
-		
 		final VBox vbox = new VBox();
 		vbox.setSpacing(5);
-		vbox.setPadding(new Insets(10));
-		vbox.getChildren().addAll(label, table, stats);
-
-		((Group) scene.getRoot()).getChildren().addAll(vbox);
-
+		//vbox.setPadding(new Insets(10, 0, 0, 10));
+		vbox.getChildren().addAll(table);
+		pane.setTop(label);
+		pane.setCenter(vbox);
+		pane.setBottom(stats);
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -118,7 +121,7 @@ public class Leaderboard {
 				total = myResult.getInt("count");
 				sb.append(String.format("Number of games played:  %d, \t",  total));
 			}
-			sqlQuery = "SELECT count(1) as count FROM `record` WHERE result='win'";
+			sqlQuery = "SELECT count(1) as count FROM `record` WHERE result='won'";
 			myResult = statement.executeQuery(sqlQuery);
 			while (myResult.next()) {
 				numWon = myResult.getInt("count");
@@ -133,9 +136,8 @@ public class Leaderboard {
 		return sb.toString();
 	}
 
-
 	/**
-	 * Get game record from MySQL database.
+	 * Gets game record from MySQL database.
 	 */
 	private void getGameRecord() {
 		String sqlQuery = "SELECT record.id, player.name, pc1, pc2, pc3, color, time, result FROM `record` JOIN player ON player.id = player";
