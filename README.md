@@ -16,7 +16,7 @@ sudo apt-get install openjfx
 ./gradlew run
 ```
 
-To build this project on Windows (tested on Windows 10 and make sure you installed the latest JDK version):
+To build this project on Windows (tested on Windows 10 and make sure you installed the latest JDK):
 ```
 gradlew build
 gradlew run
