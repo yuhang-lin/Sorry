@@ -3,7 +3,7 @@ A board game Sorry! implemented in Java.
 
 | CI Server | OS      | Status |
 | --------- | ------- | ------ |
-| Travis CI | Linux   | [![Travis CI build status](https://travis-ci.com/yuhang-lin/Sorry.svg?token=dC6ix7pFVFefei5A1V7f&branch=master)](https://travis-ci.com/yuhang-lin/Sorry) | 
+| Travis CI | Linux   | [![Build Status](https://travis-ci.org/yuhang-lin/Sorry.svg?branch=master)](https://travis-ci.org/yuhang-lin/Sorry)| 
 
 Game rules can be found on [Wikipedia](https://en.wikipedia.org/wiki/Sorry!_(game) "Sorry! game")
 
