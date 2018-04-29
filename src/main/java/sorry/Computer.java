@@ -83,11 +83,15 @@ public class Computer extends Player {
 	}
 
 	public void setNiceLevel(NiceLevel niceLevel) {
-		this.niceLevel = niceLevel;
+		if (niceLevel != null) {
+			this.niceLevel = niceLevel;
+		}
 	}
 
 	public void setSmartLevel(SmartLevel smartLevel) {
-		this.smartLevel = smartLevel;
+		if (smartLevel != null) {
+			this.smartLevel = smartLevel;
+		}
 	}
 
 	/**
