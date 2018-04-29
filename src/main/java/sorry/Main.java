@@ -112,8 +112,11 @@ public class Main extends Application {
 				}
 				for (Piece piece : player.getPieces()) {
 					ArrayList<ArrayList<Integer>> location = piece.getLocation();
-					for (ArrayList<Integer> point : location) {
-						printWriter.println(point.get(0) + "," + point.get(1));
+					ArrayList<Integer> point = location.get(0);
+					if (point.isEmpty()) {
+						printWriter.println(",,");
+					} else {
+						printWriter.println(String.format("%d,%d,%s", point.get(0), point.get(1), piece.getIsInPlay()));
 					}
 				}
 			}
@@ -128,7 +131,7 @@ public class Main extends Application {
 	/**
 	 * Resume the game status from a text file.
 	 * 
-	 * @return 0 if there is no error, 1 if file is not found, 2 otherwise.
+	 * @return 0 if there is no error, 1 if file is not found, 2 if file is damaged, 3 otherwise.
 	 */
 	public int resume(Stage stage) {
 		try (BufferedReader br = new BufferedReader(new FileReader(logFile))) {
@@ -192,18 +195,25 @@ public class Main extends Application {
 				Piece[] pieceArray = new Piece[Player.getNumPieces()];
 				for (int j = 0; j < Player.getNumPieces(); j++) {
 					ArrayList<ArrayList<Integer>> location = new ArrayList<>();
-					String[] indices = br.readLine().split(",");
+					String[] parts = br.readLine().split(",");
 					ArrayList<Integer> point = new ArrayList<>();
-					for (String indexPoint : indices) {
-						point.add(Integer.parseInt(indexPoint));
+					if (parts.length != 3) {
+						return 2;
+					}
+					for (int k = 0; k < 2; k++) {
+						point.add(Integer.parseInt(parts[k]));
 					}
 					location.add(point);
 					Piece piece = new Piece(color, player, location, j);
+					if (parts[2].equalsIgnoreCase("true")) {
+						piece.setInPlay();
+					}
 					pieceArray[j] = piece;
 				}
 				player.setPieceArray(pieceArray);
 				newPlayers.add(player);
 			}
+			clearBoard(stage);
 			players = newPlayers;
 			initBoard(stage);
 			resetText();
@@ -211,9 +221,19 @@ public class Main extends Application {
 			return 1;
 		} catch (IOException e) {
 			e.printStackTrace();
-			return 2;
+			return 3;
 		}
 		return 0;
+	}
+	
+	private void clearBoard(Stage stage) {
+		for (Player player : players) {
+			for (Piece piece : player.getPieces()) {
+				if (piece.getCircle() != null) {
+					pane.getChildren().remove(piece.getCircle());
+				}
+			}
+		}
 	}
 
 	/**
@@ -394,8 +414,10 @@ public class Main extends Application {
 					directions.setText("Succesfully restore the game at " + timeStamp);
 				} else if (result == 1) {
 					directions.setText("It seems that you didn't save the game before.");
+				} else if (result == 2) {
+					directions.setText("It seems that the file storing the last game was damaged.");
 				} else {
-					directions.setText("Failed to restore the game.");
+					directions.setText("Failed to restore the game for unknown reason.");
 				}
 			}
 		});
