@@ -106,9 +106,9 @@ public class Main extends Application {
 			for (Player player : players) {
 				printWriter.println(player.getPlayerColor());
 				if (player instanceof Computer) {
-					printWriter.println("computer");
+					printWriter.println(String.format("Computer,%s,%s", ((Computer) player).getNiceLevel(), ((Computer) player).getSmartLevel()));
 				} else {
-					printWriter.println("user");
+					printWriter.println("User");
 				}
 				for (Piece piece : player.getPieces()) {
 					ArrayList<ArrayList<Integer>> location = piece.getLocation();
@@ -167,10 +167,27 @@ public class Main extends Application {
 				}
 				String playerSetting = br.readLine();
 				Player player = null;
-				if (playerSetting.equals("user")) {
+				if (playerSetting.equals("User")) {
 					player = new Player(color);
 				} else {
 					player = new Computer(color);
+					String[] parts = playerSetting.split(",");
+					Computer.NiceLevel niceLevel = null;
+					Computer.SmartLevel smartLevel = null;
+					if (parts.length >= 3) {
+						if (parts[1].equalsIgnoreCase("NICE")) {
+							niceLevel = Computer.NiceLevel.NICE;
+						} else {
+							niceLevel = Computer.NiceLevel.MEAN;
+						}
+						if (parts[2].equalsIgnoreCase("SMART")) {
+							smartLevel = Computer.SmartLevel.SMART;
+						} else {
+							smartLevel = Computer.SmartLevel.DUMB;
+						}
+					}
+					((Computer) player).setNiceLevel(niceLevel);
+					((Computer) player).setSmartLevel(smartLevel);
 				}
 				Piece[] pieceArray = new Piece[Player.getNumPieces()];
 				for (int j = 0; j < Player.getNumPieces(); j++) {
@@ -227,8 +244,8 @@ public class Main extends Application {
 	 * Add all players of the game.
 	 */
 	private void setPlayers() {
-		//Computer blue = new Computer(new Blue(), Computer.NiceLevel.MEAN, Computer.SmartLevel.SMART); // for testing
-		Player blue = new Player(new Blue());
+		Computer blue = new Computer(new Blue(), Computer.NiceLevel.MEAN, Computer.SmartLevel.SMART); // for testing
+		//Player blue = new Player(new Blue());
 		Player green = new Player(new Green());
 		Player red = new Player(new Red());
 		Player yellow = new Player(new Yellow());
