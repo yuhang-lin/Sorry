@@ -11,7 +11,7 @@ import java.util.HashMap;
  */
 public class Board {
 	
-	private final int PATH_LENGTH = 60;
+	private final static int PATH_LENGTH = 60;
 	//To store the indexes and associated coordinates for the game path
 	private static HashMap<String, Integer> pathMap = new HashMap<>();
 
@@ -100,7 +100,7 @@ public class Board {
 	 * 
 	 * @return an integer repesenting the length of the path
 	 */
-	public int getPathLength() {
+	public static int getPathLength() {
 		return PATH_LENGTH;
 	}
 
