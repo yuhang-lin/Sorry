@@ -15,7 +15,7 @@ public class Player {
 	private int piecesHome; // number of pieces that are in the home
 	private int startPieces; // number of pieces that are in the start
 	public BoardSquare[] home = new BoardSquare[5];
-	private PieceColor color; // color of the pieces
+	protected PieceColor color; // color of the pieces
 
 	private Piece[] pieceArray = new Piece[NUM_PIECES];
 
