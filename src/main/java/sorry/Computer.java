@@ -122,6 +122,9 @@ public class Computer extends Player {
 				int targetIndex = Board.getPathIndex(move);
 				int currentIndex = Board.getPathIndex(piece.getLocation().get(0));
 				int score = lastSpotIndex - targetIndex + Board.getPathLength();
+				if (targetIndex <= lastSpotIndex || targetIndex < 10 + lastSpotIndex) {
+					score = Board.getPathLength() - Math.abs((lastSpotIndex - targetIndex));
+				}
 				if (targetIndex == firstSpotIndex || currentIndex == firstSpotIndex) {
 					score = Board.getPathLength() + 5;
 				} else if (targetIndex == -1) {
