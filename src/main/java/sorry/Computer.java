@@ -16,22 +16,30 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Computer extends Player {
 
-	private PieceColor color;
 	private NiceLevel niceLevel;
 	private SmartLevel smartLevel;
 	private ArrayList<Choice> choiceList = new ArrayList<>();
 	private HashMap<Integer, Piece> boardMap = new HashMap<>();
+	private int firstSpotIndex;
+	private int lastSpotIndex;
 
 	public Computer(PieceColor c, NiceLevel n, SmartLevel s) {
 		super(c);
 		this.niceLevel = n;
 		this.smartLevel = s;
+		updateSpotIndex();
 	}
 
 	public Computer(PieceColor c) {
 		super(c);
 		this.niceLevel = NiceLevel.NICE;
 		this.smartLevel = SmartLevel.SMART;
+		updateSpotIndex();
+	}
+
+	private void updateSpotIndex() {
+		firstSpotIndex = Board.getPathIndex(color.getFirstSpot().get(0));
+		lastSpotIndex = Board.getPathIndex(color.getLastSpot().get(0));
 	}
 
 	public enum NiceLevel {
@@ -59,7 +67,6 @@ public class Computer extends Player {
 		ArrayList<ArrayList<Integer>> nextLocation = new ArrayList<>();
 		nextLocation.add(choice.getMove());
 		int targetIndex = Board.getPathIndex(choice.getMove());
-		int firstSpotIndex = Board.getPathIndex(piece.getColor().getFirstSpot().get(0));
 		if (boardMap.containsKey(targetIndex)) {
 			Piece bumped = boardMap.get(targetIndex);
 			bumped.setOutOfPlay();
@@ -99,6 +106,7 @@ public class Computer extends Player {
 	 * higher the score is.
 	 */
 	private void calculateScore(ArrayList<Piece> piecesOnBoard) {
+		choiceList.clear();
 		boardMap.clear();
 		for (Piece piece : piecesOnBoard) {
 			boardMap.put(Board.getPathIndex(piece.getLocation().get(0)), piece);
@@ -111,11 +119,17 @@ public class Computer extends Player {
 				if (move.isEmpty()) {
 					continue;
 				}
-				// Get the entry to the safe space
-				ArrayList<Integer> safe = piece.getColor().getLastSpot().get(0);
-				int safeIndex = Board.getPathIndex(safe);
 				int targetIndex = Board.getPathIndex(move);
-				int score = Math.abs(safeIndex - targetIndex);
+				int currentIndex = Board.getPathIndex(piece.getLocation().get(0));
+				int score = lastSpotIndex - targetIndex + Board.getPathLength();
+				if (targetIndex == firstSpotIndex || currentIndex == firstSpotIndex) {
+					score = Board.getPathLength() + 5;
+				} else if (targetIndex == -1) {
+					score = Board.getPathLength();
+					if (currentIndex > 0) {
+						score += 10;
+					}
+				}
 				if (boardMap.containsKey(targetIndex)) {
 					if (this.niceLevel == NiceLevel.MEAN) {
 						score += 5;
@@ -126,6 +140,7 @@ public class Computer extends Player {
 				choiceList.add(new Choice(piece, move, score));
 			}
 		}
+		Collections.shuffle(choiceList);
 		Collections.sort(choiceList);
 	}
 
