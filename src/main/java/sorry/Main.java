@@ -71,6 +71,7 @@ public class Main extends Application {
 	GridPane pane;
 	VBox sideBar;
 	String userName = "SorryUser";
+	boolean hasEndGame = false;
 
 	ArrayList<Player> players = new ArrayList<>();
 
@@ -873,11 +874,12 @@ public class Main extends Application {
 	public void nextTurn() {
 		Player currentPlayer = players.get(currentTurn);
 		//If the player has 4 pieces home they win!!
-		if (currentPlayer.getPiecesHome() == Player.getNumPieces()) {
+		if (currentPlayer.getPiecesHome() == Player.getNumPieces() && !hasEndGame) {
 			DisplayWinner d = new DisplayWinner(currentPlayer);
 			d.Start(new Stage());
 			directions.setText("Player" + currentPlayer.getPlayerColor() + "wins!");
 			endGame();
+			numDrawLeft = 0;
 		}
 		if (numDrawLeft == 0) {
 			sideBar.getChildren().remove(4);
@@ -1210,13 +1212,13 @@ public class Main extends Application {
 		return null;
 	}
 
-	private void displayWinner(Player p) {
-		
-	}
 	/**
 	 * Save record of this game to MySQL database
 	 */
 	private void endGame() {
+		if (hasEndGame) {
+			return;
+		}
 		String sqlQuery = "";
 		try (Connection mysqlConn = MysqlConnect.myConnect(); Statement statement = mysqlConn.createStatement()) {
 			sqlQuery = "INSERT INTO `player`(`name`) VALUES (?)";
@@ -1271,5 +1273,6 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 		numDrawLeft = 0;
+		hasEndGame = true;
 	}
 }
