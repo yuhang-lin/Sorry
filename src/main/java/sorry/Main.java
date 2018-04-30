@@ -639,6 +639,10 @@ public class Main extends Application {
 		}
 		for (Piece p : currentPlayer.getPieces()) {
 			ArrayList<ArrayList<Integer>> moves = new ArrayList<ArrayList<Integer>>();
+			if (p.isHome()) {
+				p.setPossibleMoves(moves);
+				continue;
+			}
 			for (int cardNum : moveNumList) {
 				ArrayList<Integer> move = new ArrayList<>();
 				if (cardNum >= 1 && cardNum <= 5) {
@@ -867,18 +871,17 @@ public class Main extends Application {
 	 * Switch to the next turn.
 	 */
 	public void nextTurn() {
+		Player currentPlayer = players.get(currentTurn);
+		//If the player has 4 pieces home they win!!
+		if (currentPlayer.getPiecesHome() == Player.getNumPieces()) {
+			DisplayWinner d = new DisplayWinner(currentPlayer);
+			d.Start(new Stage());
+			directions.setText("Player" + currentPlayer.getPlayerColor() + "wins!");
+			endGame();
+		}
 		if (numDrawLeft == 0) {
-			Player currentPlayer = players.get(currentTurn);
 			sideBar.getChildren().remove(4);
 			sideBar.getChildren().add(4, new CardPane(new Card("Draw")));
-			
-			//If the player has 4 pieces home they win!!
-			if (currentPlayer.getPiecesHome() == Player.getNumPieces()) {
-				DisplayWinner d = new DisplayWinner(currentPlayer);
-				d.Start(new Stage());
-				directions.setText("Player" + currentPlayer.getPlayerColor() + "wins!");
-				endGame();
-			}
 			currentTurn = (currentTurn + 1) % players.size();
 			resetText();
 			numDrawLeft = 1;
@@ -1110,6 +1113,7 @@ public class Main extends Application {
 						if(homeCoords.get(selected.getHomeIndex()).get(0) == location.get(0).get(0) &&
 								homeCoords.get(selected.getHomeIndex()).get(1) == location.get(0).get(1)) {
 							selected.getPlayer().addFinishedPieces();
+							selected.setIsHome();
 						}
 							
 						for (int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
@@ -1266,5 +1270,6 @@ public class Main extends Application {
 			System.err.println("Error: " + e.getMessage());
 			e.printStackTrace();
 		}
+		numDrawLeft = 0;
 	}
 }
