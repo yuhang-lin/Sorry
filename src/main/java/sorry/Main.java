@@ -1234,18 +1234,30 @@ public class Main extends Application {
 			}
 			sqlQuery = String.format("UPDATE player SET last_game = now() WHERE id = %d", userId);
 			statement.executeUpdate(sqlQuery);
-			String pc1 = "nice & smart";
-			String pc2 = "mean & smart";
-			String pc3 = "nice & smart";
-			String color = "red";
-			String result = "won";
+			String[] pcSetting = new String[3];
+			Arrays.fill(pcSetting, "Not chosen");
+			String result = "lost";
+			String color = "Blue";
+			int pcIndex = 0;
+			for (int i = 0; i < players.size(); i++) {
+				Player player = players.get(i);
+				if (player instanceof Computer) {
+					pcSetting[pcIndex] = String.format("%s & %s", ((Computer) player).getNiceLevel(), ((Computer) player).getSmartLevel());
+					pcIndex++;
+				} else {
+					color = player.getPlayerColor().toString();
+					if (i == currentTurn) {
+						result = "won";
+					}
+				}
+			}
 			// Add record
 			sqlQuery = "INSERT INTO `record` (`player`, `pc1`, `pc2`, `pc3`, `color`, `result`) VALUES (?, ?, ?, ?, ?, ?)";
 			preStatement = mysqlConn.prepareStatement(sqlQuery);
 			preStatement.setInt(1, userId);
-			preStatement.setString(2, pc1);
-			preStatement.setString(3, pc2);
-			preStatement.setString(4, pc3);
+			preStatement.setString(2, pcSetting[0]);
+			preStatement.setString(3, pcSetting[1]);
+			preStatement.setString(4, pcSetting[2]);
 			preStatement.setString(5, color);
 			preStatement.setString(6, result);
 			preStatement.executeUpdate();
