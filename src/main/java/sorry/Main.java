@@ -673,9 +673,8 @@ public class Main extends Application {
 							move = temp;
 						}
 					}
-				} else {
+				} else if (p.getIsInPlay()){
 					if (cardNum >= 6 && canMoveToHome(p, cardNum)) {
-
 						move = p.getColor().getHomeCoords().get(p.getHomeIndex());
 					} else {
 						if (canMoveToSafe(p, cardNum)) {
@@ -765,6 +764,9 @@ public class Main extends Application {
 	 */
 	public boolean canMoveToSafe(Piece p, int card) {
 		int currentIndex = Board.getPathIndex(p.getLocation().get(0));
+		if (currentIndex < 0) {
+			return false;
+		}
 		int playersLastSpot = Board.getPathIndex(p.getColor().getLastSpot().get(0));
 		if (p.getColor() instanceof Blue && currentIndex >= 10) {
 
@@ -786,6 +788,9 @@ public class Main extends Application {
 	 */
 	public boolean canMoveToHome(Piece p, int card) {
 		int currentIndex = Board.getPathIndex(p.getLocation().get(0));
+		if (currentIndex < 0) {
+			return false;
+		}
 		int playersLastSpot = Board.getPathIndex(p.getColor().getLastSpot().get(0));
 		if (p.getColor() instanceof Blue) {
 			playersLastSpot += 60;
