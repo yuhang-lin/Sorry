@@ -52,42 +52,42 @@ public class Leaderboard {
 		table.setEditable(false);
 		getGameRecord();
 
-		TableColumn recordNumCol = new TableColumn("Record Number");
+		TableColumn<GameRecord, Integer> recordNumCol = new TableColumn<>("Record Number");
 		recordNumCol.setMinWidth(100);
-		recordNumCol.setCellValueFactory(new PropertyValueFactory<GameRecord, String>("recordNum"));
+		recordNumCol.setCellValueFactory(new PropertyValueFactory<GameRecord, Integer>("recordNum"));
 		recordNumCol.setSortType(TableColumn.SortType.ASCENDING);
 
-		TableColumn nameCol = new TableColumn("Name");
+		TableColumn<GameRecord, String> nameCol = new TableColumn<>("Name");
 		nameCol.setMinWidth(100);
 		nameCol.setCellValueFactory(new PropertyValueFactory<GameRecord, String>("name"));
 		nameCol.setSortType(TableColumn.SortType.ASCENDING);
 
-		TableColumn pc1Col = new TableColumn("Computer Opponent 1");
+		TableColumn<GameRecord, String> pc1Col = new TableColumn<>("Computer Opponent 1");
 		pc1Col.setMinWidth(200);
 		pc1Col.setCellValueFactory(new PropertyValueFactory<GameRecord, String>("pc1"));
 		pc1Col.setSortType(TableColumn.SortType.ASCENDING);
 
-		TableColumn pc2Col = new TableColumn("Computer Opponent 2");
+		TableColumn<GameRecord, String> pc2Col = new TableColumn<>("Computer Opponent 2");
 		pc2Col.setMinWidth(200);
 		pc2Col.setCellValueFactory(new PropertyValueFactory<GameRecord, String>("pc2"));
 		pc2Col.setSortType(TableColumn.SortType.ASCENDING);
 
-		TableColumn pc3Col = new TableColumn("Computer Opponent 3");
+		TableColumn<GameRecord, String> pc3Col = new TableColumn<>("Computer Opponent 3");
 		pc3Col.setMinWidth(200);
 		pc3Col.setCellValueFactory(new PropertyValueFactory<GameRecord, String>("pc3"));
 		pc3Col.setSortType(TableColumn.SortType.ASCENDING);
 
-		TableColumn colorCol = new TableColumn("Color");
+		TableColumn<GameRecord, String> colorCol = new TableColumn<>("Color");
 		colorCol.setMinWidth(100);
 		colorCol.setCellValueFactory(new PropertyValueFactory<GameRecord, String>("color"));
 		colorCol.setSortType(TableColumn.SortType.ASCENDING);
 
-		TableColumn timeCol = new TableColumn("Time");
+		TableColumn<GameRecord, String> timeCol = new TableColumn<>("Time");
 		timeCol.setMinWidth(200);
 		timeCol.setCellValueFactory(new PropertyValueFactory<GameRecord, String>("time"));
 		timeCol.setSortType(TableColumn.SortType.ASCENDING);
 
-		TableColumn resultCol = new TableColumn("Result");
+		TableColumn<GameRecord, String> resultCol = new TableColumn<>("Result");
 		resultCol.setMinWidth(100);
 		resultCol.setCellValueFactory(new PropertyValueFactory<GameRecord, String>("result"));
 		resultCol.setSortType(TableColumn.SortType.DESCENDING);
