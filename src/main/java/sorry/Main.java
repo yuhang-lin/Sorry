@@ -1247,18 +1247,18 @@ public class Main extends Application {
 			statement.executeUpdate(sqlQuery);
 			String[] pcSetting = new String[3];
 			Arrays.fill(pcSetting, "Not chosen");
-			String result = "lost";
+			String result = "Lost";
 			String color = "Blue";
 			int pcIndex = 0;
 			for (int i = 0; i < players.size(); i++) {
 				Player player = players.get(i);
 				if (player instanceof Computer) {
-					pcSetting[pcIndex] = String.format("%s & %s", ((Computer) player).getNiceLevel(), ((Computer) player).getSmartLevel());
+					pcSetting[pcIndex] = String.format("%s & %s", ((Computer) player).getSmartLevel(), ((Computer) player).getNiceLevel()).toLowerCase();
 					pcIndex++;
 				} else {
 					color = player.getPlayerColor().toString();
 					if (i == currentTurn) {
-						result = "won";
+						result = "Won";
 					}
 				}
 			}
