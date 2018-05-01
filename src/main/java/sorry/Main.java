@@ -24,14 +24,11 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -937,7 +934,7 @@ public class Main extends Application {
 		for (int i = 0; i < board.getPathCoords().size(); i++) {
 			if (piece.getLocation().get(0).get(0) == board.getPathCoords().get(i).get(0)
 					&& piece.getLocation().get(0).get(1) == board.getPathCoords().get(i).get(1)) {
-				int boardIndex = Math.floorMod((i + increment), board.getPathLength());
+				int boardIndex = Math.floorMod((i + increment), Board.getPathLength());
 				int newX = board.getPathCoords().get(boardIndex).get(0);
 				int newY = board.getPathCoords().get(boardIndex).get(1);
 				move.add(newX);
