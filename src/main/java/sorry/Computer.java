@@ -50,10 +50,6 @@ public class Computer extends Player {
 		SMART, DUMB;
 	}
 
-	public PieceColor getColor() {
-		return color;
-	}
-
 	/**
 	 * Choose one available from the list of Choice then use than choice to move the
 	 * piece.
