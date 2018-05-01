@@ -45,7 +45,7 @@ public class Leaderboard {
 
 		final Label label = new Label("Leader Board");
 		label.setFont(new Font("Arial", 20));
-		
+
 		Text stats = new Text(getStatistics());
 		stats.setFont(new Font("Arial", 15));
 
@@ -97,7 +97,7 @@ public class Leaderboard {
 
 		final VBox vbox = new VBox();
 		vbox.setSpacing(5);
-		//vbox.setPadding(new Insets(10, 0, 0, 10));
+		// vbox.setPadding(new Insets(10, 0, 0, 10));
 		vbox.getChildren().addAll(table);
 		pane.setTop(label);
 		pane.setCenter(vbox);
@@ -105,7 +105,7 @@ public class Leaderboard {
 		stage.setScene(scene);
 		stage.show();
 	}
-	
+
 	/**
 	 * Gets statistics from MySQL database.
 	 */
@@ -119,13 +119,13 @@ public class Leaderboard {
 			int numWon = 0;
 			while (myResult.next()) {
 				total = myResult.getInt("count");
-				sb.append(String.format("Number of games played:  %d, \t",  total));
+				sb.append(String.format("Number of games played:  %d, \t", total));
 			}
 			sqlQuery = "SELECT count(1) as count FROM `record` WHERE result='won'";
 			myResult = statement.executeQuery(sqlQuery);
 			while (myResult.next()) {
 				numWon = myResult.getInt("count");
-				sb.append(String.format("Number of games won: %d, \t",  numWon));
+				sb.append(String.format("Number of games won: %d, \t", numWon));
 			}
 			sb.append(String.format("Number of games lost: %d\t", total - numWon));
 		} catch (SQLException e) {// Catch exception if any

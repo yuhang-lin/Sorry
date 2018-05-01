@@ -1,12 +1,11 @@
 package sorry;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import javafx.scene.shape.Circle;
 
 /**
  * Piece class representing the individual pawns
+ * 
  * @author Austin Batistoni
  *
  */
@@ -15,7 +14,6 @@ public class Piece {
 	private PieceColor color;
 	private ArrayList<ArrayList<Integer>> location;
 	private ArrayList<ArrayList<Integer>> possibleMoves;
-	private int movement;
 	private Player player;
 	private boolean isInPlay;
 	private boolean isSelected;
@@ -24,7 +22,6 @@ public class Piece {
 	private boolean isHome;
 	private boolean canGoHome;
 	private Circle circle;
-	
 
 	public Piece(PieceColor c, Player p, ArrayList<ArrayList<Integer>> location, int index) {
 		this.color = c;
@@ -37,7 +34,6 @@ public class Piece {
 	}
 
 	public void Move(int squareNum) {
-		movement = squareNum;
 	}
 
 	public void setLocation(ArrayList<ArrayList<Integer>> sq) {
@@ -65,7 +61,8 @@ public class Piece {
 	}
 
 	/**
-	 * @param possibleMoves the possibleMoves to set
+	 * @param possibleMoves
+	 *            the possibleMoves to set
 	 */
 	public void setPossibleMoves(ArrayList<ArrayList<Integer>> possibleMoves) {
 		this.possibleMoves = possibleMoves;
@@ -138,15 +135,15 @@ public class Piece {
 	public Circle getCircle() {
 		return circle;
 	}
-	
+
 	public void setCanGoHome() {
 		this.canGoHome = true;
 	}
-	
+
 	public void setCantGoHome() {
 		this.canGoHome = false;
 	}
-	
+
 	public boolean canGoHome() {
 		return canGoHome;
 	}

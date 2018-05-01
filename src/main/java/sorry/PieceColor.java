@@ -6,8 +6,8 @@ import java.util.Arrays;
 import javafx.scene.paint.Color;
 
 /**
- * This class is the superclass for piece color that holds information
- * on the specific locations of board elements relative to the color 
+ * This class is the superclass for piece color that holds information on the
+ * specific locations of board elements relative to the color
  * 
  * @author Austin Batistoni
  */
@@ -21,6 +21,7 @@ public class PieceColor {
 
 	/**
 	 * Gets the JavaFx color of the player
+	 * 
 	 * @return color
 	 */
 	public Color getColor() {

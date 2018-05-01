@@ -104,7 +104,8 @@ public class Main extends Application {
 			for (Player player : players) {
 				printWriter.println(player.getPlayerColor());
 				if (player instanceof Computer) {
-					printWriter.println(String.format("Computer,%s,%s", ((Computer) player).getNiceLevel(), ((Computer) player).getSmartLevel()));
+					printWriter.println(String.format("Computer,%s,%s", ((Computer) player).getNiceLevel(),
+							((Computer) player).getSmartLevel()));
 				} else {
 					printWriter.println("User");
 				}
@@ -129,7 +130,8 @@ public class Main extends Application {
 	/**
 	 * Resume the game status from a text file.
 	 * 
-	 * @return 0 if there is no error, 1 if file is not found, 2 if file is damaged, 3 otherwise.
+	 * @return 0 if there is no error, 1 if file is not found, 2 if file is damaged,
+	 *         3 otherwise.
 	 */
 	public int resume(Stage stage) {
 		try (BufferedReader br = new BufferedReader(new FileReader(logFile))) {
@@ -223,7 +225,7 @@ public class Main extends Application {
 		}
 		return 0;
 	}
-	
+
 	private void clearBoard(Stage stage) {
 		for (Player player : players) {
 			for (Piece piece : player.getPieces()) {
@@ -263,7 +265,7 @@ public class Main extends Application {
 	 */
 	private void setPlayers() {
 		Computer blue = new Computer(new Blue(), Computer.NiceLevel.MEAN, Computer.SmartLevel.SMART); // for testing
-		//Player blue = new Player(new Blue());
+		// Player blue = new Player(new Blue());
 		Player green = new Player(new Green());
 		Player red = new Player(new Red());
 		Player yellow = new Player(new Yellow());
@@ -332,7 +334,7 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
-		//--------------------Button Event Handlers-----------------------//
+		// --------------------Button Event Handlers-----------------------//
 		btnHelp.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -353,7 +355,7 @@ public class Main extends Application {
 					directions.setText("The card is: " + currCard.getName());
 					sideBar.getChildren().remove(4);
 					sideBar.getChildren().add(4, (new CardPane(currCard)));
-	
+
 					directions.setText("The card is: " + card);
 					if (card.equals("2")) {
 						numDrawLeft++;
@@ -486,7 +488,8 @@ public class Main extends Application {
 	/**
 	 * Calculate all possible next moves based on the given card name.
 	 * 
-	 * @param card a String representing the card name
+	 * @param card
+	 *            a String representing the card name
 	 */
 	private void cardToMoves(String card) {
 		Player currentPlayer = players.get(currentTurn);
@@ -627,7 +630,8 @@ public class Main extends Application {
 	/**
 	 * Set the possible moves for each piece of the current player.
 	 * 
-	 * @param moveNumList list of available movement number
+	 * @param moveNumList
+	 *            list of available movement number
 	 */
 	private void setPossibleMoves(ArrayList<Integer> moveNumList) {
 		selfPieceSet.clear();
@@ -644,20 +648,20 @@ public class Main extends Application {
 			for (int cardNum : moveNumList) {
 				ArrayList<Integer> move = new ArrayList<>();
 				if (cardNum >= 1 && cardNum <= 5) {
-					//Can the piece finish with the given move
+					// Can the piece finish with the given move
 					if (canPieceFinish(p, cardNum)) {
-						//p.getPlayer().addFinishedPieces();
+						// p.getPlayer().addFinishedPieces();
 						move = p.getColor().getHomeCoords().get(p.getHomeIndex());
 					}
-					//Is the piece already in the safety zone?
+					// Is the piece already in the safety zone?
 					if (p.isPieceSafe()) {
-						//Can the piece move within the safety zone?
+						// Can the piece move within the safety zone?
 						if (canMoveWithinSafe(p, cardNum)) {
 							move = moveWithinSafeZone(p, cardNum);
 						}
 					} else {
 						if (p.getIsInPlay()) {
-							//Can the piece move to the safety zone from the main path?
+							// Can the piece move to the safety zone from the main path?
 							if (canMoveToSafe(p, cardNum)) {
 								move = getSafeLocation(p, cardNum);
 							} else {
@@ -670,7 +674,7 @@ public class Main extends Application {
 							move = temp;
 						}
 					}
-				} else if (p.getIsInPlay()){
+				} else if (p.getIsInPlay()) {
 					if (cardNum >= 6 && canMoveToHome(p, cardNum)) {
 						move = p.getColor().getHomeCoords().get(p.getHomeIndex());
 					} else {
@@ -700,7 +704,7 @@ public class Main extends Application {
 		if (p.isPieceSafe()) {
 			int i = getIndexOfSafeArray(p);
 			if (i + card == 5) {
-				//p.setCanGoHome();
+				// p.setCanGoHome();
 				return true;
 			}
 		}
@@ -710,8 +714,10 @@ public class Main extends Application {
 	/**
 	 * Returns true if piece can move within safe zone, false otherwise.
 	 * 
-	 * @param p- piece to be moved
-	 * @param card- number representation of the card
+	 * @param p-
+	 *            piece to be moved
+	 * @param card-
+	 *            number representation of the card
 	 * @return true if piece can move within safe zone, false otherwise
 	 */
 	public boolean canMoveWithinSafe(Piece p, int card) {
@@ -725,7 +731,8 @@ public class Main extends Application {
 	/**
 	 * Gets the index of safe array.
 	 * 
-	 * @param p- piece to move
+	 * @param p-
+	 *            piece to move
 	 * @return index of the safe array of the piece
 	 */
 	public int getIndexOfSafeArray(Piece p) {
@@ -741,8 +748,10 @@ public class Main extends Application {
 	/**
 	 * Returns the next location within the safe zone of the piece given the card.
 	 * 
-	 * @param p- the target piece for the next move
-	 * @param card- the numerical presentation of the card
+	 * @param p-
+	 *            the target piece for the next move
+	 * @param card-
+	 *            the numerical presentation of the card
 	 * @return the next location within the safe zone of the piece given the card
 	 */
 	public ArrayList<Integer> moveWithinSafeZone(Piece p, int card) {
@@ -755,8 +764,10 @@ public class Main extends Application {
 	/**
 	 * Returns true if the piece can move to home given the card
 	 * 
-	 * @param p- the target piece for the next move
-	 * @param card- the numerical presentation of the card
+	 * @param p-
+	 *            the target piece for the next move
+	 * @param card-
+	 *            the numerical presentation of the card
 	 * @return true if the piece can move to home given the card, false otherwise
 	 */
 	public boolean canMoveToSafe(Piece p, int card) {
@@ -779,8 +790,10 @@ public class Main extends Application {
 	/**
 	 * Returns true if the piece can move to home given the card.
 	 * 
-	 * @param p- the target piece for the next move
-	 * @param card- the numerical presentation of the card
+	 * @param p-
+	 *            the target piece for the next move
+	 * @param card-
+	 *            the numerical presentation of the card
 	 * @return true if the piece can move to home given the card, false otherwise
 	 */
 	public boolean canMoveToHome(Piece p, int card) {
@@ -794,7 +807,7 @@ public class Main extends Application {
 		}
 		if ((currentIndex <= playersLastSpot && currentIndex + card > playersLastSpot)
 				&& (card - (playersLastSpot - currentIndex) - 1) == p.getColor().getSafeCoords().size()) {
-			//p.setCanGoHome();
+			// p.setCanGoHome();
 			return true;
 		}
 		return false;
@@ -803,8 +816,10 @@ public class Main extends Application {
 	/**
 	 * Gets the safe zone location of the piece based on the card
 	 * 
-	 * @param p- the target piece for the next move
-	 * @param card- the numerical presentation of the card
+	 * @param p-
+	 *            the target piece for the next move
+	 * @param card-
+	 *            the numerical presentation of the card
 	 * @return ArrayList of new location
 	 */
 	public ArrayList<Integer> getSafeLocation(Piece p, int card) {
@@ -875,7 +890,7 @@ public class Main extends Application {
 	 */
 	public void nextTurn() {
 		Player currentPlayer = players.get(currentTurn);
-		//If the player has 4 pieces home they win!!
+		// If the player has 4 pieces home they win!!
 		if (currentPlayer.getPiecesHome() == Player.getNumPieces() && !hasEndGame) {
 			DisplayWinner d = new DisplayWinner(currentPlayer);
 			d.Start(new Stage());
@@ -924,9 +939,12 @@ public class Main extends Application {
 	/**
 	 * Gets the next location based on the given increment.
 	 * 
-	 * @param board- the game board
-	 * @param piece-the target piece for the next move
-	 * @param increment- the numerical increment of the next move
+	 * @param board-
+	 *            the game board
+	 * @param piece-the
+	 *            target piece for the next move
+	 * @param increment-
+	 *            the numerical increment of the next move
 	 * @return the next location
 	 */
 	public ArrayList<Integer> getMoveFromInt(Board board, Piece piece, int increment) {
@@ -948,11 +966,16 @@ public class Main extends Application {
 	/**
 	 * Fills in the squares with different color and effects.
 	 * 
-	 * @param grid- the internal representation of the grid
-	 * @param inside- the inside color of the square
-	 * @param outside- the outside color of the square
-	 * @param radius- the radius of the effect circle
-	 * @param pane- the pane containing the grid
+	 * @param grid-
+	 *            the internal representation of the grid
+	 * @param inside-
+	 *            the inside color of the square
+	 * @param outside-
+	 *            the outside color of the square
+	 * @param radius-
+	 *            the radius of the effect circle
+	 * @param pane-
+	 *            the pane containing the grid
 	 */
 	public void fillInSquares(ArrayList<ArrayList<Integer>> grid, Color inside, Color outside, double radius,
 			GridPane pane) {
@@ -973,9 +996,12 @@ public class Main extends Application {
 	/**
 	 * Gets the node from the grid pane
 	 * 
-	 * @param gridPane- the grid pane of the game
-	 * @param col- column in the grid pane
-	 * @param row- row in the grid pane
+	 * @param gridPane-
+	 *            the grid pane of the game
+	 * @param col-
+	 *            column in the grid pane
+	 * @param row-
+	 *            row in the grid pane
 	 * @return
 	 */
 	private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
@@ -990,11 +1016,16 @@ public class Main extends Application {
 	/**
 	 * Draws piece in the GUI.
 	 * 
-	 * @param p- piece to draw
-	 * @param primaryStage- stage used to be shown the pane
-	 * @param pane- the pane for having the board
-	 * @param board- the game board
-	 * @param i home index of the piece
+	 * @param p-
+	 *            piece to draw
+	 * @param primaryStage-
+	 *            stage used to be shown the pane
+	 * @param pane-
+	 *            the pane for having the board
+	 * @param board-
+	 *            the game board
+	 * @param i
+	 *            home index of the piece
 	 */
 	public void drawPiece(Piece p, Stage primaryStage, GridPane pane, Board board, int i) {
 		// p.setLocation(moves);
@@ -1051,8 +1082,10 @@ public class Main extends Application {
 	/**
 	 * Draws the GUI of the game board.
 	 * 
-	 * @param pane- the pane to draw the board
-	 * @param board- the game board
+	 * @param pane-
+	 *            the pane to draw the board
+	 * @param board-
+	 *            the game board
 	 */
 	public void drawBoard(GridPane pane, Board board) {
 		for (int i = 0; i <= 15; i++) {
@@ -1079,7 +1112,8 @@ public class Main extends Application {
 	/**
 	 * Move the selected piece to the target location
 	 * 
-	 * @param location- the target location of the selected piece
+	 * @param location-
+	 *            the target location of the selected piece
 	 */
 	private void movePiece(ArrayList<ArrayList<Integer>> location) {
 		returnSquareColor();
@@ -1112,14 +1146,15 @@ public class Main extends Application {
 						if (otherPieceMap.containsKey(location.toString())) {
 							removeBumpedPiece(location);
 						}
-						ArrayList<ArrayList<Integer>> homeCoords = selected.getPlayer().getPlayerColor().getHomeCoords();
-						
-						if(homeCoords.get(selected.getHomeIndex()).get(0) == location.get(0).get(0) &&
-								homeCoords.get(selected.getHomeIndex()).get(1) == location.get(0).get(1)) {
+						ArrayList<ArrayList<Integer>> homeCoords = selected.getPlayer().getPlayerColor()
+								.getHomeCoords();
+
+						if (homeCoords.get(selected.getHomeIndex()).get(0) == location.get(0).get(0)
+								&& homeCoords.get(selected.getHomeIndex()).get(1) == location.get(0).get(1)) {
 							selected.getPlayer().addFinishedPieces();
 							selected.setIsHome();
 						}
-							
+
 						for (int i = 0; i < selected.getColor().getSafeCoords().size(); i++) {
 							if ((location.get(0).get(0) == selected.getColor().getSafeCoords().get(i).get(0))
 									&& (location.get(0).get(1) == selected.getColor().getSafeCoords().get(i).get(1))) {
@@ -1155,9 +1190,12 @@ public class Main extends Application {
 	/**
 	 * Removes a piece from start.
 	 * 
-	 * @param p- piece to be removed
-	 * @param pane- Pane of the game board
-	 * @param circle- the circle of the piece in the GUI
+	 * @param p-
+	 *            piece to be removed
+	 * @param pane-
+	 *            Pane of the game board
+	 * @param circle-
+	 *            the circle of the piece in the GUI
 	 */
 	public void moveFromStart(Piece p, GridPane pane, Circle circle) {
 		ArrayList<ArrayList<Integer>> firstSpot = p.getColor().getFirstSpot();
@@ -1168,11 +1206,11 @@ public class Main extends Application {
 		circle.setStroke(Color.BLACK);
 	}
 
-
 	/**
 	 * Removes the other piece from the location.
 	 * 
-	 * @param location-  the location for pumping
+	 * @param location-
+	 *            the location for pumping
 	 */
 	private void removeBumpedPiece(ArrayList<ArrayList<Integer>> location) {
 		Piece piece = getBumpedPiece(location);
@@ -1202,7 +1240,8 @@ public class Main extends Application {
 	/**
 	 * Get bumped piece based on the given location
 	 * 
-	 * @param location- the location of bumping
+	 * @param location-
+	 *            the location of bumping
 	 * @return bumped Piece if found, otherwise null
 	 */
 	public Piece getBumpedPiece(ArrayList<ArrayList<Integer>> location) {
@@ -1250,7 +1289,9 @@ public class Main extends Application {
 			for (int i = 0; i < players.size(); i++) {
 				Player player = players.get(i);
 				if (player instanceof Computer) {
-					pcSetting[pcIndex] = String.format("%s & %s", ((Computer) player).getSmartLevel(), ((Computer) player).getNiceLevel()).toLowerCase();
+					pcSetting[pcIndex] = String
+							.format("%s & %s", ((Computer) player).getSmartLevel(), ((Computer) player).getNiceLevel())
+							.toLowerCase();
 					pcIndex++;
 				} else {
 					color = player.getPlayerColor().toString();

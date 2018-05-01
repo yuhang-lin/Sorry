@@ -8,7 +8,8 @@ import org.junit.jupiter.api.RepeatedTest;
 class DeckTest {
 
 	/**
-	 * The number of two consecutive cards that are the same should be no more than 25 out of 200.
+	 * The number of two consecutive cards that are the same should be no more than
+	 * 25 out of 200.
 	 */
 	@RepeatedTest(20)
 	@DisplayName("Repeat testing two consecutive cards that are the same")
