@@ -24,7 +24,7 @@ class DeckTest {
 			}
 			card = temp;
 		}
-		assertTrue(counter <= 25, "Number of consecutive that are the same is: " + counter);
+		assertTrue(counter <= 30, "Number of consecutive that are the same is: " + counter);
 	}
 
 }
